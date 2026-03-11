@@ -5,69 +5,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>최종우수 비상대응 - 상황 선택</title>
   <style>
+    * { box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
       margin: 0;
-      background: #f6f7f9;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      background: #f3f6f9;
+      color: #1f2d3d;
     }
     .wrap {
-      max-width: 520px;
+      max-width: 640px;
       margin: 0 auto;
-      padding: 18px;
+      padding: 24px 18px 40px;
     }
-    .card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.06);
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0 0 10px;
-    }
-    p {
-      margin: 6px 0 14px;
-      color: #444;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 12px;
-      text-decoration: none;
-      color: #111;
-      background: #eef2ff;
-      border: 1px solid #dbe0ff;
-      font-weight: 800;
+    .header {
+      background: linear-gradient(135deg, #0f6fb5, #008cd2);
+      color: white;
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 24px rgba(0, 78, 140, 0.18);
       text-align: center;
     }
-    .danger {
-      margin-top: 12px;
-      font-size: 13px;
-      font-weight: 900;
-      color: #b00020;
+    .header h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+    }
+    .header p {
+      margin: 10px 0 0;
+      font-size: 15px;
+      opacity: 0.95;
+      line-height: 1.5;
+    }
+    .card {
+      background: white;
+      border-radius: 22px;
+      margin-top: 18px;
+      padding: 26px 20px;
+      box-shadow: 0 8px 24px rgba(31, 45, 61, 0.08);
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      text-align: center;
+      color: #0f6fb5;
+    }
+    .section-desc {
+      margin: 0 0 24px;
+      text-align: center;
+      font-size: 15px;
+      color: #5b6777;
+      line-height: 1.6;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+    .main-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 68px;
+      padding: 16px 18px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      transition: transform 0.15s ease;
+    }
+    .main-btn:hover { transform: translateY(-1px); }
+    .btn-leak { background: linear-gradient(135deg, #008cd2, #0f6fb5); }
+    .btn-ph { background: linear-gradient(135deg, #a1c814, #7fa30c); }
+
+    .notice {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #eef7fc;
+      border: 1px solid #d2ebf8;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #35526b;
+    }
+
+    @media (max-width: 480px) {
+      .header h1 { font-size: 23px; }
+      .main-btn { font-size: 16px; min-height: 62px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <div class="header">
+      <h1>최종우수 비상대응</h1>
+      <p>상황을 선택하면 단계별 대응방법 및 보고사항을 확인할 수 있습니다.</p>
+    </div>
+
     <div class="card">
-      <h1>[1] 상황 선택</h1>
-      <p>해당 상황을 선택하면 다음 단계로 이동합니다.</p>
+      <h2 class="section-title">[1] 상황 선택</h2>
+      <p class="section-desc">해당 상황을 선택해 주세요.</p>
 
-      <a class="btn" href="./leak.html">
-        1) 원료/제품 누출 상황
-      </a>
+      <div class="btn-group">
+        <a class="main-btn btn-leak" href="./leak.html">원료 / 제품 누출 상황</a>
+        <a class="main-btn btn-ph" href="./ph.html">pH 농도 이상 상황</a>
+      </div>
 
-      <a class="btn" href="./ph.html">
-        2) pH 관리범위 외 이탈 상황
-      </a>
-
-      <div class="danger">
-        ※ 임의 방류 금지 / 필요 시 최종우수 차단밸브 잠금
+      <div class="notice">
+        ※ 비상상황 발생 시 침착하게 단계별 조치 후, 최종적으로 안전환경팀에 즉시 보고 바랍니다.
       </div>
     </div>
   </div>
