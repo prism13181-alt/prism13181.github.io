@@ -3,36 +3,210 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>대응방법 - 누출</title>
+  <title>대응방법 - 원료/제품 누출</title>
   <style>
-    body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;margin:0;background:#f6f7f9}
-    .wrap{max-width:520px;margin:0 auto;padding:18px}
-    .card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-    h1{font-size:18px;margin:0 0 10px}
-    ol{padding-left:18px;margin:10px 0}
-    li{margin:10px 0;line-height:1.45}
-    .btnrow{display:flex;gap:10px;margin-top:14px}
-    .btn{flex:1;padding:12px;border-radius:12px;text-align:center;text-decoration:none;font-weight:800}
-    .b1{background:#f1f5f9;color:#111;border:1px solid #e2e8f0}
-    .b2{background:#e8fff1;color:#0a5;border:1px solid #bff0cf}
-    .danger{margin-top:10px;font-size:13px;font-weight:900;color:#b00020}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      background: #f3f6f9;
+      color: #1f2d3d;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 18px 40px;
+    }
+    .header {
+      background: linear-gradient(135deg, #0f6fb5, #008cd2);
+      color: white;
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 24px rgba(0, 78, 140, 0.18);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      text-align: center;
+    }
+    .header p {
+      margin: 10px 0 0;
+      line-height: 1.6;
+      font-size: 15px;
+      text-align: center;
+      opacity: 0.95;
+    }
+    .card {
+      background: white;
+      border-radius: 22px;
+      margin-top: 18px;
+      padding: 24px 20px;
+      box-shadow: 0 8px 24px rgba(31, 45, 61, 0.08);
+    }
+    .step-title {
+      margin: 0 0 14px;
+      font-size: 22px;
+      color: #0f6fb5;
+      text-align: center;
+    }
+    .guide-box {
+      background: #f8fbfd;
+      border: 1px solid #d8ebf7;
+      border-radius: 16px;
+      padding: 18px;
+      line-height: 1.9;
+      font-size: 16px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .nav-btn {
+      flex: 1 1 220px;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, #0f6fb5, #008cd2);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+    .nav-btn.gray {
+      background: #6b7785;
+    }
+    .popup-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .popup-btn {
+      flex: 1 1 220px;
+      min-height: 54px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+    .popup-blue { background: #008CD2; }
+    .popup-green { background: #A1C814; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 28, 44, 0.55);
+      z-index: 999;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.show { display: flex; }
+    .modal-box {
+      width: 100%;
+      max-width: 560px;
+      background: white;
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+    }
+    .modal-box h3 {
+      margin: 0 0 14px;
+      font-size: 21px;
+      color: #0f6fb5;
+    }
+    .modal-box p {
+      margin: 0;
+      line-height: 1.8;
+      font-size: 15px;
+      color: #445466;
+    }
+    .modal-close {
+      margin-top: 18px;
+      width: 100%;
+      min-height: 48px;
+      border: none;
+      border-radius: 12px;
+      background: #0f6fb5;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap"><div class="card">
-    <h1>[2] 대응방법 – 원료/제품 누출</h1>
-    <ol>
-      <li><b>작업 즉시 중지</b> 및 주변 인원 안전확보</li>
-      <li>누출 지점/유출 경로 <b>확인</b> (위험 시 접근 금지)</li>
-      <li>가능한 경우 <b>2차 확산 방지</b> (흡착포/차단 등)</li>
-      <li><b>최종우수 차단밸브 잠금</b> (필요 시 즉시)</li>
-      <li><b>안전환경팀 연락</b> 및 지시에 따라 조치</li>
-    </ol>
-    <div class="danger">※ 임의 방류 금지 / 차단 여부 반드시 확인</div>
-    <div class="btnrow">
-      <a class="btn b1" href="./index.html">← 상황 선택</a>
-      <a class="btn b2" href="./report.html">보고 단계 →</a>
+  <div class="wrap">
+    <div class="header">
+      <h1>원료 / 제품 누출 상황</h1>
+      <p>아래 대응방법을 순서대로 확인 후 조치하시기 바랍니다.</p>
     </div>
-  </div></div>
+
+    <div class="card">
+      <h2 class="step-title">[2] 대응방법</h2>
+
+      <div class="guide-box">
+        1. 초동대응 장구함에서 대응 가방을 착용하고 누출 지점으로 이동합니다.<br>
+        2. 현장 접근 전 장갑, 보안경 등 개인보호구를 착용합니다.<br>
+        3. 누출 위치와 누출 범위를 확인합니다.<br>
+        4. 필요 시 트렌치 및 우수 유입 경로를 우선 차단합니다.<br>
+        5. 유흡착제, 흡착포, boom 등을 활용하여 누출액 확산을 방지하고 흡수합니다.<br>
+        6. 최종우수 차단이 필요한 경우 차단 조치를 실시합니다.<br>
+        7. 조치 후 보고단계로 이동하여 현장상황을 보고합니다.
+      </div>
+
+      <div class="btn-row">
+        <a class="nav-btn gray" href="./index.html">상황선택</a>
+        <a class="nav-btn" href="./report.html">보고단계</a>
+      </div>
+
+      <div class="popup-row">
+        <button class="popup-btn popup-blue" onclick="openModal('modal1')">공장 우수로 계통도</button>
+        <button class="popup-btn popup-green" onclick="openModal('modal2')">공장 내 방제장비 위치</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal1">
+    <div class="modal-box">
+      <h3>공장 우수로 계통도</h3>
+      <p>
+        여기에 공장 우수로 계통도 이미지 또는 설명을 삽입하면 됩니다.<br>
+        예: 우수로 흐름 방향, 최종우수 위치, 차단 필요 지점 표시
+      </p>
+      <button class="modal-close" onclick="closeModal('modal1')">닫기</button>
+    </div>
+  </div>
+
+  <div class="modal" id="modal2">
+    <div class="modal-box">
+      <h3>공장 내 방제장비 위치</h3>
+      <p>
+        여기에 공장 내 방제장비 위치도 이미지 또는 설명을 삽입하면 됩니다.<br>
+        예: 초동대응 장구함 위치, 흡착제 보관함, 차단도구 비치장소
+      </p>
+      <button class="modal-close" onclick="closeModal('modal2')">닫기</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+  </script>
 </body>
 </html>
