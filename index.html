@@ -20,6 +20,8 @@
 
       --green:#a1c814;
       --green-dark:#8fb10f;
+      --green-soft:#eff8cf;
+      --green-border:#d8ec9a;
 
       --gray-btn:#ffffff;
       --gray-border:#d7e3ee;
@@ -27,6 +29,7 @@
       --shadow:0 16px 40px rgba(24,50,74,0.08);
       --shadow-soft:0 10px 24px rgba(24,50,74,0.05);
       --shadow-blue:0 16px 32px rgba(0,140,210,0.12);
+      --shadow-green:0 16px 32px rgba(161,200,20,0.12);
     }
 
     html, body {
@@ -241,6 +244,7 @@
       box-shadow: 0 8px 18px rgba(0,140,210,0.22);
       line-height: 1;
       flex: 0 0 auto;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
     }
 
     .section-title {
@@ -259,6 +263,11 @@
       font-size: 17px;
       line-height: 1.7;
       color: var(--muted);
+    }
+
+    .highlight-text {
+      color: #111111;
+      font-weight: 800;
     }
 
     .select-grid {
@@ -368,7 +377,7 @@
       font-size: 21px;
       font-weight: 800;
       letter-spacing: -0.02em;
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease, color 0.2s ease, border 0.2s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -387,6 +396,13 @@
       color: var(--sky-dark);
       border: 2px solid #bfe0f3;
       box-shadow: var(--shadow-blue);
+    }
+
+    .nav-btn.next.ph-mode {
+      background: var(--green-soft);
+      color: var(--green-dark);
+      border: 2px solid var(--green-border);
+      box-shadow: var(--shadow-green);
     }
 
     .nav-icon {
@@ -632,10 +648,6 @@
         font-size: 18px;
       }
 
-      .section-title {
-        font-size: 26px;
-      }
-
       .section-desc,
       .guide-list {
         font-size: 15px;
@@ -725,7 +737,7 @@
 
       <section class="screen" id="screen-2">
         <div class="section-title-wrap">
-          <div class="section-no">2</div>
+          <div class="section-no" id="section-step-no">2</div>
           <h2 class="section-title">대응방법</h2>
         </div>
         <p class="section-desc" id="response-desc"></p>
@@ -740,7 +752,7 @@
             <span class="nav-icon">←</span>
             <span>이전</span>
           </button>
-          <button class="nav-btn next" onclick="goNext()">
+          <button class="nav-btn next" id="next-btn" onclick="goNext()">
             <span>다음</span>
             <span class="nav-icon">→</span>
           </button>
@@ -813,12 +825,14 @@
 
   <script>
     let currentStep = 1;
+    let currentType = "leak";
 
     const dataMap = {
       leak: {
-        desc: "누출 상황(제품 / 원·부재료)에 대한 대응방법입니다.",
-        title: "누출 상황(제품 / 원·부재료)",
-        cardClass: "leak",
+        desc: '<span class="highlight-text">누출 상황(제품 / 원·부재료)</span>에 대한 대응방법입니다.',
+        title: '누출 상황(제품 / 원·부재료)',
+        cardClass: 'leak',
+        stepColor: 'blue',
         steps: [
           "초동대응 장구함에서 대응 가방을 착용하고 누출 지점으로 이동합니다.",
           "현장 접근 전 장갑, 보안경 등 개인보호구를 착용합니다.",
@@ -830,9 +844,10 @@
         ]
       },
       ph: {
-        desc: "pH 농도 이상 상황에 대한 대응방법입니다.",
-        title: "pH 농도 이상 상황",
-        cardClass: "ph",
+        desc: '<span class="highlight-text">pH 농도 이상 상황</span>에 대한 대응방법입니다.',
+        title: 'pH 농도 이상 상황',
+        cardClass: 'ph',
+        stepColor: 'green',
         steps: [
           "pH 계측값을 재확인합니다.",
           "계측기 이상 여부 및 공정 이상 여부를 함께 확인합니다.",
@@ -859,14 +874,33 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    function applyScenarioColors(type) {
+      const stepNo = document.getElementById("section-step-no");
+      const nextBtn = document.getElementById("next-btn");
+
+      stepNo.style.background = "";
+      stepNo.style.boxShadow = "";
+      nextBtn.classList.remove("ph-mode");
+
+      if (type === "ph") {
+        stepNo.style.background = "var(--green)";
+        stepNo.style.boxShadow = "0 8px 18px rgba(161,200,20,0.22)";
+        nextBtn.classList.add("ph-mode");
+      } else {
+        stepNo.style.background = "var(--sky)";
+        stepNo.style.boxShadow = "0 8px 18px rgba(0,140,210,0.22)";
+      }
+    }
+
     function selectSituation(type) {
+      currentType = type;
       const info = dataMap[type];
       const desc = document.getElementById("response-desc");
       const title = document.getElementById("response-title");
       const list = document.getElementById("response-list");
       const card = document.getElementById("response-card");
 
-      desc.textContent = info.desc;
+      desc.innerHTML = info.desc;
       title.textContent = info.title;
       list.innerHTML = "";
       card.className = "content-card " + info.cardClass;
@@ -877,12 +911,16 @@
         list.appendChild(li);
       });
 
+      applyScenarioColors(type);
       setStage(2);
     }
 
     function goPrev() {
       if (currentStep === 2) setStage(1);
-      else if (currentStep === 3) setStage(2);
+      else if (currentStep === 3) {
+        setStage(2);
+        applyScenarioColors(currentType);
+      }
     }
 
     function goNext() {
