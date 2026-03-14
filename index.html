@@ -496,9 +496,14 @@
     .report-list {
       margin: 0;
       padding-left: 22px;
-      font-size: 16px;
-      line-height: 1.95;
-      color: #394b5c;
+      font-size: 17px;
+      line-height: 2;
+      color: #111111;
+      font-weight: 700;
+    }
+
+    .report-list li + li {
+      margin-top: 2px;
     }
 
     .notice {
@@ -632,9 +637,12 @@
       }
 
       .section-desc,
-      .guide-list,
-      .report-list {
+      .guide-list {
         font-size: 15px;
+      }
+
+      .report-list {
+        font-size: 16px;
       }
 
       .select-btn-title {
@@ -700,7 +708,7 @@
 
         <div class="select-grid">
           <button class="select-btn blue" onclick="selectSituation('leak')">
-            <span class="select-btn-title">원료 / 제품 누출 상황</span>
+            <span class="select-btn-title">누출 상황(제품 / 원·부재료)</span>
             <span class="select-btn-sub">누출 위치 확인, 확산 방지, 최종우수 차단 및 보고 절차 확인</span>
           </button>
 
@@ -808,8 +816,8 @@
 
     const dataMap = {
       leak: {
-        desc: "원료 / 제품 누출 상황에 대한 대응방법입니다.",
-        title: "원료 / 제품 누출 상황",
+        desc: "누출 상황(제품 / 원·부재료)에 대한 대응방법입니다.",
+        title: "누출 상황(제품 / 원·부재료)",
         cardClass: "leak",
         steps: [
           "초동대응 장구함에서 대응 가방을 착용하고 누출 지점으로 이동합니다.",
