@@ -78,13 +78,24 @@
       background: rgba(255,255,255,0.06);
     }
 
-    .hero-logo {
+    .hero-logo-wrap {
       position: absolute;
-      top: 20px;
-      left: 24px;
+      top: 18px;
+      left: 22px;
       z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(220,230,240,0.95);
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(18,40,60,0.10);
+    }
+
+    .hero-logo {
       display: block;
-      height: 34px;
+      height: 27px;
       width: auto;
       object-fit: contain;
     }
@@ -201,6 +212,21 @@
 
     .screen { display: none; }
     .screen.active { display: block; }
+
+    .section-badge {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 800;
+      box-shadow: 0 14px 28px rgba(0,140,210,0.20);
+    }
 
     .section-title {
       margin: 0;
@@ -345,7 +371,7 @@
     .nav-btn.next {
       background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
       color: #fff;
-      border: none;
+      border: 2px solid #dbe5ee;
       box-shadow: var(--shadow-strong);
     }
 
@@ -353,8 +379,22 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 18px;
       line-height: 1;
+      font-weight: 800;
+    }
+
+    .nav-btn.prev .nav-icon {
+      background: #eef3f8;
+      color: #4f6477;
+    }
+
+    .nav-btn.next .nav-icon {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
     }
 
     .util-row {
@@ -538,10 +578,14 @@
         padding: 18px 18px 20px;
       }
 
+      .hero-logo-wrap {
+        top: 14px;
+        left: 14px;
+        padding: 6px 10px;
+      }
+
       .hero-logo {
-        top: 16px;
-        left: 18px;
-        height: 26px;
+        height: 21px;
       }
 
       .hero-inner {
@@ -609,7 +653,10 @@
 <body>
   <div class="page">
     <header class="hero">
-      <img class="hero-logo" src="./logo.png" alt="이수스페셜티케미컬 로고">
+      <div class="hero-logo-wrap">
+        <img class="hero-logo" src="./logo.png" alt="이수스페셜티케미컬 로고">
+      </div>
+
       <div class="hero-inner">
         <p class="hero-kicker">Emergency Response Guide</p>
         <h1 class="hero-title">누출사고 초동조치방법</h1>
@@ -634,7 +681,8 @@
 
     <main class="panel">
       <section class="screen active" id="screen-1">
-        <h2 class="section-title">[1] 상황 선택</h2>
+        <div class="section-badge">1</div>
+        <h2 class="section-title">상황 선택</h2>
         <p class="section-desc">해당 상황을 선택해 주세요.</p>
 
         <div class="select-grid">
@@ -655,7 +703,8 @@
       </section>
 
       <section class="screen" id="screen-2">
-        <h2 class="section-title">[2] 대응방법</h2>
+        <div class="section-badge">2</div>
+        <h2 class="section-title">대응방법</h2>
         <p class="section-desc" id="response-desc"></p>
 
         <div class="content-card" id="response-card">
@@ -665,12 +714,12 @@
 
         <div class="nav-row">
           <button class="nav-btn prev" onclick="goPrev()">
-            <span class="nav-icon">←</span>
+            <span class="nav-icon">◀</span>
             <span>이전</span>
           </button>
           <button class="nav-btn next" onclick="goNext()">
             <span>다음</span>
-            <span class="nav-icon">→</span>
+            <span class="nav-icon">▶</span>
           </button>
         </div>
 
@@ -681,7 +730,8 @@
       </section>
 
       <section class="screen" id="screen-3">
-        <h2 class="section-title">[3] 보고단계</h2>
+        <div class="section-badge">3</div>
+        <h2 class="section-title">보고단계</h2>
         <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
 
         <div class="contact-card">
@@ -706,7 +756,7 @@
 
         <div class="nav-row single">
           <button class="nav-btn prev" onclick="goPrev()">
-            <span class="nav-icon">←</span>
+            <span class="nav-icon">◀</span>
             <span>이전</span>
           </button>
         </div>
@@ -738,7 +788,6 @@
 
   <script>
     let currentStep = 1;
-    let selectedSituation = "";
 
     const dataMap = {
       leak: {
@@ -786,7 +835,6 @@
     }
 
     function selectSituation(type) {
-      selectedSituation = type;
       const info = dataMap[type];
       const desc = document.getElementById("response-desc");
       const title = document.getElementById("response-title");
