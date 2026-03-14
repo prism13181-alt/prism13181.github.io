@@ -866,9 +866,14 @@
 
       for (let i = 1; i <= 3; i++) {
         const el = document.getElementById(`stage-${i}`);
-        el.classList.remove("active", "done");
+        el.classList.remove("active", "done", "green-mode");
+
         if (i < step) el.classList.add("done");
         if (i === step) el.classList.add("active");
+
+        if (currentType === "ph" && (i <= step)) {
+          el.classList.add("green-mode");
+        }
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -877,10 +882,12 @@
     function applyScenarioColors(type) {
       const stepNo = document.getElementById("section-step-no");
       const nextBtn = document.getElementById("next-btn");
+      const stageItems = document.querySelectorAll(".stage-item");
 
       stepNo.style.background = "";
       stepNo.style.boxShadow = "";
       nextBtn.classList.remove("ph-mode");
+      stageItems.forEach(el => el.classList.remove("green-mode"));
 
       if (type === "ph") {
         stepNo.style.background = "var(--green)";
@@ -916,8 +923,10 @@
     }
 
     function goPrev() {
-      if (currentStep === 2) setStage(1);
-      else if (currentStep === 3) {
+      if (currentStep === 2) {
+        currentType = "leak";
+        setStage(1);
+      } else if (currentStep === 3) {
         setStage(2);
         applyScenarioColors(currentType);
       }
