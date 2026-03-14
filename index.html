@@ -3,34 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>최종우수 비상대응</title>
+  <title>누출사고 초동조치방법</title>
   <style>
     * { box-sizing: border-box; }
 
-    :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1f2d3d;
-      --muted: #6b7a8c;
-      --line: #e5edf5;
-      --blue: #008cd2;
-      --blue-dark: #0a6ca8;
-      --blue-soft: #eef7fd;
-      --green: #a1c814;
-      --green-dark: #89ae0f;
-      --shadow: 0 12px 36px rgba(28, 54, 84, 0.08);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 14px;
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --text:#18324a;
+      --muted:#6e8093;
+      --line:#e4edf5;
+      --blue:#008cd2;
+      --blue2:#0a71b1;
+      --blue-soft:#edf7fd;
+      --green:#a1c814;
+      --green2:#8eb20f;
+      --gray:#7f8c9b;
+      --shadow:0 16px 40px rgba(24,50,74,0.08);
+      --shadow-strong:0 16px 32px rgba(0,140,210,0.18);
     }
 
     html, body {
       margin: 0;
       padding: 0;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(0,140,210,0.06), transparent 28%),
+        radial-gradient(circle at top right, rgba(0,140,210,0.06), transparent 22%),
         linear-gradient(180deg, #f8fbfe 0%, var(--bg) 100%);
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       color: var(--text);
     }
 
@@ -40,19 +39,19 @@
 
     .page {
       width: 100%;
-      max-width: 880px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 28px 18px 48px;
+      padding: 22px 18px 48px;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 52%, #22a7e4 100%);
-      border-radius: 30px;
-      padding: 26px 28px 24px;
-      color: #fff;
-      box-shadow: 0 18px 40px rgba(0, 98, 156, 0.18);
+      min-height: 188px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, #0a6fab 0%, #008cd2 55%, #2aa7e3 100%);
+      box-shadow: 0 20px 44px rgba(0,98,156,0.18);
+      padding: 22px 26px 24px;
     }
 
     .hero::before,
@@ -60,176 +59,164 @@
       content: "";
       position: absolute;
       border-radius: 999px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
       pointer-events: none;
     }
 
     .hero::before {
-      width: 220px;
-      height: 220px;
-      right: -40px;
-      top: -90px;
+      width: 230px;
+      height: 230px;
+      right: -36px;
+      top: -64px;
     }
 
     .hero::after {
-      width: 160px;
-      height: 160px;
-      right: 90px;
-      bottom: -90px;
-      background: rgba(255,255,255,0.08);
-    }
-
-    .hero-top {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 14px;
-    }
-
-    .hero-logo-box {
-      flex: 0 0 auto;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 18px;
-      padding: 10px 14px;
-      backdrop-filter: blur(4px);
+      width: 170px;
+      height: 170px;
+      right: 110px;
+      bottom: -78px;
+      background: rgba(255,255,255,0.06);
     }
 
     .hero-logo {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      z-index: 2;
       display: block;
+      height: 34px;
       width: auto;
-      height: 42px;
       object-fit: contain;
     }
 
-    .hero-text {
-      min-width: 0;
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      min-height: 142px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px 110px 0;
     }
 
     .hero-kicker {
-      margin: 0 0 6px;
+      margin: 0 0 8px;
       font-size: 12px;
+      line-height: 1;
+      letter-spacing: 0.16em;
       font-weight: 700;
-      letter-spacing: 0.12em;
-      opacity: 0.9;
+      color: rgba(255,255,255,0.92);
       text-transform: uppercase;
     }
 
     .hero-title {
       margin: 0;
-      font-size: 31px;
+      font-size: 38px;
+      line-height: 1.15;
+      letter-spacing: -0.04em;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
+      color: #fff;
     }
 
     .hero-desc {
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      max-width: 560px;
-      font-size: 15px;
+      margin: 14px 0 0;
+      font-size: 16px;
       line-height: 1.7;
       color: rgba(255,255,255,0.94);
     }
 
     .stage-bar {
-      margin: 18px 0;
-      background: rgba(255,255,255,0.86);
-      border: 1px solid rgba(220,232,243,0.9);
-      border-radius: 999px;
-      box-shadow: 0 8px 24px rgba(28, 54, 84, 0.06);
+      margin: 18px 0 20px;
       padding: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(227,236,244,0.95);
+      box-shadow: 0 10px 24px rgba(24,50,74,0.05);
+      backdrop-filter: blur(8px);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      backdrop-filter: blur(8px);
+      gap: 10px;
     }
 
     .stage-item {
-      position: relative;
-      min-height: 58px;
+      min-height: 64px;
       border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 10px 14px;
+      gap: 12px;
+      padding: 12px 14px;
       background: transparent;
-      color: #6f7f91;
-      transition: all 0.2s ease;
+      color: #728395;
+      transition: 0.2s ease;
     }
 
     .stage-item.active {
       background: linear-gradient(135deg, rgba(0,140,210,0.14), rgba(0,140,210,0.08));
-      color: var(--blue-dark);
+      color: var(--blue2);
     }
 
     .stage-item.done {
-      color: var(--blue-dark);
+      color: var(--blue2);
     }
 
     .stage-num {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 800;
-      background: #dfeaf3;
-      color: #6b7a8c;
+      background: #dbe7f0;
+      color: #6f8092;
       flex: 0 0 auto;
     }
 
     .stage-item.active .stage-num,
     .stage-item.done .stage-num {
-      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      background: linear-gradient(135deg, var(--blue2), var(--blue));
       color: #fff;
-      box-shadow: 0 6px 14px rgba(0,140,210,0.22);
+      box-shadow: 0 8px 18px rgba(0,140,210,0.22);
     }
 
     .stage-label {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
       word-break: keep-all;
     }
 
     .panel {
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(224,234,242,0.95);
-      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.94);
+      border: 1px solid rgba(226,236,244,0.95);
+      border-radius: 34px;
       box-shadow: var(--shadow);
       padding: 30px 24px 24px;
       backdrop-filter: blur(6px);
     }
 
-    .screen {
-      display: none;
-    }
-
-    .screen.active {
-      display: block;
-    }
+    .screen { display: none; }
+    .screen.active { display: block; }
 
     .section-title {
       margin: 0;
       text-align: center;
-      font-size: 30px;
+      font-size: 31px;
+      line-height: 1.2;
       font-weight: 800;
-      letter-spacing: -0.04em;
-      color: #16324a;
+      letter-spacing: -0.05em;
+      color: var(--text);
     }
 
     .section-desc {
-      margin: 10px auto 24px;
-      max-width: 620px;
+      margin: 14px auto 24px;
+      max-width: 640px;
       text-align: center;
-      font-size: 15px;
+      font-size: 17px;
       line-height: 1.7;
       color: var(--muted);
     }
@@ -241,15 +228,15 @@
 
     .select-btn {
       width: 100%;
-      min-height: 84px;
+      min-height: 92px;
       border: none;
-      border-radius: 22px;
-      padding: 18px 22px;
+      border-radius: 24px;
+      padding: 20px 24px;
       color: #fff;
-      cursor: pointer;
       text-align: left;
+      cursor: pointer;
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      box-shadow: 0 14px 28px rgba(0,0,0,0.1);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.10);
       transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
     }
 
@@ -262,69 +249,60 @@
       filter: brightness(1.01);
     }
 
-    .select-btn:active,
-    .nav-btn:active,
-    .util-btn:active,
-    .call-btn:active,
-    .modal-close:active {
-      transform: translateY(0);
-    }
-
     .select-btn.blue {
-      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
+      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
     }
 
     .select-btn.green {
-      background: linear-gradient(135deg, #91b70f 0%, #a1c814 100%);
+      background: linear-gradient(135deg, #90b60f 0%, #a1c814 100%);
     }
 
     .select-btn-title {
       display: block;
-      font-size: 21px;
+      font-size: 23px;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 7px;
       letter-spacing: -0.03em;
     }
 
     .select-btn-sub {
       display: block;
-      font-size: 14px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.92);
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.93);
     }
 
     .content-card {
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(248,251,253,0.95) 0%, rgba(255,255,255,0.98) 100%);
+      border-radius: 26px;
       padding: 22px 20px;
       margin-bottom: 18px;
+      border: 1px solid var(--line);
     }
 
     .content-card.leak {
       background: linear-gradient(180deg, #f7fbfe 0%, #ffffff 100%);
-      border-color: #d8ebf7;
+      border-color: #d7eaf7;
     }
 
     .content-card.ph {
-      background: linear-gradient(180deg, #fbfdf7 0%, #ffffff 100%);
-      border-color: #e5efc7;
+      background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%);
+      border-color: #e3eec3;
     }
 
     .content-title {
       margin: 0 0 12px;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 800;
-      color: #16324a;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      color: var(--text);
     }
 
     .guide-list {
       margin: 0;
-      padding-left: 22px;
+      padding-left: 24px;
+      font-size: 17px;
       line-height: 1.95;
-      font-size: 16px;
-      color: #24384e;
+      color: #22384c;
     }
 
     .guide-list li + li {
@@ -335,7 +313,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .nav-row.single {
@@ -343,24 +321,40 @@
     }
 
     .nav-btn {
-      min-height: 62px;
-      border: none;
-      border-radius: 18px;
+      min-height: 66px;
+      border-radius: 20px;
       cursor: pointer;
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 18px;
+      font-size: 21px;
       font-weight: 800;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+      letter-spacing: -0.02em;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
 
     .nav-btn.prev {
-      background: #7a8796;
-      color: #fff;
+      background: #fff;
+      color: var(--text);
+      border: 2px solid #d7e3ee;
+      box-shadow: 0 8px 22px rgba(24,50,74,0.05);
     }
 
     .nav-btn.next {
-      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
+      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
       color: #fff;
+      border: none;
+      box-shadow: var(--shadow-strong);
+    }
+
+    .nav-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
     }
 
     .util-row {
@@ -371,59 +365,56 @@
     }
 
     .util-btn {
-      min-height: 62px;
+      min-height: 66px;
       border: none;
-      border-radius: 18px;
+      border-radius: 20px;
       cursor: pointer;
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 18px;
+      font-size: 21px;
       font-weight: 800;
+      letter-spacing: -0.02em;
       color: #fff;
       box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
-    .util-btn.blue {
-      background: #008CD2;
-    }
-
-    .util-btn.green {
-      background: #A1C814;
-    }
+    .util-btn.blue { background: #008CD2; }
+    .util-btn.green { background: #A1C814; }
 
     .contact-card {
       border: 1px solid #d8ebf7;
-      border-radius: 24px;
+      border-radius: 28px;
       background: linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
       padding: 24px 22px;
     }
 
     .contact-label {
-      font-size: 15px;
-      color: #587286;
-      margin-bottom: 8px;
       text-align: center;
+      font-size: 15px;
+      color: #5d7689;
+      margin-bottom: 8px;
     }
 
     .contact-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: #153650;
       text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
       margin-bottom: 6px;
     }
 
     .contact-number {
       text-align: center;
-      font-size: 34px;
+      font-size: 36px;
       font-weight: 800;
-      color: var(--blue-dark);
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+      color: var(--blue2);
       margin-bottom: 8px;
     }
 
     .contact-desc {
       text-align: center;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.7;
       color: var(--muted);
       margin-bottom: 16px;
@@ -434,36 +425,37 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      min-height: 62px;
-      border-radius: 18px;
+      min-height: 64px;
+      border-radius: 20px;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 21px;
       font-weight: 800;
       color: #fff;
-      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
-      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
+      box-shadow: var(--shadow-strong);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
     .report-box {
       margin-top: 16px;
       padding: 22px 20px;
-      border-radius: 22px;
+      border-radius: 24px;
       background: linear-gradient(180deg, #fffdf7 0%, #ffffff 100%);
       border: 1px solid #f0e4b7;
     }
 
     .report-title {
       margin: 0 0 12px;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 800;
-      color: #836200;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      color: #856300;
     }
 
     .report-list {
       margin: 0;
       padding-left: 22px;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.95;
       color: #394b5c;
     }
@@ -472,8 +464,8 @@
       margin-top: 18px;
       padding: 16px 18px;
       border-radius: 18px;
-      background: linear-gradient(180deg, var(--blue-soft) 0%, #f8fcff 100%);
-      border: 1px solid #d5eaf7;
+      background: linear-gradient(180deg, #edf8fd 0%, #f8fcff 100%);
+      border: 1px solid #d5ebf7;
       font-size: 14px;
       line-height: 1.8;
       color: #35526b;
@@ -485,7 +477,7 @@
       inset: 0;
       z-index: 999;
       padding: 18px;
-      background: rgba(13, 30, 47, 0.52);
+      background: rgba(13,30,47,0.52);
       align-items: center;
       justify-content: center;
       backdrop-filter: blur(6px);
@@ -502,15 +494,15 @@
       border: 1px solid rgba(226,236,244,0.95);
       border-radius: 28px;
       padding: 26px 22px 22px;
-      box-shadow: 0 24px 60px rgba(16, 34, 54, 0.18);
+      box-shadow: 0 24px 60px rgba(16,34,54,0.18);
     }
 
     .modal-title {
       margin: 0 0 12px;
       font-size: 24px;
       font-weight: 800;
-      color: #16324a;
       letter-spacing: -0.03em;
+      color: var(--text);
     }
 
     .modal-desc {
@@ -523,38 +515,46 @@
     .modal-close {
       margin-top: 18px;
       width: 100%;
-      min-height: 56px;
+      min-height: 58px;
       border: none;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
       color: #fff;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       cursor: pointer;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow-strong);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
       .page {
-        padding-top: 18px;
+        padding-top: 16px;
       }
 
       .hero {
-        padding: 22px 20px;
-        border-radius: 26px;
-      }
-
-      .hero-top {
-        align-items: flex-start;
+        min-height: auto;
+        padding: 18px 18px 20px;
       }
 
       .hero-logo {
-        height: 34px;
+        top: 16px;
+        left: 18px;
+        height: 26px;
+      }
+
+      .hero-inner {
+        min-height: 128px;
+        padding: 16px 8px 0;
       }
 
       .hero-title {
-        font-size: 25px;
+        font-size: 29px;
+      }
+
+      .hero-desc {
+        font-size: 15px;
       }
 
       .stage-bar {
@@ -564,7 +564,7 @@
 
       .stage-item {
         justify-content: flex-start;
-        min-height: 52px;
+        min-height: 54px;
         padding-left: 14px;
       }
 
@@ -573,23 +573,35 @@
       }
 
       .section-title {
-        font-size: 25px;
+        font-size: 26px;
+      }
+
+      .section-desc,
+      .guide-list,
+      .report-list {
+        font-size: 15px;
       }
 
       .select-btn-title {
-        font-size: 18px;
+        font-size: 20px;
       }
 
-      .guide-list {
-        font-size: 15px;
+      .select-btn-sub {
+        font-size: 14px;
       }
 
       .nav-row {
         grid-template-columns: 1fr;
       }
 
+      .nav-btn,
+      .util-btn,
+      .call-btn {
+        font-size: 19px;
+      }
+
       .contact-number {
-        font-size: 28px;
+        font-size: 31px;
       }
     }
   </style>
@@ -597,18 +609,12 @@
 <body>
   <div class="page">
     <header class="hero">
-      <div class="hero-top">
-        <div class="hero-logo-box">
-          <img class="hero-logo" src="./이수SC Ci.png" alt="이수스페셜티케미컬 로고">
-        </div>
-        <div class="hero-text">
-          <p class="hero-kicker">Emergency Response Guide</p>
-          <h1 class="hero-title">최종우수 비상대응</h1>
-        </div>
+      <img class="hero-logo" src="./logo.png" alt="이수스페셜티케미컬 로고">
+      <div class="hero-inner">
+        <p class="hero-kicker">Emergency Response Guide</p>
+        <h1 class="hero-title">누출사고 초동조치방법</h1>
+        <p class="hero-desc">상황 선택 후 단계별 대응방법 및 보고사항을 확인하시기 바랍니다.</p>
       </div>
-      <p class="hero-desc">
-        상황 선택 후 단계별 대응방법 및 보고사항을 확인하시기 바랍니다.
-      </p>
     </header>
 
     <div class="stage-bar">
@@ -627,12 +633,9 @@
     </div>
 
     <main class="panel">
-      <!-- 1단계 -->
       <section class="screen active" id="screen-1">
         <h2 class="section-title">[1] 상황 선택</h2>
-        <p class="section-desc">
-          해당 상황을 선택해 주세요.
-        </p>
+        <p class="section-desc">해당 상황을 선택해 주세요.</p>
 
         <div class="select-grid">
           <button class="select-btn blue" onclick="selectSituation('leak')">
@@ -651,7 +654,6 @@
         </div>
       </section>
 
-      <!-- 2단계 -->
       <section class="screen" id="screen-2">
         <h2 class="section-title">[2] 대응방법</h2>
         <p class="section-desc" id="response-desc"></p>
@@ -662,8 +664,14 @@
         </div>
 
         <div class="nav-row">
-          <button class="nav-btn prev" onclick="goPrev()">← 이전</button>
-          <button class="nav-btn next" onclick="goNext()">다음 →</button>
+          <button class="nav-btn prev" onclick="goPrev()">
+            <span class="nav-icon">←</span>
+            <span>이전</span>
+          </button>
+          <button class="nav-btn next" onclick="goNext()">
+            <span>다음</span>
+            <span class="nav-icon">→</span>
+          </button>
         </div>
 
         <div class="util-row">
@@ -672,20 +680,15 @@
         </div>
       </section>
 
-      <!-- 3단계 -->
       <section class="screen" id="screen-3">
         <h2 class="section-title">[3] 보고단계</h2>
-        <p class="section-desc">
-          현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.
-        </p>
+        <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
 
         <div class="contact-card">
           <div class="contact-label">안전환경팀</div>
           <div class="contact-name">윤정일 팀장</div>
           <div class="contact-number">052-231-5572</div>
-          <div class="contact-desc">
-            현장 사진 촬영 후 즉시 유선 보고 바랍니다.
-          </div>
+          <div class="contact-desc">현장 사진 촬영 후 즉시 유선 보고 바랍니다.</div>
           <a class="call-btn" href="tel:0522315572">전화 걸기</a>
         </div>
 
@@ -702,13 +705,15 @@
         </div>
 
         <div class="nav-row single">
-          <button class="nav-btn prev" onclick="goPrev()">← 이전</button>
+          <button class="nav-btn prev" onclick="goPrev()">
+            <span class="nav-icon">←</span>
+            <span>이전</span>
+          </button>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- 팝업: 우수로 계통도 -->
   <div class="modal" id="modal-flow">
     <div class="modal-box">
       <h3 class="modal-title">공장 우수로 계통도</h3>
@@ -720,7 +725,6 @@
     </div>
   </div>
 
-  <!-- 팝업: 방제장비 위치 -->
   <div class="modal" id="modal-equipment">
     <div class="modal-box">
       <h3 class="modal-title">공장 내 방제장비 위치</h3>
@@ -804,17 +808,12 @@
     }
 
     function goPrev() {
-      if (currentStep === 2) {
-        setStage(1);
-      } else if (currentStep === 3) {
-        setStage(2);
-      }
+      if (currentStep === 2) setStage(1);
+      else if (currentStep === 3) setStage(2);
     }
 
     function goNext() {
-      if (currentStep === 2) {
-        setStage(3);
-      }
+      if (currentStep === 2) setStage(3);
     }
 
     function openModal(id) {
@@ -827,9 +826,7 @@
 
     window.addEventListener("click", function (e) {
       document.querySelectorAll(".modal").forEach(modal => {
-        if (e.target === modal) {
-          modal.classList.remove("show");
-        }
+        if (e.target === modal) modal.classList.remove("show");
       });
     });
   </script>
