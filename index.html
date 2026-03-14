@@ -7,114 +7,205 @@
   <style>
     * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      background: #f3f6f9;
-      color: #1f2d3d;
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2d3d;
+      --muted: #6b7a8c;
+      --line: #e5edf5;
+      --blue: #008cd2;
+      --blue-dark: #0a6ca8;
+      --blue-soft: #eef7fd;
+      --green: #a1c814;
+      --green-dark: #89ae0f;
+      --shadow: 0 12px 36px rgba(28, 54, 84, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
     }
 
-    .wrap {
-      max-width: 760px;
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0,140,210,0.06), transparent 28%),
+        linear-gradient(180deg, #f8fbfe 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 880px;
       margin: 0 auto;
-      padding: 16px 16px 40px;
+      padding: 28px 18px 48px;
     }
 
     .hero {
-      background: linear-gradient(135deg, #0f6fb5, #008cd2);
-      color: #fff;
-      border-radius: 24px;
-      padding: 24px 20px;
-      box-shadow: 0 10px 24px rgba(0, 78, 140, 0.18);
-      text-align: center;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: -0.2px;
-    }
-
-    .hero p {
-      margin: 10px 0 0;
-      font-size: 15px;
-      line-height: 1.6;
-      opacity: 0.95;
-    }
-
-    .stepbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-
-    .step {
-      flex: 1;
       position: relative;
-      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 52%, #22a7e4 100%);
+      border-radius: 30px;
+      padding: 26px 28px 24px;
+      color: #fff;
+      box-shadow: 0 18px 40px rgba(0, 98, 156, 0.18);
     }
 
-    .step:not(:last-child)::after {
+    .hero::before,
+    .hero::after {
       content: "";
       position: absolute;
-      top: 20px;
-      left: calc(50% + 28px);
-      width: calc(100% - 56px);
-      height: 4px;
-      background: #d7e1ea;
       border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 220px;
+      height: 220px;
+      right: -40px;
+      top: -90px;
+    }
+
+    .hero::after {
+      width: 160px;
+      height: 160px;
+      right: 90px;
+      bottom: -90px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero-top {
+      position: relative;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 14px;
     }
 
-    .step.done:not(:last-child)::after,
-    .step.current:not(:last-child)::after {
-      background: #008cd2;
+    .hero-logo-box {
+      flex: 0 0 auto;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 18px;
+      padding: 10px 14px;
+      backdrop-filter: blur(4px);
     }
 
-    .step-circle {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 8px;
-      border-radius: 50%;
+    .hero-logo {
+      display: block;
+      width: auto;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .hero-text {
+      min-width: 0;
+    }
+
+    .hero-kicker {
+      margin: 0 0 6px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      opacity: 0.9;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .hero-desc {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      max-width: 560px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .stage-bar {
+      margin: 18px 0;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(220,232,243,0.9);
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(28, 54, 84, 0.06);
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      backdrop-filter: blur(8px);
+    }
+
+    .stage-item {
+      position: relative;
+      min-height: 58px;
+      border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 16px;
-      background: #d7e1ea;
-      color: #607284;
-      position: relative;
-      z-index: 2;
+      gap: 10px;
+      padding: 10px 14px;
+      background: transparent;
+      color: #6f7f91;
+      transition: all 0.2s ease;
     }
 
-    .step.done .step-circle,
-    .step.current .step-circle {
-      background: #008cd2;
+    .stage-item.active {
+      background: linear-gradient(135deg, rgba(0,140,210,0.14), rgba(0,140,210,0.08));
+      color: var(--blue-dark);
+    }
+
+    .stage-item.done {
+      color: var(--blue-dark);
+    }
+
+    .stage-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      background: #dfeaf3;
+      color: #6b7a8c;
+      flex: 0 0 auto;
+    }
+
+    .stage-item.active .stage-num,
+    .stage-item.done .stage-num {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
       color: #fff;
+      box-shadow: 0 6px 14px rgba(0,140,210,0.22);
     }
 
-    .step-label {
+    .stage-label {
       font-size: 14px;
       font-weight: 700;
-      color: #7a8896;
-      line-height: 1.4;
+      letter-spacing: -0.01em;
       word-break: keep-all;
     }
 
-    .step.done .step-label,
-    .step.current .step-label {
-      color: #0f6fb5;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 24px;
-      padding: 28px 20px 24px;
-      box-shadow: 0 8px 24px rgba(31, 45, 61, 0.08);
+    .panel {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(224,234,242,0.95);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 30px 24px 24px;
+      backdrop-filter: blur(6px);
     }
 
     .screen {
@@ -126,197 +217,265 @@
     }
 
     .section-title {
-      margin: 0 0 10px;
+      margin: 0;
       text-align: center;
-      font-size: 22px;
-      font-weight: 700;
-      color: #0f6fb5;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #16324a;
     }
 
     .section-desc {
-      margin: 0 0 22px;
+      margin: 10px auto 24px;
+      max-width: 620px;
       text-align: center;
       font-size: 15px;
-      line-height: 1.6;
-      color: #5b6777;
+      line-height: 1.7;
+      color: var(--muted);
     }
 
-    .btn-stack {
-      display: flex;
-      flex-direction: column;
+    .select-grid {
+      display: grid;
       gap: 14px;
-      align-items: stretch;
     }
 
-    .main-btn {
+    .select-btn {
       width: 100%;
-      min-height: 68px;
+      min-height: 84px;
       border: none;
-      border-radius: 16px;
+      border-radius: 22px;
+      padding: 18px 22px;
       color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-      padding: 16px 18px;
-      text-align: center;
+      text-align: left;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.1);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
     }
 
-    .btn-blue {
-      background: linear-gradient(135deg, #0f6fb5, #008cd2);
+    .select-btn:hover,
+    .nav-btn:hover,
+    .util-btn:hover,
+    .call-btn:hover,
+    .modal-close:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.01);
     }
 
-    .btn-green {
-      background: linear-gradient(135deg, #8fb30f, #a1c814);
+    .select-btn:active,
+    .nav-btn:active,
+    .util-btn:active,
+    .call-btn:active,
+    .modal-close:active {
+      transform: translateY(0);
     }
 
-    .guide-box {
-      background: #f8fbfd;
-      border: 1px solid #d8ebf7;
-      border-radius: 18px;
-      padding: 18px;
-      line-height: 1.9;
+    .select-btn.blue {
+      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
+    }
+
+    .select-btn.green {
+      background: linear-gradient(135deg, #91b70f 0%, #a1c814 100%);
+    }
+
+    .select-btn-title {
+      display: block;
+      font-size: 21px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .select-btn-sub {
+      display: block;
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .content-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(248,251,253,0.95) 0%, rgba(255,255,255,0.98) 100%);
+      padding: 22px 20px;
+      margin-bottom: 18px;
+    }
+
+    .content-card.leak {
+      background: linear-gradient(180deg, #f7fbfe 0%, #ffffff 100%);
+      border-color: #d8ebf7;
+    }
+
+    .content-card.ph {
+      background: linear-gradient(180deg, #fbfdf7 0%, #ffffff 100%);
+      border-color: #e5efc7;
+    }
+
+    .content-title {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 800;
+      color: #16324a;
+      letter-spacing: -0.02em;
+    }
+
+    .guide-list {
+      margin: 0;
+      padding-left: 22px;
+      line-height: 1.95;
       font-size: 16px;
       color: #24384e;
     }
 
-    .guide-box.ph {
-      background: #fbfdf5;
-      border-color: #e4efbf;
+    .guide-list li + li {
+      margin-top: 2px;
     }
 
     .nav-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .nav-row.single {
+      grid-template-columns: 1fr;
     }
 
     .nav-btn {
-      flex: 1 1 200px;
-      min-height: 58px;
+      min-height: 62px;
       border: none;
-      border-radius: 14px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      border-radius: 18px;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
     }
 
     .nav-btn.prev {
       background: #7a8796;
+      color: #fff;
     }
 
     .nav-btn.next {
-      background: linear-gradient(135deg, #0f6fb5, #008cd2);
+      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
+      color: #fff;
     }
 
-    .popup-row {
-      display: flex;
-      flex-direction: column;
+    .util-row {
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 12px;
       margin-top: 14px;
     }
 
-    .popup-btn {
-      width: 100%;
-      min-height: 58px;
+    .util-btn {
+      min-height: 62px;
       border: none;
-      border-radius: 14px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      border-radius: 18px;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-      padding: 14px 16px;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
     }
 
-    .popup-blue {
+    .util-btn.blue {
       background: #008CD2;
     }
 
-    .popup-green {
+    .util-btn.green {
       background: #A1C814;
     }
 
-    .phone-box {
-      padding: 20px 18px;
-      border-radius: 18px;
-      background: #f8fbfd;
+    .contact-card {
       border: 1px solid #d8ebf7;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
+      padding: 24px 22px;
+    }
+
+    .contact-label {
+      font-size: 15px;
+      color: #587286;
+      margin-bottom: 8px;
       text-align: center;
     }
 
-    .phone-label {
-      font-size: 16px;
-      color: #567086;
+    .contact-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #153650;
+      text-align: center;
       margin-bottom: 6px;
     }
 
-    .phone-num {
-      font-size: 30px;
-      font-weight: 700;
-      color: #0f6fb5;
+    .contact-number {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
       margin-bottom: 8px;
-      letter-spacing: 0.2px;
     }
 
-    .phone-desc {
+    .contact-desc {
+      text-align: center;
       font-size: 14px;
-      color: #5b6777;
-      line-height: 1.6;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
 
     .call-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 16px;
       width: 100%;
-      min-height: 60px;
-      border-radius: 14px;
+      min-height: 62px;
+      border-radius: 18px;
       text-decoration: none;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
       color: #fff;
-      background: linear-gradient(135deg, #0f6fb5, #008cd2);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
     }
 
     .report-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #fffdf7;
+      margin-top: 16px;
+      padding: 22px 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fffdf7 0%, #ffffff 100%);
       border: 1px solid #f0e4b7;
     }
 
-    .report-box h3 {
+    .report-title {
       margin: 0 0 12px;
-      font-size: 19px;
-      color: #8b6a00;
+      font-size: 20px;
+      font-weight: 800;
+      color: #836200;
+      letter-spacing: -0.02em;
     }
 
-    .report-box ul {
+    .report-list {
       margin: 0;
-      padding-left: 20px;
+      padding-left: 22px;
       font-size: 15px;
-      line-height: 1.9;
+      line-height: 1.95;
       color: #394b5c;
     }
 
     .notice {
       margin-top: 18px;
-      padding: 16px;
-      border-radius: 16px;
-      background: #eef7fc;
-      border: 1px solid #d2ebf8;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--blue-soft) 0%, #f8fcff 100%);
+      border: 1px solid #d5eaf7;
       font-size: 14px;
-      line-height: 1.7;
+      line-height: 1.8;
       color: #35526b;
     }
 
@@ -324,11 +483,12 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 28, 44, 0.55);
       z-index: 999;
-      padding: 20px;
+      padding: 18px;
+      background: rgba(13, 30, 47, 0.52);
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(6px);
     }
 
     .modal.show {
@@ -337,97 +497,153 @@
 
     .modal-box {
       width: 100%;
-      max-width: 580px;
-      background: #fff;
-      border-radius: 22px;
-      padding: 24px 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+      max-width: 620px;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid rgba(226,236,244,0.95);
+      border-radius: 28px;
+      padding: 26px 22px 22px;
+      box-shadow: 0 24px 60px rgba(16, 34, 54, 0.18);
     }
 
-    .modal-box h3 {
-      margin: 0 0 14px;
-      font-size: 21px;
-      color: #0f6fb5;
+    .modal-title {
+      margin: 0 0 12px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #16324a;
+      letter-spacing: -0.03em;
     }
 
-    .modal-box p {
+    .modal-desc {
       margin: 0;
-      line-height: 1.8;
       font-size: 15px;
-      color: #445466;
+      line-height: 1.8;
+      color: #46596b;
     }
 
     .modal-close {
       margin-top: 18px;
       width: 100%;
-      min-height: 50px;
+      min-height: 56px;
       border: none;
-      border-radius: 12px;
-      background: #0f6fb5;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #0a73b3 0%, #008cd2 100%);
       color: #fff;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       cursor: pointer;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
     }
 
-    @media (max-width: 640px) {
-      .hero h1 {
-        font-size: 26px;
+    @media (max-width: 720px) {
+      .page {
+        padding-top: 18px;
       }
 
-      .step-label {
-        font-size: 12px;
+      .hero {
+        padding: 22px 20px;
+        border-radius: 26px;
+      }
+
+      .hero-top {
+        align-items: flex-start;
+      }
+
+      .hero-logo {
+        height: 34px;
+      }
+
+      .hero-title {
+        font-size: 25px;
+      }
+
+      .stage-bar {
+        grid-template-columns: 1fr;
+        border-radius: 24px;
+      }
+
+      .stage-item {
+        justify-content: flex-start;
+        min-height: 52px;
+        padding-left: 14px;
+      }
+
+      .panel {
+        padding: 24px 16px 20px;
       }
 
       .section-title {
-        font-size: 21px;
+        font-size: 25px;
       }
 
-      .main-btn,
-      .nav-btn,
-      .popup-btn,
-      .call-btn {
-        font-size: 17px;
+      .select-btn-title {
+        font-size: 18px;
       }
 
-      .guide-box {
+      .guide-list {
         font-size: 15px;
+      }
+
+      .nav-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-number {
+        font-size: 28px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <h1>최종우수 비상대응</h1>
-      <p>상황 선택 후 단계별 대응방법 및 보고사항을 확인하시기 바랍니다.</p>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <div class="hero-logo-box">
+          <img class="hero-logo" src="./이수SC Ci.png" alt="이수스페셜티케미컬 로고">
+        </div>
+        <div class="hero-text">
+          <p class="hero-kicker">Emergency Response Guide</p>
+          <h1 class="hero-title">최종우수 비상대응</h1>
+        </div>
+      </div>
+      <p class="hero-desc">
+        상황 선택 후 단계별 대응방법 및 보고사항을 확인하시기 바랍니다.
+      </p>
+    </header>
+
+    <div class="stage-bar">
+      <div class="stage-item active" id="stage-1">
+        <span class="stage-num">1</span>
+        <span class="stage-label">상황선택</span>
+      </div>
+      <div class="stage-item" id="stage-2">
+        <span class="stage-num">2</span>
+        <span class="stage-label">대응방법</span>
+      </div>
+      <div class="stage-item" id="stage-3">
+        <span class="stage-num">3</span>
+        <span class="stage-label">보고단계</span>
+      </div>
     </div>
 
-    <div class="stepbar">
-      <div class="step current" id="step-indicator-1">
-        <div class="step-circle">1</div>
-        <div class="step-label">상황선택</div>
-      </div>
-      <div class="step" id="step-indicator-2">
-        <div class="step-circle">2</div>
-        <div class="step-label">대응방법</div>
-      </div>
-      <div class="step" id="step-indicator-3">
-        <div class="step-circle">3</div>
-        <div class="step-label">보고단계</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <!-- 1단계: 상황 선택 -->
-      <section class="screen active" id="screen-step1">
+    <main class="panel">
+      <!-- 1단계 -->
+      <section class="screen active" id="screen-1">
         <h2 class="section-title">[1] 상황 선택</h2>
-        <p class="section-desc">해당 상황을 선택해 주세요.</p>
+        <p class="section-desc">
+          해당 상황을 선택해 주세요.
+        </p>
 
-        <div class="btn-stack">
-          <button class="main-btn btn-blue" onclick="selectSituation('leak')">원료 / 제품 누출 상황</button>
-          <button class="main-btn btn-green" onclick="selectSituation('ph')">pH 농도 이상 상황</button>
+        <div class="select-grid">
+          <button class="select-btn blue" onclick="selectSituation('leak')">
+            <span class="select-btn-title">원료 / 제품 누출 상황</span>
+            <span class="select-btn-sub">누출 위치 확인, 확산 방지, 최종우수 차단 및 보고 절차 확인</span>
+          </button>
+
+          <button class="select-btn green" onclick="selectSituation('ph')">
+            <span class="select-btn-title">pH 농도 이상 상황</span>
+            <span class="select-btn-sub">계측값 재확인, 이상 원인 확인, 유입 차단 및 보고 절차 확인</span>
+          </button>
         </div>
 
         <div class="notice">
@@ -435,39 +651,47 @@
         </div>
       </section>
 
-      <!-- 2단계: 대응방법 -->
-      <section class="screen" id="screen-step2">
-        <h2 class="section-title" id="response-title">[2] 대응방법</h2>
-        <p class="section-desc" id="response-desc">아래 대응방법을 순서대로 확인 후 조치하시기 바랍니다.</p>
+      <!-- 2단계 -->
+      <section class="screen" id="screen-2">
+        <h2 class="section-title">[2] 대응방법</h2>
+        <p class="section-desc" id="response-desc"></p>
 
-        <div class="guide-box" id="response-guide"></div>
+        <div class="content-card" id="response-card">
+          <h3 class="content-title" id="response-title"></h3>
+          <ol class="guide-list" id="response-list"></ol>
+        </div>
 
         <div class="nav-row">
           <button class="nav-btn prev" onclick="goPrev()">← 이전</button>
           <button class="nav-btn next" onclick="goNext()">다음 →</button>
         </div>
 
-        <div class="popup-row">
-          <button class="popup-btn popup-blue" onclick="openModal('modal-flow')">공장 우수로 계통도</button>
-          <button class="popup-btn popup-green" onclick="openModal('modal-equipment')">공장 내 방제장비 위치</button>
+        <div class="util-row">
+          <button class="util-btn blue" onclick="openModal('modal-flow')">공장 우수로 계통도</button>
+          <button class="util-btn green" onclick="openModal('modal-equipment')">공장 내 방제장비 위치</button>
         </div>
       </section>
 
-      <!-- 3단계: 보고단계 -->
-      <section class="screen" id="screen-step3">
+      <!-- 3단계 -->
+      <section class="screen" id="screen-3">
         <h2 class="section-title">[3] 보고단계</h2>
-        <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
+        <p class="section-desc">
+          현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.
+        </p>
 
-        <div class="phone-box">
-          <div class="phone-label">안전환경팀 윤정일 팀장</div>
-          <div class="phone-num">052-231-5572</div>
-          <div class="phone-desc">현장 사진 촬영 후 즉시 유선 보고 바랍니다.</div>
+        <div class="contact-card">
+          <div class="contact-label">안전환경팀</div>
+          <div class="contact-name">윤정일 팀장</div>
+          <div class="contact-number">052-231-5572</div>
+          <div class="contact-desc">
+            현장 사진 촬영 후 즉시 유선 보고 바랍니다.
+          </div>
           <a class="call-btn" href="tel:0522315572">전화 걸기</a>
         </div>
 
         <div class="report-box">
-          <h3>보고사항</h3>
-          <ul>
+          <h3 class="report-title">보고사항</h3>
+          <ul class="report-list">
             <li>보고자</li>
             <li>누출 위치</li>
             <li>누출 시간</li>
@@ -477,18 +701,18 @@
           </ul>
         </div>
 
-        <div class="nav-row">
+        <div class="nav-row single">
           <button class="nav-btn prev" onclick="goPrev()">← 이전</button>
         </div>
       </section>
-    </div>
+    </main>
   </div>
 
-  <!-- 팝업 1 -->
+  <!-- 팝업: 우수로 계통도 -->
   <div class="modal" id="modal-flow">
     <div class="modal-box">
-      <h3>공장 우수로 계통도</h3>
-      <p>
+      <h3 class="modal-title">공장 우수로 계통도</h3>
+      <p class="modal-desc">
         여기에 공장 우수로 계통도 이미지 또는 설명을 삽입하면 됩니다.<br>
         예: 우수 흐름 방향, 최종우수 위치, 차단 필요 지점 표시
       </p>
@@ -496,11 +720,11 @@
     </div>
   </div>
 
-  <!-- 팝업 2 -->
+  <!-- 팝업: 방제장비 위치 -->
   <div class="modal" id="modal-equipment">
     <div class="modal-box">
-      <h3>공장 내 방제장비 위치</h3>
-      <p>
+      <h3 class="modal-title">공장 내 방제장비 위치</h3>
+      <p class="modal-desc">
         여기에 공장 내 방제장비 위치도 이미지 또는 설명을 삽입하면 됩니다.<br>
         예: 초동대응 장구함 위치, 흡착제 보관 위치, 차단도구 비치장소
       </p>
@@ -512,88 +736,84 @@
     let currentStep = 1;
     let selectedSituation = "";
 
-    const leakGuide = `
-      1. 초동대응 장구함에서 대응 가방을 착용하고 누출 지점으로 이동합니다.<br>
-      2. 현장 접근 전 장갑, 보안경 등 개인보호구를 착용합니다.<br>
-      3. 누출 위치와 누출 범위를 확인합니다.<br>
-      4. 필요 시 트렌치 및 우수 유입 경로를 우선 차단합니다.<br>
-      5. 유흡착제, 흡착포, boom 등을 활용하여 누출액 확산을 방지하고 흡수합니다.<br>
-      6. 최종우수 차단이 필요한 경우 차단 조치를 실시합니다.<br>
-      7. 조치 후 다음 단계로 이동하여 현장상황을 보고합니다.
-    `;
-
-    const phGuide = `
-      1. pH 계측값을 재확인합니다.<br>
-      2. 계측기 이상 여부 및 공정 이상 여부를 함께 확인합니다.<br>
-      3. 이상 원인으로 의심되는 유입 지점 및 배출 경로를 확인합니다.<br>
-      4. 필요 시 최종우수 유입 차단 조치를 실시합니다.<br>
-      5. 현장 조치 후 다음 단계로 이동하여 상황을 보고합니다.
-    `;
-
-    function hideAllScreens() {
-      document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-      });
-    }
-
-    function updateStepBar() {
-      for (let i = 1; i <= 3; i++) {
-        const el = document.getElementById(`step-indicator-${i}`);
-        el.classList.remove("done", "current");
-        if (i < currentStep) el.classList.add("done");
-        if (i === currentStep) el.classList.add("current");
+    const dataMap = {
+      leak: {
+        desc: "원료 / 제품 누출 상황에 대한 대응방법입니다.",
+        title: "원료 / 제품 누출 상황",
+        cardClass: "leak",
+        steps: [
+          "초동대응 장구함에서 대응 가방을 착용하고 누출 지점으로 이동합니다.",
+          "현장 접근 전 장갑, 보안경 등 개인보호구를 착용합니다.",
+          "누출 위치와 누출 범위를 확인합니다.",
+          "필요 시 트렌치 및 우수 유입 경로를 우선 차단합니다.",
+          "유흡착제, 흡착포, boom 등을 활용하여 누출액 확산을 방지하고 흡수합니다.",
+          "최종우수 차단이 필요한 경우 차단 조치를 실시합니다.",
+          "조치 후 다음 단계로 이동하여 현장상황을 보고합니다."
+        ]
+      },
+      ph: {
+        desc: "pH 농도 이상 상황에 대한 대응방법입니다.",
+        title: "pH 농도 이상 상황",
+        cardClass: "ph",
+        steps: [
+          "pH 계측값을 재확인합니다.",
+          "계측기 이상 여부 및 공정 이상 여부를 함께 확인합니다.",
+          "이상 원인으로 의심되는 유입 지점 및 배출 경로를 확인합니다.",
+          "필요 시 최종우수 유입 차단 조치를 실시합니다.",
+          "현장 조치 후 다음 단계로 이동하여 상황을 보고합니다."
+        ]
       }
-    }
+    };
 
-    function showStep(step) {
+    function setStage(step) {
       currentStep = step;
-      hideAllScreens();
 
-      if (step === 1) {
-        document.getElementById("screen-step1").classList.add("active");
-      } else if (step === 2) {
-        document.getElementById("screen-step2").classList.add("active");
-      } else if (step === 3) {
-        document.getElementById("screen-step3").classList.add("active");
+      document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+      document.getElementById(`screen-${step}`).classList.add("active");
+
+      for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById(`stage-${i}`);
+        el.classList.remove("active", "done");
+        if (i < step) el.classList.add("done");
+        if (i === step) el.classList.add("active");
       }
 
-      updateStepBar();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function selectSituation(type) {
       selectedSituation = type;
-
-      const title = document.getElementById("response-title");
+      const info = dataMap[type];
       const desc = document.getElementById("response-desc");
-      const guide = document.getElementById("response-guide");
+      const title = document.getElementById("response-title");
+      const list = document.getElementById("response-list");
+      const card = document.getElementById("response-card");
 
-      if (type === "leak") {
-        title.textContent = "[2] 대응방법";
-        desc.textContent = "원료 / 제품 누출 상황에 대한 대응방법입니다.";
-        guide.classList.remove("ph");
-        guide.innerHTML = leakGuide;
-      } else if (type === "ph") {
-        title.textContent = "[2] 대응방법";
-        desc.textContent = "pH 농도 이상 상황에 대한 대응방법입니다.";
-        guide.classList.add("ph");
-        guide.innerHTML = phGuide;
-      }
+      desc.textContent = info.desc;
+      title.textContent = info.title;
+      list.innerHTML = "";
+      card.className = "content-card " + info.cardClass;
 
-      showStep(2);
+      info.steps.forEach(text => {
+        const li = document.createElement("li");
+        li.textContent = text;
+        list.appendChild(li);
+      });
+
+      setStage(2);
     }
 
     function goPrev() {
       if (currentStep === 2) {
-        showStep(1);
+        setStage(1);
       } else if (currentStep === 3) {
-        showStep(2);
+        setStage(2);
       }
     }
 
     function goNext() {
       if (currentStep === 2) {
-        showStep(3);
+        setStage(3);
       }
     }
 
