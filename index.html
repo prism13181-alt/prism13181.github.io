@@ -461,6 +461,11 @@
       padding: 24px 22px;
     }
 
+    .contact-card.green-mode {
+      border-color: var(--green-border);
+      background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%);
+    }
+
     .contact-label {
       text-align: center;
       font-size: 15px;
@@ -483,6 +488,11 @@
       letter-spacing: -0.04em;
       color: var(--sky-dark);
       margin-bottom: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .contact-number.green-mode {
+      color: var(--green-dark);
     }
 
     .contact-desc {
@@ -506,7 +516,12 @@
       color: #fff;
       background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
       box-shadow: var(--shadow-blue);
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease;
+    }
+
+    .call-btn.green-mode {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+      box-shadow: var(--shadow-green);
     }
 
     .report-box {
@@ -782,17 +797,17 @@
 
       <section class="screen" id="screen-3">
         <div class="section-title-wrap">
-          <div class="section-no">3</div>
+          <div class="section-no" id="report-step-no">3</div>
           <h2 class="section-title">보고단계</h2>
         </div>
         <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
 
-        <div class="contact-card">
+        <div class="contact-card" id="contact-card">
           <div class="contact-label">안전환경팀</div>
           <div class="contact-name">윤정일 팀장</div>
-          <div class="contact-number">052-231-5572</div>
+          <div class="contact-number" id="contact-number">052-231-5572</div>
           <div class="contact-desc">현장 사진 촬영 후 즉시 유선 보고 바랍니다.</div>
-          <a class="call-btn" href="tel:0522315572">전화 걸기</a>
+          <a class="call-btn" id="call-btn" href="tel:0522315572">전화 걸기</a>
         </div>
 
         <div class="report-box">
@@ -895,19 +910,39 @@
 
     function applyScenarioColors(type) {
       const stepNo = document.getElementById("section-step-no");
+      const reportStepNo = document.getElementById("report-step-no");
       const nextBtn = document.getElementById("next-btn");
+      const contactNumber = document.getElementById("contact-number");
+      const callBtn = document.getElementById("call-btn");
+      const contactCard = document.getElementById("contact-card");
 
       stepNo.style.background = "";
       stepNo.style.boxShadow = "";
+      reportStepNo.style.background = "";
+      reportStepNo.style.boxShadow = "";
+
       nextBtn.classList.remove("ph-mode");
+      contactNumber.classList.remove("green-mode");
+      callBtn.classList.remove("green-mode");
+      contactCard.classList.remove("green-mode");
 
       if (type === "ph") {
         stepNo.style.background = "var(--green)";
         stepNo.style.boxShadow = "0 8px 18px rgba(161,200,20,0.22)";
+
+        reportStepNo.style.background = "var(--green)";
+        reportStepNo.style.boxShadow = "0 8px 18px rgba(161,200,20,0.22)";
+
         nextBtn.classList.add("ph-mode");
+        contactNumber.classList.add("green-mode");
+        callBtn.classList.add("green-mode");
+        contactCard.classList.add("green-mode");
       } else {
         stepNo.style.background = "var(--sky)";
         stepNo.style.boxShadow = "0 8px 18px rgba(0,140,210,0.22)";
+
+        reportStepNo.style.background = "var(--sky)";
+        reportStepNo.style.boxShadow = "0 8px 18px rgba(0,140,210,0.22)";
       }
     }
 
@@ -945,7 +980,10 @@
     }
 
     function goNext() {
-      if (currentStep === 2) setStage(3);
+      if (currentStep === 2) {
+        setStage(3);
+        applyScenarioColors(currentType);
+      }
     }
 
     function openModal(id) {
