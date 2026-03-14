@@ -9,16 +9,14 @@
 
     :root{
       --bg:#f4f7fb;
-      --card:#ffffff;
       --text:#18324a;
       --muted:#6e8093;
       --line:#e4edf5;
       --blue:#008cd2;
       --blue2:#0a71b1;
-      --blue-soft:#edf7fd;
+      --sky:#1699df;
+      --sky2:#138fd1;
       --green:#a1c814;
-      --green2:#8eb20f;
-      --gray:#7f8c9b;
       --shadow:0 16px 40px rgba(24,50,74,0.08);
       --shadow-strong:0 16px 32px rgba(0,140,210,0.18);
     }
@@ -213,24 +211,24 @@
     .screen { display: none; }
     .screen.active { display: block; }
 
-    .section-badge {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 14px;
-      border-radius: 50%;
+    .section-title-wrap {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
-      color: #fff;
-      font-size: 24px;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .section-no {
+      font-size: 48px;
+      line-height: 1;
       font-weight: 800;
-      box-shadow: 0 14px 28px rgba(0,140,210,0.20);
+      letter-spacing: -0.04em;
+      color: #1699df;
     }
 
     .section-title {
       margin: 0;
-      text-align: center;
       font-size: 31px;
       line-height: 1.2;
       font-weight: 800;
@@ -369,32 +367,19 @@
     }
 
     .nav-btn.next {
-      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
+      background: linear-gradient(135deg, var(--sky) 0%, var(--sky2) 100%);
       color: #fff;
       border: 2px solid #dbe5ee;
-      box-shadow: var(--shadow-strong);
+      box-shadow: 0 16px 32px rgba(22,153,223,0.20);
     }
 
     .nav-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      font-size: 18px;
+      font-size: 24px;
       line-height: 1;
       font-weight: 800;
-    }
-
-    .nav-btn.prev .nav-icon {
-      background: #eef3f8;
-      color: #4f6477;
-    }
-
-    .nav-btn.next .nav-icon {
-      background: rgba(255,255,255,0.18);
-      color: #fff;
     }
 
     .util-row {
@@ -616,6 +601,14 @@
         padding: 24px 16px 20px;
       }
 
+      .section-title-wrap {
+        gap: 10px;
+      }
+
+      .section-no {
+        font-size: 38px;
+      }
+
       .section-title {
         font-size: 26px;
       }
@@ -681,8 +674,10 @@
 
     <main class="panel">
       <section class="screen active" id="screen-1">
-        <div class="section-badge">1</div>
-        <h2 class="section-title">상황 선택</h2>
+        <div class="section-title-wrap">
+          <div class="section-no">①</div>
+          <h2 class="section-title">상황 선택</h2>
+        </div>
         <p class="section-desc">해당 상황을 선택해 주세요.</p>
 
         <div class="select-grid">
@@ -703,8 +698,10 @@
       </section>
 
       <section class="screen" id="screen-2">
-        <div class="section-badge">2</div>
-        <h2 class="section-title">대응방법</h2>
+        <div class="section-title-wrap">
+          <div class="section-no">②</div>
+          <h2 class="section-title">대응방법</h2>
+        </div>
         <p class="section-desc" id="response-desc"></p>
 
         <div class="content-card" id="response-card">
@@ -714,12 +711,12 @@
 
         <div class="nav-row">
           <button class="nav-btn prev" onclick="goPrev()">
-            <span class="nav-icon">◀</span>
+            <span class="nav-icon">←</span>
             <span>이전</span>
           </button>
           <button class="nav-btn next" onclick="goNext()">
             <span>다음</span>
-            <span class="nav-icon">▶</span>
+            <span class="nav-icon">→</span>
           </button>
         </div>
 
@@ -730,8 +727,10 @@
       </section>
 
       <section class="screen" id="screen-3">
-        <div class="section-badge">3</div>
-        <h2 class="section-title">보고단계</h2>
+        <div class="section-title-wrap">
+          <div class="section-no">③</div>
+          <h2 class="section-title">보고단계</h2>
+        </div>
         <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
 
         <div class="contact-card">
@@ -756,7 +755,7 @@
 
         <div class="nav-row single">
           <button class="nav-btn prev" onclick="goPrev()">
-            <span class="nav-icon">◀</span>
+            <span class="nav-icon">←</span>
             <span>이전</span>
           </button>
         </div>
