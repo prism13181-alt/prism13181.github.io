@@ -26,7 +26,7 @@
 
       --shadow:0 16px 40px rgba(24,50,74,0.08);
       --shadow-soft:0 10px 24px rgba(24,50,74,0.05);
-      --shadow-blue:0 16px 32px rgba(0,140,210,0.18);
+      --shadow-blue:0 16px 32px rgba(0,140,210,0.12);
     }
 
     html, body {
@@ -50,7 +50,6 @@
       padding: 22px 18px 48px;
     }
 
-    /* 헤더 */
     .hero {
       position: relative;
       overflow: hidden;
@@ -145,7 +144,6 @@
       color: rgba(255,255,255,0.94);
     }
 
-    /* 단계 바 */
     .stage-bar {
       margin: 18px 0 20px;
       padding: 10px;
@@ -209,7 +207,6 @@
       word-break: keep-all;
     }
 
-    /* 본문 패널 */
     .panel {
       background: rgba(255,255,255,0.94);
       border: 1px solid rgba(226,236,244,0.95);
@@ -222,7 +219,6 @@
     .screen { display: none; }
     .screen.active { display: block; }
 
-    /* 섹션 제목 */
     .section-title-wrap {
       display: flex;
       align-items: center;
@@ -232,17 +228,17 @@
     }
 
     .section-no {
-      width: 56px;
-      height: 56px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--sky);
       color: #fff;
-      font-size: 26px;
+      font-size: 20px;
       font-weight: 800;
-      box-shadow: 0 10px 22px rgba(0,140,210,0.22);
+      box-shadow: 0 8px 18px rgba(0,140,210,0.22);
       line-height: 1;
       flex: 0 0 auto;
     }
@@ -265,7 +261,6 @@
       color: var(--muted);
     }
 
-    /* 상황 선택 버튼 */
     .select-grid {
       display: grid;
       gap: 14px;
@@ -317,7 +312,6 @@
       color: rgba(255,255,255,0.93);
     }
 
-    /* 내용 카드 */
     .content-card {
       border-radius: 26px;
       padding: 22px 20px;
@@ -355,7 +349,6 @@
       margin-top: 2px;
     }
 
-    /* 이전/다음 버튼 */
     .nav-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -390,9 +383,9 @@
     }
 
     .nav-btn.next {
-      background: var(--sky);
-      color: #fff;
-      border: 2px solid #dbe5ee;
+      background: var(--sky-soft);
+      color: var(--sky-dark);
+      border: 2px solid #bfe0f3;
       box-shadow: var(--shadow-blue);
     }
 
@@ -405,7 +398,6 @@
       font-weight: 800;
     }
 
-    /* 유틸 버튼 */
     .util-row {
       display: grid;
       grid-template-columns: 1fr;
@@ -430,7 +422,6 @@
     .util-btn.blue { background: var(--sky); }
     .util-btn.green { background: var(--green); }
 
-    /* 연락 카드 */
     .contact-card {
       border: 1px solid #d8ebf7;
       border-radius: 28px;
@@ -486,7 +477,6 @@
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
-    /* 보고사항 */
     .report-box {
       margin-top: 16px;
       padding: 22px 20px;
@@ -522,7 +512,6 @@
       color: #35526b;
     }
 
-    /* 모달 */
     .modal {
       display: none;
       position: fixed;
@@ -633,9 +622,9 @@
       }
 
       .section-no {
-        width: 48px;
-        height: 48px;
-        font-size: 22px;
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
       }
 
       .section-title {
