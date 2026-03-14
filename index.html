@@ -183,6 +183,15 @@
       color: var(--sky-dark);
     }
 
+    .stage-item.green-mode.active {
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+
+    .stage-item.green-mode.done {
+      color: var(--green-dark);
+    }
+
     .stage-num {
       width: 30px;
       height: 30px;
@@ -202,6 +211,13 @@
       background: var(--sky);
       color: #fff;
       box-shadow: 0 8px 18px rgba(0,140,210,0.22);
+    }
+
+    .stage-item.green-mode.active .stage-num,
+    .stage-item.green-mode.done .stage-num {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(161,200,20,0.22);
     }
 
     .stage-label {
@@ -832,7 +848,6 @@
         desc: '<span class="highlight-text">누출 상황(제품 / 원·부재료)</span>에 대한 대응방법입니다.',
         title: '누출 상황(제품 / 원·부재료)',
         cardClass: 'leak',
-        stepColor: 'blue',
         steps: [
           "초동대응 장구함에서 대응 가방을 착용하고 누출 지점으로 이동합니다.",
           "현장 접근 전 장갑, 보안경 등 개인보호구를 착용합니다.",
@@ -847,7 +862,6 @@
         desc: '<span class="highlight-text">pH 농도 이상 상황</span>에 대한 대응방법입니다.',
         title: 'pH 농도 이상 상황',
         cardClass: 'ph',
-        stepColor: 'green',
         steps: [
           "pH 계측값을 재확인합니다.",
           "계측기 이상 여부 및 공정 이상 여부를 함께 확인합니다.",
@@ -871,7 +885,7 @@
         if (i < step) el.classList.add("done");
         if (i === step) el.classList.add("active");
 
-        if (currentType === "ph" && (i <= step)) {
+        if (currentType === "ph" && i <= step) {
           el.classList.add("green-mode");
         }
       }
@@ -882,12 +896,10 @@
     function applyScenarioColors(type) {
       const stepNo = document.getElementById("section-step-no");
       const nextBtn = document.getElementById("next-btn");
-      const stageItems = document.querySelectorAll(".stage-item");
 
       stepNo.style.background = "";
       stepNo.style.boxShadow = "";
       nextBtn.classList.remove("ph-mode");
-      stageItems.forEach(el => el.classList.remove("green-mode"));
 
       if (type === "ph") {
         stepNo.style.background = "var(--green)";
