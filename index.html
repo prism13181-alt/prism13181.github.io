@@ -9,25 +9,33 @@
 
     :root{
       --bg:#f4f7fb;
+      --panel:#ffffff;
       --text:#18324a;
       --muted:#6e8093;
       --line:#e4edf5;
-      --blue:#008cd2;
-      --blue2:#0a71b1;
-      --sky:#1699df;
-      --sky2:#138fd1;
+
+      --sky:#008cd2;
+      --sky-dark:#0a71b1;
+      --sky-soft:#e9f6fd;
+
       --green:#a1c814;
+      --green-dark:#8fb10f;
+
+      --gray-btn:#ffffff;
+      --gray-border:#d7e3ee;
+
       --shadow:0 16px 40px rgba(24,50,74,0.08);
-      --shadow-strong:0 16px 32px rgba(0,140,210,0.18);
+      --shadow-soft:0 10px 24px rgba(24,50,74,0.05);
+      --shadow-blue:0 16px 32px rgba(0,140,210,0.18);
     }
 
     html, body {
       margin: 0;
       padding: 0;
+      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       background:
         radial-gradient(circle at top right, rgba(0,140,210,0.06), transparent 22%),
         linear-gradient(180deg, #f8fbfe 0%, var(--bg) 100%);
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       color: var(--text);
     }
 
@@ -42,6 +50,7 @@
       padding: 22px 18px 48px;
     }
 
+    /* 헤더 */
     .hero {
       position: relative;
       overflow: hidden;
@@ -85,7 +94,7 @@
       align-items: center;
       justify-content: center;
       padding: 8px 12px;
-      background: rgba(255,255,255,0.96);
+      background: rgba(255,255,255,0.97);
       border: 1px solid rgba(220,230,240,0.95);
       border-radius: 14px;
       box-shadow: 0 8px 20px rgba(18,40,60,0.10);
@@ -136,13 +145,14 @@
       color: rgba(255,255,255,0.94);
     }
 
+    /* 단계 바 */
     .stage-bar {
       margin: 18px 0 20px;
       padding: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.84);
       border: 1px solid rgba(227,236,244,0.95);
-      box-shadow: 0 10px 24px rgba(24,50,74,0.05);
+      box-shadow: var(--shadow-soft);
       backdrop-filter: blur(8px);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -160,15 +170,16 @@
       background: transparent;
       color: #728395;
       transition: 0.2s ease;
+      font-weight: 800;
     }
 
     .stage-item.active {
-      background: linear-gradient(135deg, rgba(0,140,210,0.14), rgba(0,140,210,0.08));
-      color: var(--blue2);
+      background: var(--sky-soft);
+      color: var(--sky-dark);
     }
 
     .stage-item.done {
-      color: var(--blue2);
+      color: var(--sky-dark);
     }
 
     .stage-num {
@@ -187,18 +198,18 @@
 
     .stage-item.active .stage-num,
     .stage-item.done .stage-num {
-      background: linear-gradient(135deg, var(--blue2), var(--blue));
+      background: var(--sky);
       color: #fff;
       box-shadow: 0 8px 18px rgba(0,140,210,0.22);
     }
 
     .stage-label {
       font-size: 15px;
-      font-weight: 800;
       letter-spacing: -0.02em;
       word-break: keep-all;
     }
 
+    /* 본문 패널 */
     .panel {
       background: rgba(255,255,255,0.94);
       border: 1px solid rgba(226,236,244,0.95);
@@ -211,6 +222,7 @@
     .screen { display: none; }
     .screen.active { display: block; }
 
+    /* 섹션 제목 */
     .section-title-wrap {
       display: flex;
       align-items: center;
@@ -220,11 +232,19 @@
     }
 
     .section-no {
-      font-size: 48px;
-      line-height: 1;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--sky);
+      color: #fff;
+      font-size: 26px;
       font-weight: 800;
-      letter-spacing: -0.04em;
-      color: #1699df;
+      box-shadow: 0 10px 22px rgba(0,140,210,0.22);
+      line-height: 1;
+      flex: 0 0 auto;
     }
 
     .section-title {
@@ -245,6 +265,7 @@
       color: var(--muted);
     }
 
+    /* 상황 선택 버튼 */
     .select-grid {
       display: grid;
       gap: 14px;
@@ -274,11 +295,11 @@
     }
 
     .select-btn.blue {
-      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
     }
 
     .select-btn.green {
-      background: linear-gradient(135deg, #90b60f 0%, #a1c814 100%);
+      background: linear-gradient(135deg, #90b60f 0%, var(--green) 100%);
     }
 
     .select-btn-title {
@@ -296,6 +317,7 @@
       color: rgba(255,255,255,0.93);
     }
 
+    /* 내용 카드 */
     .content-card {
       border-radius: 26px;
       padding: 22px 20px;
@@ -333,6 +355,7 @@
       margin-top: 2px;
     }
 
+    /* 이전/다음 버튼 */
     .nav-row {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -362,15 +385,15 @@
     .nav-btn.prev {
       background: #fff;
       color: var(--text);
-      border: 2px solid #d7e3ee;
+      border: 2px solid var(--gray-border);
       box-shadow: 0 8px 22px rgba(24,50,74,0.05);
     }
 
     .nav-btn.next {
-      background: linear-gradient(135deg, var(--sky) 0%, var(--sky2) 100%);
+      background: var(--sky);
       color: #fff;
       border: 2px solid #dbe5ee;
-      box-shadow: 0 16px 32px rgba(22,153,223,0.20);
+      box-shadow: var(--shadow-blue);
     }
 
     .nav-icon {
@@ -382,6 +405,7 @@
       font-weight: 800;
     }
 
+    /* 유틸 버튼 */
     .util-row {
       display: grid;
       grid-template-columns: 1fr;
@@ -403,9 +427,10 @@
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
-    .util-btn.blue { background: #008CD2; }
-    .util-btn.green { background: #A1C814; }
+    .util-btn.blue { background: var(--sky); }
+    .util-btn.green { background: var(--green); }
 
+    /* 연락 카드 */
     .contact-card {
       border: 1px solid #d8ebf7;
       border-radius: 28px;
@@ -433,7 +458,7 @@
       font-size: 36px;
       font-weight: 800;
       letter-spacing: -0.04em;
-      color: var(--blue2);
+      color: var(--sky-dark);
       margin-bottom: 8px;
     }
 
@@ -456,11 +481,12 @@
       font-size: 21px;
       font-weight: 800;
       color: #fff;
-      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
-      box-shadow: var(--shadow-strong);
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
+      box-shadow: var(--shadow-blue);
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
+    /* 보고사항 */
     .report-box {
       margin-top: 16px;
       padding: 22px 20px;
@@ -496,6 +522,7 @@
       color: #35526b;
     }
 
+    /* 모달 */
     .modal {
       display: none;
       position: fixed;
@@ -543,13 +570,13 @@
       min-height: 58px;
       border: none;
       border-radius: 18px;
-      background: linear-gradient(135deg, #0a71b1 0%, #008cd2 100%);
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
       color: #fff;
       font-size: 18px;
       font-weight: 800;
       font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
       cursor: pointer;
-      box-shadow: var(--shadow-strong);
+      box-shadow: var(--shadow-blue);
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
@@ -606,7 +633,9 @@
       }
 
       .section-no {
-        font-size: 38px;
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
       }
 
       .section-title {
@@ -675,7 +704,7 @@
     <main class="panel">
       <section class="screen active" id="screen-1">
         <div class="section-title-wrap">
-          <div class="section-no">①</div>
+          <div class="section-no">1</div>
           <h2 class="section-title">상황 선택</h2>
         </div>
         <p class="section-desc">해당 상황을 선택해 주세요.</p>
@@ -699,7 +728,7 @@
 
       <section class="screen" id="screen-2">
         <div class="section-title-wrap">
-          <div class="section-no">②</div>
+          <div class="section-no">2</div>
           <h2 class="section-title">대응방법</h2>
         </div>
         <p class="section-desc" id="response-desc"></p>
@@ -728,7 +757,7 @@
 
       <section class="screen" id="screen-3">
         <div class="section-title-wrap">
-          <div class="section-no">③</div>
+          <div class="section-no">3</div>
           <h2 class="section-title">보고단계</h2>
         </div>
         <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
