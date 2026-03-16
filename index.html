@@ -23,7 +23,6 @@
       --green-soft:#eff8cf;
       --green-border:#d8ec9a;
 
-      --gray-btn:#ffffff;
       --gray-border:#d7e3ee;
 
       --shadow:0 16px 40px rgba(24,50,74,0.08);
@@ -91,7 +90,7 @@
       position: absolute;
       top: 18px;
       left: 22px;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -582,11 +581,13 @@
 
     .modal-box {
       width: 100%;
-      max-width: 620px;
+      max-width: 1100px;
+      max-height: 90vh;
+      overflow: auto;
       background: rgba(255,255,255,0.98);
       border: 1px solid rgba(226,236,244,0.95);
       border-radius: 28px;
-      padding: 26px 22px 22px;
+      padding: 20px;
       box-shadow: 0 24px 60px rgba(16,34,54,0.18);
     }
 
@@ -599,10 +600,31 @@
     }
 
     .modal-desc {
-      margin: 0;
+      margin: 0 0 14px;
       font-size: 15px;
       line-height: 1.8;
       color: #46596b;
+    }
+
+    .modal-image-wrap {
+      width: 100%;
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid #dde7ef;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .modal-image-link {
+      display: inline-block;
+      min-width: 100%;
+    }
+
+    .modal-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
     }
 
     .modal-close {
@@ -628,12 +650,13 @@
 
       .hero {
         min-height: auto;
-        padding: 18px 18px 20px;
+        padding: 16px 16px 18px;
       }
 
       .hero-logo-wrap {
-        top: 14px;
-        left: 14px;
+        position: static;
+        display: inline-flex;
+        margin-bottom: 10px;
         padding: 6px 10px;
       }
 
@@ -642,8 +665,13 @@
       }
 
       .hero-inner {
-        min-height: 128px;
-        padding: 16px 8px 0;
+        min-height: auto;
+        padding: 0;
+        align-items: center;
+      }
+
+      .hero-kicker {
+        margin-top: 2px;
       }
 
       .hero-title {
@@ -708,6 +736,17 @@
 
       .contact-number {
         font-size: 31px;
+      }
+
+      .modal-box {
+        max-width: 100%;
+        padding: 16px;
+      }
+
+      .modal-image {
+        width: auto;
+        min-width: 100%;
+        max-width: none;
       }
     }
   </style>
@@ -835,10 +874,12 @@
   <div class="modal" id="modal-flow">
     <div class="modal-box">
       <h3 class="modal-title">공장 우수로 계통도</h3>
-      <p class="modal-desc">
-        여기에 공장 우수로 계통도 이미지 또는 설명을 삽입하면 됩니다.<br>
-        예: 우수 흐름 방향, 최종우수 위치, 차단 필요 지점 표시
-      </p>
+      <p class="modal-desc">이미지를 크게 보려면 이미지를 탭하거나 클릭해 새 창에서 확대해 보세요.</p>
+      <div class="modal-image-wrap">
+        <a class="modal-image-link" href="./route1.png" target="_blank" rel="noopener noreferrer">
+          <img class="modal-image" src="./route1.png" alt="공장 우수로 계통도">
+        </a>
+      </div>
       <button class="modal-close" onclick="closeModal('modal-flow')">닫기</button>
     </div>
   </div>
@@ -846,10 +887,12 @@
   <div class="modal" id="modal-equipment">
     <div class="modal-box">
       <h3 class="modal-title">공장 내 방제장비 위치</h3>
-      <p class="modal-desc">
-        여기에 공장 내 방제장비 위치도 이미지 또는 설명을 삽입하면 됩니다.<br>
-        예: 초동대응 장구함 위치, 흡착제 보관 위치, 차단도구 비치장소
-      </p>
+      <p class="modal-desc">이미지를 크게 보려면 이미지를 탭하거나 클릭해 새 창에서 확대해 보세요.</p>
+      <div class="modal-image-wrap">
+        <a class="modal-image-link" href="./chestpoint1.png" target="_blank" rel="noopener noreferrer">
+          <img class="modal-image" src="./chestpoint1.png" alt="공장 내 방제장비 위치">
+        </a>
+      </div>
       <button class="modal-close" onclick="closeModal('modal-equipment')">닫기</button>
     </div>
   </div>
