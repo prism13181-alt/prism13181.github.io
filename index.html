@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="누출사고 및 pH 농도 이상 상황 발생 시 초동조치방법과 보고 절차 안내" />
+  <meta name="theme-color" content="#008cd2" />
+  <link rel="manifest" href="./manifest.json" />
   <title>누출사고 초동조치방법</title>
   <style>
     * { box-sizing: border-box; }
@@ -29,6 +32,24 @@
       --shadow-soft:0 10px 24px rgba(24,50,74,0.05);
       --shadow-blue:0 16px 32px rgba(0,140,210,0.12);
       --shadow-green:0 16px 32px rgba(161,200,20,0.12);
+
+      /* 시나리오 테마 변수: 기본값은 누출(파랑) */
+      --theme:var(--sky);
+      --theme-dark:var(--sky-dark);
+      --theme-soft:var(--sky-soft);
+      --theme-border:#bfe0f3;
+      --theme-shadow:var(--shadow-blue);
+      --theme-glow:0 8px 18px rgba(0,140,210,0.22);
+    }
+
+    /* pH 시나리오: data-theme 하나로 전체 색상 전환 */
+    body[data-theme="ph"]{
+      --theme:var(--green);
+      --theme-dark:var(--green-dark);
+      --theme-soft:var(--green-soft);
+      --theme-border:var(--green-border);
+      --theme-shadow:var(--shadow-green);
+      --theme-glow:0 8px 18px rgba(161,200,20,0.22);
     }
 
     html, body {
@@ -41,8 +62,14 @@
       color: var(--text);
     }
 
-    body {
-      min-height: 100vh;
+    body { min-height: 100vh; }
+    body.modal-open { overflow: hidden; }
+
+    /* 키보드 사용자 포커스 표시 */
+    :focus-visible {
+      outline: 3px solid var(--theme-dark);
+      outline-offset: 3px;
+      border-radius: 6px;
     }
 
     .page {
@@ -108,6 +135,19 @@
       object-fit: contain;
     }
 
+    /* 로고 로드 실패 시 회사명 텍스트로 대체 */
+    .hero-logo-fallback {
+      display: none;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--sky-dark);
+      white-space: nowrap;
+    }
+
+    .hero-logo-wrap.img-failed .hero-logo { display: none; }
+    .hero-logo-wrap.img-failed .hero-logo-fallback { display: block; }
+
     .hero-inner {
       position: relative;
       z-index: 2;
@@ -150,13 +190,13 @@
       margin: 18px 0 20px;
       padding: 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.84);
+      background: rgba(255,255,255,0.9);
       border: 1px solid rgba(227,236,244,0.95);
       box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(8px);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+      list-style: none;
     }
 
     .stage-item {
@@ -174,22 +214,11 @@
     }
 
     .stage-item.active {
-      background: var(--sky-soft);
-      color: var(--sky-dark);
+      background: var(--theme-soft);
+      color: var(--theme-dark);
     }
 
-    .stage-item.done {
-      color: var(--sky-dark);
-    }
-
-    .stage-item.green-mode.active {
-      background: var(--green-soft);
-      color: var(--green-dark);
-    }
-
-    .stage-item.green-mode.done {
-      color: var(--green-dark);
-    }
+    .stage-item.done { color: var(--theme-dark); }
 
     .stage-num {
       width: 30px;
@@ -207,16 +236,9 @@
 
     .stage-item.active .stage-num,
     .stage-item.done .stage-num {
-      background: var(--sky);
+      background: var(--theme);
       color: #fff;
-      box-shadow: 0 8px 18px rgba(0,140,210,0.22);
-    }
-
-    .stage-item.green-mode.active .stage-num,
-    .stage-item.green-mode.done .stage-num {
-      background: var(--green);
-      color: #fff;
-      box-shadow: 0 8px 18px rgba(161,200,20,0.22);
+      box-shadow: var(--theme-glow);
     }
 
     .stage-label {
@@ -226,12 +248,11 @@
     }
 
     .panel {
-      background: rgba(255,255,255,0.94);
+      background: #ffffff;
       border: 1px solid rgba(226,236,244,0.95);
       border-radius: 34px;
       box-shadow: var(--shadow);
       padding: 30px 24px 24px;
-      backdrop-filter: blur(6px);
     }
 
     .screen { display: none; }
@@ -252,11 +273,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--sky);
+      background: var(--theme);
       color: #fff;
       font-size: 20px;
       font-weight: 800;
-      box-shadow: 0 8px 18px rgba(0,140,210,0.22);
+      box-shadow: var(--theme-glow);
       line-height: 1;
       flex: 0 0 auto;
       transition: background 0.2s ease, box-shadow 0.2s ease;
@@ -270,6 +291,9 @@
       letter-spacing: -0.05em;
       color: var(--text);
     }
+
+    /* 포커스 이동용 제목: 시각적 아웃라인은 숨김(스크린리더 안내 목적) */
+    .section-title:focus { outline: none; }
 
     .section-desc {
       margin: 14px auto 24px;
@@ -369,8 +393,29 @@
       color: #22384c;
     }
 
-    .guide-list li + li {
+    .guide-list li + li { margin-top: 10px; }
+
+    /* 분기(4-1/4-2)는 번호 없는 하위 블록으로 표현 → 자동 번호와 충돌 방지 */
+    .guide-branch {
       margin-top: 10px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .guide-branch > li {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(0,140,210,0.045);
+      border: 1px dashed rgba(0,140,210,0.25);
+    }
+
+    .guide-branch-label {
+      display: block;
+      font-weight: 800;
+      color: var(--sky-dark);
+      margin-bottom: 4px;
+      font-size: 16px;
     }
 
     .guide-sub {
@@ -382,9 +427,7 @@
       color: #22384c;
     }
 
-    .guide-sub li {
-      margin-top: 6px;
-    }
+    .guide-sub li { margin-top: 6px; }
 
     .guide-note {
       margin-top: 8px;
@@ -401,9 +444,7 @@
       margin-top: 8px;
     }
 
-    .nav-row.single {
-      grid-template-columns: 1fr;
-    }
+    .nav-row.single { grid-template-columns: 1fr; }
 
     .nav-btn {
       min-height: 66px;
@@ -428,17 +469,10 @@
     }
 
     .nav-btn.next {
-      background: var(--sky-soft);
-      color: var(--sky-dark);
-      border: 2px solid #bfe0f3;
-      box-shadow: var(--shadow-blue);
-    }
-
-    .nav-btn.next.ph-mode {
-      background: var(--green-soft);
-      color: var(--green-dark);
-      border: 2px solid var(--green-border);
-      box-shadow: var(--shadow-green);
+      background: var(--theme-soft);
+      color: var(--theme-dark);
+      border: 2px solid var(--theme-border);
+      box-shadow: var(--theme-shadow);
     }
 
     .nav-icon {
@@ -475,14 +509,13 @@
     .util-btn.green { background: var(--green); }
 
     .contact-card {
-      border: 1px solid #d8ebf7;
+      border: 1px solid var(--theme-border);
       border-radius: 28px;
       background: linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
       padding: 24px 22px;
     }
 
-    .contact-card.green-mode {
-      border-color: var(--green-border);
+    body[data-theme="ph"] .contact-card {
       background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%);
     }
 
@@ -506,13 +539,9 @@
       font-size: 36px;
       font-weight: 800;
       letter-spacing: -0.04em;
-      color: var(--sky-dark);
+      color: var(--theme-dark);
       margin-bottom: 8px;
       transition: color 0.2s ease;
-    }
-
-    .contact-number.green-mode {
-      color: var(--green-dark);
     }
 
     .contact-desc {
@@ -534,14 +563,9 @@
       font-size: 21px;
       font-weight: 800;
       color: #fff;
-      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
-      box-shadow: var(--shadow-blue);
+      background: linear-gradient(135deg, var(--theme-dark) 0%, var(--theme) 100%);
+      box-shadow: var(--theme-shadow);
       transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease;
-    }
-
-    .call-btn.green-mode {
-      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
-      box-shadow: var(--shadow-green);
     }
 
     .report-box {
@@ -569,9 +593,7 @@
       font-weight: 700;
     }
 
-    .report-list li + li {
-      margin-top: 2px;
-    }
+    .report-list li + li { margin-top: 2px; }
 
     .notice {
       margin-top: 18px;
@@ -584,6 +606,22 @@
       color: #35526b;
     }
 
+    /* 오프라인 안내 배너 */
+    .offline-banner {
+      display: none;
+      margin: 0 0 14px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: #fff6e8;
+      border: 1px solid #f0d9ae;
+      color: #7a5a12;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    body.offline .offline-banner { display: block; }
+
     .modal {
       display: none;
       position: fixed;
@@ -593,19 +631,16 @@
       background: rgba(13,30,47,0.52);
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(6px);
     }
 
-    .modal.show {
-      display: flex;
-    }
+    .modal.show { display: flex; }
 
     .modal-box {
       width: 100%;
       max-width: 1100px;
       max-height: 90vh;
       overflow: auto;
-      background: rgba(255,255,255,0.98);
+      background: #ffffff;
       border: 1px solid rgba(226,236,244,0.95);
       border-radius: 28px;
       padding: 20px;
@@ -648,6 +683,21 @@
       border-radius: 12px;
     }
 
+    /* 이미지 로드 실패 안내 */
+    .image-error {
+      display: none;
+      padding: 28px 18px;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #8a4b0f;
+      background: #fff6e8;
+      border-radius: 12px;
+    }
+
+    .modal-image-wrap.img-failed .modal-image-link { display: none; }
+    .modal-image-wrap.img-failed .image-error { display: block; }
+
     .modal-close {
       margin-top: 18px;
       width: 100%;
@@ -664,10 +714,17 @@
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
-    @media (max-width: 760px) {
-      .page {
-        padding-top: 16px;
+    /* 모션 최소화 설정 존중 */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
       }
+    }
+
+    @media (max-width: 760px) {
+      .page { padding-top: 16px; }
 
       .hero {
         min-height: auto;
@@ -681,9 +738,7 @@
         padding: 6px 10px;
       }
 
-      .hero-logo {
-        height: 21px;
-      }
+      .hero-logo { height: 21px; }
 
       .hero-inner {
         min-height: auto;
@@ -691,17 +746,9 @@
         align-items: center;
       }
 
-      .hero-kicker {
-        margin-top: 2px;
-      }
-
-      .hero-title {
-        font-size: 29px;
-      }
-
-      .hero-desc {
-        font-size: 15px;
-      }
+      .hero-kicker { margin-top: 2px; }
+      .hero-title { font-size: 29px; }
+      .hero-desc { font-size: 15px; }
 
       .stage-bar {
         grid-template-columns: 1fr;
@@ -714,13 +761,9 @@
         padding-left: 14px;
       }
 
-      .panel {
-        padding: 24px 16px 20px;
-      }
+      .panel { padding: 24px 16px 20px; }
 
-      .section-title-wrap {
-        gap: 10px;
-      }
+      .section-title-wrap { gap: 10px; }
 
       .section-no {
         width: 38px;
@@ -729,39 +772,20 @@
       }
 
       .section-desc,
-      .guide-list {
-        font-size: 15px;
-      }
+      .guide-list { font-size: 15px; }
 
-      .guide-sub {
-        font-size: 14px;
-      }
+      .guide-sub { font-size: 14px; }
+      .report-list { font-size: 16px; }
+      .select-btn-title { font-size: 20px; }
+      .select-btn-sub { font-size: 14px; }
 
-      .report-list {
-        font-size: 16px;
-      }
-
-      .select-btn-title {
-        font-size: 20px;
-      }
-
-      .select-btn-sub {
-        font-size: 14px;
-      }
-
-      .nav-row {
-        grid-template-columns: 1fr;
-      }
+      .nav-row { grid-template-columns: 1fr; }
 
       .nav-btn,
       .util-btn,
-      .call-btn {
-        font-size: 19px;
-      }
+      .call-btn { font-size: 19px; }
 
-      .contact-number {
-        font-size: 31px;
-      }
+      .contact-number { font-size: 31px; }
 
       .modal-box {
         max-width: 100%;
@@ -774,13 +798,40 @@
         max-width: none;
       }
     }
+
+    /* 인쇄: 현장 게시용 - 모든 절차를 한 번에 출력 */
+    @media print {
+      body { background: #fff; color: #000; }
+      .stage-bar, .nav-row, .util-row, .select-grid, .modal,
+      .offline-banner, .call-btn { display: none !important; }
+      .page { max-width: 100%; padding: 0; }
+      .hero, .panel, .content-card, .contact-card, .report-box {
+        box-shadow: none;
+        border-radius: 8px;
+      }
+      .hero {
+        background: none;
+        border: 2px solid #000;
+        padding: 14px;
+        min-height: auto;
+      }
+      .hero-title, .hero-desc, .hero-kicker { color: #000; }
+      .hero::before, .hero::after { display: none; }
+      /* 인쇄 시 숨겨진 화면도 모두 표시 */
+      .screen { display: block !important; page-break-inside: avoid; margin-bottom: 16px; }
+      .print-only-title { display: block !important; }
+    }
+
+    .print-only-title { display: none; }
   </style>
 </head>
-<body>
+<body data-theme="leak">
   <div class="page">
     <header class="hero">
-      <div class="hero-logo-wrap">
-        <img class="hero-logo" src="./logo.png" alt="이수스페셜티케미컬 로고">
+      <div class="hero-logo-wrap" id="logo-wrap">
+        <img class="hero-logo" src="./logo.png" alt="이수스페셜티케미컬 로고"
+             onerror="document.getElementById('logo-wrap').classList.add('img-failed')">
+        <span class="hero-logo-fallback">이수스페셜티케미컬</span>
       </div>
 
       <div class="hero-inner">
@@ -790,36 +841,41 @@
       </div>
     </header>
 
-    <div class="stage-bar">
-      <div class="stage-item active" id="stage-1">
-        <span class="stage-num">1</span>
-        <span class="stage-label">상황선택</span>
-      </div>
-      <div class="stage-item" id="stage-2">
-        <span class="stage-num">2</span>
-        <span class="stage-label">대응방법</span>
-      </div>
-      <div class="stage-item" id="stage-3">
-        <span class="stage-num">3</span>
-        <span class="stage-label">보고단계</span>
-      </div>
+    <div class="offline-banner" role="status">
+      현재 오프라인 상태입니다. 저장된 안내 내용은 계속 볼 수 있으나, 전화 연결은 통신 상태에 따라 제한될 수 있습니다.
     </div>
 
+    <ol class="stage-bar" aria-label="진행 단계">
+      <li class="stage-item active" id="stage-1" aria-current="step">
+        <span class="stage-num" aria-hidden="true">1</span>
+        <span class="stage-label">상황선택</span>
+      </li>
+      <li class="stage-item" id="stage-2">
+        <span class="stage-num" aria-hidden="true">2</span>
+        <span class="stage-label">대응방법</span>
+      </li>
+      <li class="stage-item" id="stage-3">
+        <span class="stage-num" aria-hidden="true">3</span>
+        <span class="stage-label">보고단계</span>
+      </li>
+    </ol>
+
     <main class="panel">
-      <section class="screen active" id="screen-1">
+      <!-- 1단계: 상황 선택 -->
+      <section class="screen active" id="screen-1" aria-labelledby="title-1">
         <div class="section-title-wrap">
-          <div class="section-no">1</div>
-          <h2 class="section-title">상황 선택</h2>
+          <div class="section-no" aria-hidden="true">1</div>
+          <h2 class="section-title" id="title-1" tabindex="-1">상황 선택</h2>
         </div>
         <p class="section-desc">해당 상황을 선택해 주세요.</p>
 
         <div class="select-grid">
-          <button class="select-btn blue" onclick="selectSituation('leak')">
+          <button type="button" class="select-btn blue" onclick="selectSituation('leak')">
             <span class="select-btn-title">누출 상황(제품 / 원·부재료)</span>
             <span class="select-btn-sub">누출 위치 확인, 확산 방지, 최종우수 차단 및 보고 절차 확인</span>
           </button>
 
-          <button class="select-btn green" onclick="selectSituation('ph')">
+          <button type="button" class="select-btn green" onclick="selectSituation('ph')">
             <span class="select-btn-title">pH 농도 이상 상황</span>
             <span class="select-btn-sub">계측값 재확인, 이상 원인 확인, 유입 차단 및 보고 절차 확인</span>
           </button>
@@ -830,10 +886,11 @@
         </div>
       </section>
 
-      <section class="screen" id="screen-2">
+      <!-- 2단계: 대응방법 -->
+      <section class="screen" id="screen-2" aria-labelledby="title-2">
         <div class="section-title-wrap">
-          <div class="section-no" id="section-step-no">2</div>
-          <h2 class="section-title">대응방법</h2>
+          <div class="section-no" aria-hidden="true">2</div>
+          <h2 class="section-title" id="title-2" tabindex="-1">대응방법</h2>
         </div>
         <p class="section-desc" id="response-desc"></p>
 
@@ -843,35 +900,36 @@
         </div>
 
         <div class="nav-row">
-          <button class="nav-btn prev" onclick="goPrev()">
-            <span class="nav-icon">←</span>
+          <button type="button" class="nav-btn prev" onclick="goPrev()">
+            <span class="nav-icon" aria-hidden="true">←</span>
             <span>이전</span>
           </button>
-          <button class="nav-btn next" id="next-btn" onclick="goNext()">
+          <button type="button" class="nav-btn next" id="next-btn" onclick="goNext()">
             <span>다음</span>
-            <span class="nav-icon">→</span>
+            <span class="nav-icon" aria-hidden="true">→</span>
           </button>
         </div>
 
         <div class="util-row">
-          <button class="util-btn blue" onclick="openModal('modal-flow')">공장 우수로 계통도</button>
-          <button class="util-btn green" onclick="openModal('modal-equipment')">공장 내 방제장비 위치</button>
+          <button type="button" class="util-btn blue" onclick="openModal('modal-flow', this)">공장 우수로 계통도</button>
+          <button type="button" class="util-btn green" onclick="openModal('modal-equipment', this)">공장 내 방제장비 위치</button>
         </div>
       </section>
 
-      <section class="screen" id="screen-3">
+      <!-- 3단계: 보고단계 -->
+      <section class="screen" id="screen-3" aria-labelledby="title-3">
         <div class="section-title-wrap">
-          <div class="section-no" id="report-step-no">3</div>
-          <h2 class="section-title">보고단계</h2>
+          <div class="section-no" aria-hidden="true">3</div>
+          <h2 class="section-title" id="title-3" tabindex="-1">보고단계</h2>
         </div>
         <p class="section-desc">현장 상황을 확인한 후 아래 연락처로 즉시 보고해 주세요.</p>
 
-        <div class="contact-card" id="contact-card">
+        <div class="contact-card">
           <div class="contact-label">안전환경팀</div>
-          <div class="contact-name">윤정일 팀장</div>
-          <div class="contact-number" id="contact-number">052-231-5572</div>
+          <div class="contact-name" id="contact-name"></div>
+          <div class="contact-number" id="contact-number"></div>
           <div class="contact-desc">현장 사진 촬영 후 즉시 유선 보고 바랍니다.</div>
-          <a class="call-btn" id="call-btn" href="tel:0522315572">전화 걸기</a>
+          <a class="call-btn" id="call-btn" href="#">전화 걸기</a>
         </div>
 
         <div class="report-box">
@@ -887,8 +945,8 @@
         </div>
 
         <div class="nav-row single">
-          <button class="nav-btn prev" onclick="goPrev()">
-            <span class="nav-icon">←</span>
+          <button type="button" class="nav-btn prev" onclick="goPrev()">
+            <span class="nav-icon" aria-hidden="true">←</span>
             <span>이전</span>
           </button>
         </div>
@@ -896,178 +954,307 @@
     </main>
   </div>
 
-  <div class="modal" id="modal-flow">
+  <!-- 모달: 공장 우수로 계통도 -->
+  <div class="modal" id="modal-flow" role="dialog" aria-modal="true" aria-labelledby="modal-flow-title">
     <div class="modal-box">
-      <h3 class="modal-title">공장 우수로 계통도</h3>
-      <p class="modal-desc">이미지를 크게 보려면 이미지를 탭하거나 클릭해 새 창에서 확대해 보세요.</p>
-      <div class="modal-image-wrap">
+      <h3 class="modal-title" id="modal-flow-title">공장 우수로 계통도</h3>
+      <p class="modal-desc">이미지를 크게 보려면 이미지를 탭하거나 클릭해 새 창에서 확대해 보세요. (Esc 키로 닫기)</p>
+      <div class="modal-image-wrap" id="flow-image-wrap">
         <a class="modal-image-link" href="./route1.png" target="_blank" rel="noopener noreferrer">
-          <img class="modal-image" src="./route1.png" alt="공장 우수로 계통도">
+          <img class="modal-image" src="./route1.png" alt="공장 우수로 계통도"
+               onerror="document.getElementById('flow-image-wrap').classList.add('img-failed')">
         </a>
+        <div class="image-error">
+          계통도 이미지를 불러올 수 없습니다.<br>
+          현장 게시판의 인쇄본을 확인하거나, 네트워크 연결 후 다시 시도해 주세요.
+        </div>
       </div>
-      <button class="modal-close" onclick="closeModal('modal-flow')">닫기</button>
+      <button type="button" class="modal-close" onclick="closeModal('modal-flow')">닫기</button>
     </div>
   </div>
 
-  <div class="modal" id="modal-equipment">
+  <!-- 모달: 공장 내 방제장비 위치 -->
+  <div class="modal" id="modal-equipment" role="dialog" aria-modal="true" aria-labelledby="modal-equipment-title">
     <div class="modal-box">
-      <h3 class="modal-title">공장 내 방제장비 위치</h3>
-      <p class="modal-desc">이미지를 크게 보려면 이미지를 탭하거나 클릭해 새 창에서 확대해 보세요.</p>
-      <div class="modal-image-wrap">
+      <h3 class="modal-title" id="modal-equipment-title">공장 내 방제장비 위치</h3>
+      <p class="modal-desc">이미지를 크게 보려면 이미지를 탭하거나 클릭해 새 창에서 확대해 보세요. (Esc 키로 닫기)</p>
+      <div class="modal-image-wrap" id="equipment-image-wrap">
         <a class="modal-image-link" href="./chestpoint1.png" target="_blank" rel="noopener noreferrer">
-          <img class="modal-image" src="./chestpoint1.png" alt="공장 내 방제장비 위치">
+          <img class="modal-image" src="./chestpoint1.png" alt="공장 내 방제장비 위치"
+               onerror="document.getElementById('equipment-image-wrap').classList.add('img-failed')">
         </a>
+        <div class="image-error">
+          방제장비 위치 이미지를 불러올 수 없습니다.<br>
+          현장 게시판의 인쇄본을 확인하거나, 네트워크 연결 후 다시 시도해 주세요.
+        </div>
       </div>
-      <button class="modal-close" onclick="closeModal('modal-equipment')">닫기</button>
+      <button type="button" class="modal-close" onclick="closeModal('modal-equipment')">닫기</button>
     </div>
   </div>
 
   <script>
-    let currentStep = 1;
-    let currentType = "leak";
+    "use strict";
 
-    const dataMap = {
+    /* =========================================================
+     * 설정: 담당자/연락처가 바뀌면 여기 한 곳만 수정하세요.
+     * ========================================================= */
+    const CONFIG = {
+      contactName: "윤정일 팀장",
+      contactNumber: "052-231-5572"
+    };
+
+    /* =========================================================
+     * 시나리오 데이터
+     * - branch: 조건 분기(4-1/4-2처럼 번호가 이어지지 않는 항목)
+     * - note:   ※ 주의사항
+     * - sub:    (1)(2) 세부 절차
+     * ========================================================= */
+    const SCENARIOS = {
       leak: {
-        desc: '<span class="highlight-text">누출 상황(제품 / 원·부재료)</span>에 대한 대응방법입니다.',
-        title: '누출 상황(제품 / 원·부재료)',
-        cardClass: 'leak',
-        html: `
-          <li>무전기를 통해 안전환경팀, 조정실, 교대직장 및 주위 동료에게 신속히 연락한다.</li>
-          <li>
-            Unit 우수로 및 후문우수로 차단밸브/막을 잠금(Close) 실시한다.
-            <div class="guide-note">※ 단, Unit 화재, 폭발 또는 접근이 불가할 수준의 사고일 경우에는 후문우수로만 잠금 실시한다.</div>
-          </li>
-          <li>화학보호구(방독마스크, 내산장갑, 내산장화, 내산복 등)를 착용하고, 추가 누출이 없도록 공정상의 조치를 실시한다.(차단밸브 잠금 등)</li>
-          <li>
-            4-1. (누출량이 적은 경우) 누출물질을 흡유포/보루로 제품을 흡수시킨 후 마대에 넣어 폐유(고상) 폐기물로 처리한다.
-          </li>
-          <li>
-            4-2. (누출량이 많은 경우)
-            <ul class="guide-sub">
-              <li>(1) 누출물질의 우배수로로의 유입이 예상되는 지점에 Oil boom 등을 이용하여 선제 차단하고, 만약 우배수로에 유입된 경우 하류의 우수로 내부에 Oil Boom, 흡유포 등을 설치한다.(외부 유출을 차단)</li>
-              <li>(2) 확산방지조치가 이루어지면 에어펌프를 이용하여 우수로 등에 고인 누출물질을 루베통에 담는다.</li>
-            </ul>
-          </li>
-        `
+        label: "누출 상황(제품 / 원·부재료)",
+        cardClass: "leak",
+        steps: [
+          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장 및 주위 동료에게 신속히 연락한다." },
+          {
+            text: "Unit 우수로 및 후문우수로 차단밸브/막을 잠금(Close) 실시한다.",
+            note: "※ 단, Unit 화재, 폭발 또는 접근이 불가할 수준의 사고일 경우에는 후문우수로만 잠금 실시한다."
+          },
+          { text: "화학보호구(방독마스크, 내산장갑, 내산장화, 내산복 등)를 착용하고, 추가 누출이 없도록 공정상의 조치를 실시한다.(차단밸브 잠금 등)" },
+          {
+            text: "누출량에 따라 아래 중 해당하는 조치를 실시한다.",
+            branch: [
+              {
+                label: "4-1. 누출량이 적은 경우",
+                text: "누출물질을 흡유포/보루로 제품을 흡수시킨 후 마대에 넣어 폐유(고상) 폐기물로 처리한다."
+              },
+              {
+                label: "4-2. 누출량이 많은 경우",
+                sub: [
+                  "(1) 누출물질의 우배수로로의 유입이 예상되는 지점에 Oil boom 등을 이용하여 선제 차단하고, 만약 우배수로에 유입된 경우 하류의 우수로 내부에 Oil Boom, 흡유포 등을 설치한다.(외부 유출을 차단)",
+                  "(2) 확산방지조치가 이루어지면 에어펌프를 이용하여 우수로 등에 고인 누출물질을 루베통에 담는다."
+                ]
+              }
+            ]
+          }
+        ]
       },
       ph: {
-        desc: '<span class="highlight-text">pH 농도 이상 상황</span>에 대한 대응방법입니다.',
-        title: 'pH 농도 이상 상황',
-        cardClass: 'ph',
-        html: `
-          <li>무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다.</li>
-          <li>해당 Unit의 유수분리조로 이동 후 유수분리조 차단 밸브를 잠금한다.</li>
-          <li>유수분리조 내 잔류된 스팀응축수를 에어펌프를 이용하여 루베통에 담는다.</li>
-        `
+        label: "pH 농도 이상 상황",
+        cardClass: "ph",
+        steps: [
+          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다." },
+          { text: "해당 Unit의 유수분리조로 이동 후 유수분리조 차단 밸브를 잠금한다." },
+          { text: "유수분리조 내 잔류된 스팀응축수를 에어펌프를 이용하여 루베통에 담는다." }
+        ]
       }
     };
 
+    let currentStep = 1;
+    let currentType = "leak";
+    let lastFocusedBeforeModal = null;
+
+    /* ---------- 연락처 주입 (한 곳에서 관리) ---------- */
+    function initContact() {
+      document.getElementById("contact-name").textContent = CONFIG.contactName;
+      document.getElementById("contact-number").textContent = CONFIG.contactNumber;
+      document.getElementById("call-btn").href =
+        "tel:" + CONFIG.contactNumber.replace(/[^0-9+]/g, "");
+      document.getElementById("call-btn").setAttribute(
+        "aria-label",
+        "안전환경팀 " + CONFIG.contactName + "에게 전화 걸기, " + CONFIG.contactNumber
+      );
+    }
+
+    /* ---------- 대응방법 목록 렌더링 (innerHTML 대신 DOM 생성) ---------- */
+    function renderSteps(type) {
+      const info = SCENARIOS[type];
+      const list = document.getElementById("response-list");
+      list.textContent = "";
+
+      info.steps.forEach(step => {
+        const li = document.createElement("li");
+        li.appendChild(document.createTextNode(step.text));
+
+        if (step.note) {
+          const note = document.createElement("div");
+          note.className = "guide-note";
+          note.textContent = step.note;
+          li.appendChild(note);
+        }
+
+        if (step.branch) {
+          const branchUl = document.createElement("ul");
+          branchUl.className = "guide-branch";
+
+          step.branch.forEach(b => {
+            const bLi = document.createElement("li");
+
+            const label = document.createElement("span");
+            label.className = "guide-branch-label";
+            label.textContent = b.label;
+            bLi.appendChild(label);
+
+            if (b.text) {
+              bLi.appendChild(document.createTextNode(b.text));
+            }
+
+            if (b.sub) {
+              const subUl = document.createElement("ul");
+              subUl.className = "guide-sub";
+              b.sub.forEach(s => {
+                const sLi = document.createElement("li");
+                sLi.textContent = s;
+                subUl.appendChild(sLi);
+              });
+              bLi.appendChild(subUl);
+            }
+
+            branchUl.appendChild(bLi);
+          });
+
+          li.appendChild(branchUl);
+        }
+
+        list.appendChild(li);
+      });
+
+      // 설명/제목/카드 스타일
+      const desc = document.getElementById("response-desc");
+      desc.textContent = "";
+      const strong = document.createElement("span");
+      strong.className = "highlight-text";
+      strong.textContent = info.label;
+      desc.appendChild(strong);
+      desc.appendChild(document.createTextNode("에 대한 대응방법입니다."));
+
+      document.getElementById("response-title").textContent = info.label;
+      document.getElementById("response-card").className = "content-card " + info.cardClass;
+    }
+
+    /* ---------- 단계 전환 ---------- */
     function setStage(step) {
       currentStep = step;
 
       document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
-      document.getElementById(`screen-${step}`).classList.add("active");
+      const screen = document.getElementById("screen-" + step);
+      screen.classList.add("active");
 
       for (let i = 1; i <= 3; i++) {
-        const el = document.getElementById(`stage-${i}`);
-        el.classList.remove("active", "done", "green-mode");
+        const el = document.getElementById("stage-" + i);
+        el.classList.remove("active", "done");
+        el.removeAttribute("aria-current");
 
         if (i < step) el.classList.add("done");
-        if (i === step) el.classList.add("active");
-
-        if (currentType === "ph" && i <= step) {
-          el.classList.add("green-mode");
+        if (i === step) {
+          el.classList.add("active");
+          el.setAttribute("aria-current", "step");
         }
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }
 
-    function applyScenarioColors(type) {
-      const stepNo = document.getElementById("section-step-no");
-      const reportStepNo = document.getElementById("report-step-no");
-      const nextBtn = document.getElementById("next-btn");
-      const contactNumber = document.getElementById("contact-number");
-      const callBtn = document.getElementById("call-btn");
-      const contactCard = document.getElementById("contact-card");
-
-      stepNo.style.background = "";
-      stepNo.style.boxShadow = "";
-      reportStepNo.style.background = "";
-      reportStepNo.style.boxShadow = "";
-
-      nextBtn.classList.remove("ph-mode");
-      contactNumber.classList.remove("green-mode");
-      callBtn.classList.remove("green-mode");
-      contactCard.classList.remove("green-mode");
-
-      if (type === "ph") {
-        stepNo.style.background = "var(--green)";
-        stepNo.style.boxShadow = "0 8px 18px rgba(161,200,20,0.22)";
-
-        reportStepNo.style.background = "var(--green)";
-        reportStepNo.style.boxShadow = "0 8px 18px rgba(161,200,20,0.22)";
-
-        nextBtn.classList.add("ph-mode");
-        contactNumber.classList.add("green-mode");
-        callBtn.classList.add("green-mode");
-        contactCard.classList.add("green-mode");
-      } else {
-        stepNo.style.background = "var(--sky)";
-        stepNo.style.boxShadow = "0 8px 18px rgba(0,140,210,0.22)";
-
-        reportStepNo.style.background = "var(--sky)";
-        reportStepNo.style.boxShadow = "0 8px 18px rgba(0,140,210,0.22)";
-      }
+      // 스크린리더가 화면 전환을 인지하도록 새 화면의 제목으로 포커스 이동
+      const title = document.getElementById("title-" + step);
+      if (title) title.focus({ preventScroll: true });
     }
 
     function selectSituation(type) {
       currentType = type;
-      const info = dataMap[type];
-      const desc = document.getElementById("response-desc");
-      const title = document.getElementById("response-title");
-      const list = document.getElementById("response-list");
-      const card = document.getElementById("response-card");
-
-      desc.innerHTML = info.desc;
-      title.textContent = info.title;
-      list.innerHTML = info.html;
-      card.className = "content-card " + info.cardClass;
-
-      applyScenarioColors(type);
+      document.body.setAttribute("data-theme", type);
+      renderSteps(type);
       setStage(2);
     }
 
     function goPrev() {
       if (currentStep === 2) {
-        currentType = "leak";
+        // 상황선택 화면으로 복귀 시 테마를 기본(파랑)으로
+        document.body.setAttribute("data-theme", "leak");
         setStage(1);
       } else if (currentStep === 3) {
         setStage(2);
-        applyScenarioColors(currentType);
       }
     }
 
     function goNext() {
-      if (currentStep === 2) {
-        setStage(3);
-        applyScenarioColors(currentType);
-      }
+      if (currentStep === 2) setStage(3);
     }
 
-    function openModal(id) {
-      document.getElementById(id).classList.add("show");
+    /* ---------- 모달 (키보드 대응 포함) ---------- */
+    function getOpenModal() {
+      return document.querySelector(".modal.show");
+    }
+
+    function openModal(id, triggerEl) {
+      lastFocusedBeforeModal = triggerEl || document.activeElement;
+      const modal = document.getElementById(id);
+      modal.classList.add("show");
+      document.body.classList.add("modal-open");
+      modal.querySelector(".modal-close").focus();
     }
 
     function closeModal(id) {
-      document.getElementById(id).classList.remove("show");
+      const modal = document.getElementById(id);
+      modal.classList.remove("show");
+      document.body.classList.remove("modal-open");
+      if (lastFocusedBeforeModal) {
+        lastFocusedBeforeModal.focus();
+        lastFocusedBeforeModal = null;
+      }
     }
 
+    // 배경 클릭으로 닫기
     window.addEventListener("click", function (e) {
-      document.querySelectorAll(".modal").forEach(modal => {
-        if (e.target === modal) modal.classList.remove("show");
-      });
+      const modal = getOpenModal();
+      if (modal && e.target === modal) closeModal(modal.id);
     });
+
+    // Esc로 닫기 + Tab 포커스 트랩
+    window.addEventListener("keydown", function (e) {
+      const modal = getOpenModal();
+      if (!modal) return;
+
+      if (e.key === "Escape") {
+        closeModal(modal.id);
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const focusables = modal.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    /* ---------- 오프라인 감지 ---------- */
+    function updateOnlineStatus() {
+      document.body.classList.toggle("offline", !navigator.onLine);
+    }
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    /* ---------- 서비스워커 등록 (오프라인 캐싱) ---------- */
+    if ("serviceWorker" in navigator && location.protocol === "https:") {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("./sw.js").catch(function () {
+          // sw.js가 없거나 등록 실패해도 페이지 동작에는 영향 없음
+        });
+      });
+    }
+
+    /* ---------- 초기화 ---------- */
+    initContact();
+    updateOnlineStatus();
   </script>
 </body>
 </html>
