@@ -1,0 +1,17 @@
+{
+  "name": "누출사고 초동조치방법",
+  "short_name": "초동조치",
+  "description": "누출사고 및 pH 농도 이상 상황 발생 시 초동조치방법과 보고 절차 안내",
+  "lang": "ko",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#008cd2",
+  "icons": [
+    {
+      "src": "./logo.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
