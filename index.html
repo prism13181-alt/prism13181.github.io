@@ -307,6 +307,26 @@
       font-size: 15px; line-height: 1.7; color: #7a5a12; font-weight: 700;
     }
 
+    /* 단계 카드 안의 보고사항 박스 */
+    .step-report {
+      margin-top: 18px; padding: 18px 18px 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fffdf7 0%, #ffffff 100%);
+      border: 1px solid #f0e4b7;
+    }
+
+    .step-report-title {
+      margin: 0 0 10px; font-size: 17px; font-weight: 800;
+      letter-spacing: -0.02em; color: #856300;
+    }
+
+    .step-report-list {
+      margin: 0; padding-left: 20px;
+      font-size: 16px; line-height: 1.9; color: #111111; font-weight: 700;
+    }
+
+    .step-report-list li + li { margin-top: 2px; }
+
     /* 단계별 이미지 */
     .step-image-wrap {
       margin-top: 18px;
@@ -681,14 +701,7 @@
 
         <div class="report-box">
           <h3 class="report-title">보고사항</h3>
-          <ul class="report-list">
-            <li>보고자</li>
-            <li>누출 위치</li>
-            <li>누출 시간</li>
-            <li>누출범위(피해 범위)</li>
-            <li>현장 인원 / 공정 상 피해 여부 (피해 있을 시 피해인원 이름)</li>
-            <li>누출 차단 완료 여부</li>
-          </ul>
+          <ul class="report-list" id="report-list"></ul>
         </div>
 
         <div class="nav-row single">
@@ -740,6 +753,16 @@
       contactNumber: "052-231-5572"
     };
 
+    // 보고사항 (1단계 안내 + 3단계 보고단계에서 공통 사용)
+    const REPORT_ITEMS = [
+      "보고자",
+      "누출 위치",
+      "누출 시간",
+      "누출범위(피해 범위)",
+      "현장 인원 / 공정 상 피해 여부 (피해 있을 시 피해인원 이름)",
+      "누출 차단 완료 여부"
+    ];
+
     const SCENARIOS = {
       leak: {
         label: "누출 상황(제품 / 원·부재료)",
@@ -747,7 +770,7 @@
         steps: [
           {
             text: "무전기를 통해 안전환경팀, 조정실, 교대직장 및 주위 동료에게 신속히 연락한다.",
-            image: "leak-step1.png"
+            report: true
           },
           {
             text: "Unit 우수로 및 후문우수로 차단밸브/막을 잠금(Close) 실시한다.",
@@ -782,7 +805,7 @@
         label: "pH 농도 이상 상황",
         cardClass: "ph",
         steps: [
-          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다.", image: "ph-step1.png" },
+          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다.", report: true },
           { text: "해당 Unit의 유수분리조로 이동 후 유수분리조 차단 밸브를 잠금한다.", image: "ph-step2.png" },
           { text: "유수분리조 내 잔류된 스팀응축수를 에어펌프를 이용하여 루베통에 담는다.", image: "ph-step3.png" }
         ]
@@ -800,6 +823,15 @@
       document.getElementById("call-btn").href = "tel:" + CONFIG.contactNumber.replace(/[^0-9+]/g, "");
       document.getElementById("call-btn").setAttribute("aria-label",
         "안전환경팀 " + CONFIG.contactName + "에게 전화 걸기, " + CONFIG.contactNumber);
+
+      // 3단계 보고 목록 채우기 (1단계와 동일 항목)
+      const reportList = document.getElementById("report-list");
+      reportList.textContent = "";
+      REPORT_ITEMS.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        reportList.appendChild(li);
+      });
     }
 
     function renderProgress() {
@@ -824,7 +856,6 @@
       const wrap = document.createElement("div");
       wrap.className = "step-image-wrap";
 
-      // 자리표시(이미지 준비 중 / 로드 실패 시 노출)
       const ph = document.createElement("div");
       ph.className = "step-image-placeholder";
       ph.innerHTML =
@@ -843,19 +874,16 @@
       img.src = "./" + filename;
       img.alt = (respIndex + 1) + "단계 안내 이미지";
       img.loading = "lazy";
-      // 로드 실패(파일 미업로드 포함) → 자리표시로 전환
       img.onerror = function () {
         link.style.display = "none";
         ph.style.display = "flex";
       };
-      // 로드 성공 → 자리표시 숨김
       img.onload = function () {
         ph.style.display = "none";
         link.style.display = "block";
       };
       link.appendChild(img);
 
-      // 초기엔 자리표시를 보여주고, 로드 성공 시 img가 대체
       ph.style.display = "flex";
       link.style.display = "none";
 
@@ -892,7 +920,26 @@
         card.appendChild(note);
       }
 
-      // 단계 본문 이미지 (분기가 없는 단계)
+      // 보고사항 박스 (1단계 연락 시 함께 안내)
+      if (step.report) {
+        const box = document.createElement("div");
+        box.className = "step-report";
+        const title = document.createElement("h4");
+        title.className = "step-report-title";
+        title.textContent = "보고사항";
+        box.appendChild(title);
+        const ul = document.createElement("ul");
+        ul.className = "step-report-list";
+        REPORT_ITEMS.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+        box.appendChild(ul);
+        card.appendChild(box);
+      }
+
+      // 단계 본문 이미지 (분기가 없는 단계, image 지정 시)
       if (step.image) {
         card.appendChild(buildStepImage(step.image));
       }
