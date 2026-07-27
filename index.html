@@ -33,7 +33,6 @@
       --shadow-blue:0 16px 32px rgba(0,140,210,0.12);
       --shadow-green:0 16px 32px rgba(161,200,20,0.12);
 
-      /* 시나리오 테마 변수: 기본값은 누출(파랑) */
       --theme:var(--sky);
       --theme-dark:var(--sky-dark);
       --theme-soft:var(--sky-soft);
@@ -42,7 +41,6 @@
       --theme-glow:0 8px 18px rgba(0,140,210,0.22);
     }
 
-    /* pH 시나리오: data-theme 하나로 전체 색상 전환 */
     body[data-theme="ph"]{
       --theme:var(--green);
       --theme-dark:var(--green-dark);
@@ -65,7 +63,6 @@
     body { min-height: 100vh; }
     body.modal-open { overflow: hidden; }
 
-    /* 키보드 사용자 포커스 표시 */
     :focus-visible {
       outline: 3px solid var(--theme-dark);
       outline-offset: 3px;
@@ -98,29 +95,12 @@
       pointer-events: none;
     }
 
-    .hero::before {
-      width: 230px;
-      height: 230px;
-      right: -36px;
-      top: -64px;
-    }
-
-    .hero::after {
-      width: 170px;
-      height: 170px;
-      right: 110px;
-      bottom: -78px;
-      background: rgba(255,255,255,0.06);
-    }
+    .hero::before { width: 230px; height: 230px; right: -36px; top: -64px; }
+    .hero::after { width: 170px; height: 170px; right: 110px; bottom: -78px; background: rgba(255,255,255,0.06); }
 
     .hero-logo-wrap {
-      position: absolute;
-      top: 18px;
-      left: 22px;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 18px; left: 22px; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
       padding: 8px 12px;
       background: rgba(255,255,255,0.97);
       border: 1px solid rgba(220,230,240,0.95);
@@ -128,130 +108,79 @@
       box-shadow: 0 8px 20px rgba(18,40,60,0.10);
     }
 
-    .hero-logo {
-      display: block;
-      height: 27px;
-      width: auto;
-      object-fit: contain;
-    }
+    .hero-logo { display: block; height: 27px; width: auto; object-fit: contain; }
 
-    /* 로고 로드 실패 시 회사명 텍스트로 대체 */
     .hero-logo-fallback {
       display: none;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--sky-dark);
-      white-space: nowrap;
+      font-size: 14px; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--sky-dark); white-space: nowrap;
     }
 
     .hero-logo-wrap.img-failed .hero-logo { display: none; }
     .hero-logo-wrap.img-failed .hero-logo-fallback { display: block; }
 
     .hero-inner {
-      position: relative;
-      z-index: 2;
-      min-height: 142px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 6px 110px 0;
+      position: relative; z-index: 2; min-height: 142px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 6px 110px 0;
     }
 
     .hero-kicker {
-      margin: 0 0 8px;
-      font-size: 12px;
-      line-height: 1;
-      letter-spacing: 0.16em;
-      font-weight: 700;
-      color: rgba(255,255,255,0.92);
-      text-transform: uppercase;
+      margin: 0 0 8px; font-size: 12px; line-height: 1;
+      letter-spacing: 0.16em; font-weight: 700;
+      color: rgba(255,255,255,0.92); text-transform: uppercase;
     }
 
     .hero-title {
-      margin: 0;
-      font-size: 38px;
-      line-height: 1.15;
-      letter-spacing: -0.04em;
-      font-weight: 800;
-      color: #fff;
+      margin: 0; font-size: 38px; line-height: 1.15;
+      letter-spacing: -0.04em; font-weight: 800; color: #fff;
     }
 
     .hero-desc {
-      margin: 14px 0 0;
-      font-size: 16px;
-      line-height: 1.7;
+      margin: 14px 0 0; font-size: 16px; line-height: 1.7;
       color: rgba(255,255,255,0.94);
     }
 
     .stage-bar {
-      margin: 18px 0 20px;
-      padding: 10px;
+      margin: 18px 0 20px; padding: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,0.9);
       border: 1px solid rgba(227,236,244,0.95);
       box-shadow: var(--shadow-soft);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
       list-style: none;
     }
 
     .stage-item {
-      min-height: 64px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 12px 14px;
-      background: transparent;
-      color: #728395;
-      transition: 0.2s ease;
-      font-weight: 800;
+      min-height: 64px; border-radius: 999px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; padding: 12px 14px;
+      background: transparent; color: #728395;
+      transition: 0.2s ease; font-weight: 800;
     }
 
-    .stage-item.active {
-      background: var(--theme-soft);
-      color: var(--theme-dark);
-    }
-
+    .stage-item.active { background: var(--theme-soft); color: var(--theme-dark); }
     .stage-item.done { color: var(--theme-dark); }
 
     .stage-num {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      background: #dbe7f0;
-      color: #6f8092;
-      flex: 0 0 auto;
+      width: 30px; height: 30px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800;
+      background: #dbe7f0; color: #6f8092; flex: 0 0 auto;
     }
 
     .stage-item.active .stage-num,
     .stage-item.done .stage-num {
-      background: var(--theme);
-      color: #fff;
-      box-shadow: var(--theme-glow);
+      background: var(--theme); color: #fff; box-shadow: var(--theme-glow);
     }
 
-    .stage-label {
-      font-size: 15px;
-      letter-spacing: -0.02em;
-      word-break: keep-all;
-    }
+    .stage-label { font-size: 15px; letter-spacing: -0.02em; word-break: keep-all; }
 
     .panel {
       background: #ffffff;
       border: 1px solid rgba(226,236,244,0.95);
-      border-radius: 34px;
-      box-shadow: var(--shadow);
+      border-radius: 34px; box-shadow: var(--shadow);
       padding: 30px 24px 24px;
     }
 
@@ -259,248 +188,236 @@
     .screen.active { display: block; }
 
     .section-title-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; margin-bottom: 8px;
     }
 
     .section-no {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--theme);
-      color: #fff;
-      font-size: 20px;
-      font-weight: 800;
-      box-shadow: var(--theme-glow);
-      line-height: 1;
-      flex: 0 0 auto;
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--theme); color: #fff;
+      font-size: 20px; font-weight: 800;
+      box-shadow: var(--theme-glow); line-height: 1; flex: 0 0 auto;
       transition: background 0.2s ease, box-shadow 0.2s ease;
     }
 
     .section-title {
-      margin: 0;
-      font-size: 31px;
-      line-height: 1.2;
-      font-weight: 800;
-      letter-spacing: -0.05em;
-      color: var(--text);
+      margin: 0; font-size: 31px; line-height: 1.2;
+      font-weight: 800; letter-spacing: -0.05em; color: var(--text);
     }
 
-    /* 포커스 이동용 제목: 시각적 아웃라인은 숨김(스크린리더 안내 목적) */
     .section-title:focus { outline: none; }
 
     .section-desc {
-      margin: 14px auto 24px;
-      max-width: 760px;
-      text-align: center;
-      font-size: 17px;
-      line-height: 1.7;
-      color: var(--muted);
+      margin: 14px auto 24px; max-width: 760px; text-align: center;
+      font-size: 17px; line-height: 1.7; color: var(--muted);
     }
 
-    .highlight-text {
-      color: #111111;
-      font-weight: 800;
-    }
+    .highlight-text { color: #111111; font-weight: 800; }
 
-    .select-grid {
-      display: grid;
-      gap: 14px;
-    }
+    .select-grid { display: grid; gap: 14px; }
 
     .select-btn {
-      width: 100%;
-      min-height: 92px;
-      border: none;
-      border-radius: 24px;
-      padding: 20px 24px;
-      color: #fff;
-      text-align: left;
-      cursor: pointer;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+      width: 100%; min-height: 92px; border: none;
+      border-radius: 24px; padding: 20px 24px; color: #fff;
+      text-align: left; cursor: pointer; font-family: inherit;
       box-shadow: 0 14px 30px rgba(0,0,0,0.10);
       transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
     }
 
-    .select-btn:hover,
-    .nav-btn:hover,
-    .util-btn:hover,
-    .call-btn:hover,
-    .modal-close:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.01);
+    .select-btn:hover, .nav-btn:hover, .util-btn:hover,
+    .call-btn:hover, .modal-close:hover {
+      transform: translateY(-1px); filter: brightness(1.01);
     }
 
-    .select-btn.blue {
-      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
-    }
-
-    .select-btn.green {
-      background: linear-gradient(135deg, #90b60f 0%, var(--green) 100%);
-    }
+    .select-btn.blue { background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%); }
+    .select-btn.green { background: linear-gradient(135deg, #90b60f 0%, var(--green) 100%); }
 
     .select-btn-title {
-      display: block;
-      font-size: 23px;
-      font-weight: 800;
-      margin-bottom: 7px;
-      letter-spacing: -0.03em;
+      display: block; font-size: 23px; font-weight: 800;
+      margin-bottom: 7px; letter-spacing: -0.03em;
     }
 
     .select-btn-sub {
-      display: block;
-      font-size: 15px;
-      line-height: 1.65;
+      display: block; font-size: 15px; line-height: 1.65;
       color: rgba(255,255,255,0.93);
     }
 
-    .content-card {
-      border-radius: 26px;
-      padding: 22px 20px;
-      margin-bottom: 18px;
+    /* ============ 대응방법: 단계별 1페이지 ============ */
+    .response-progress {
+      margin-bottom: 20px;
+    }
+
+    .rp-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .rp-label {
+      font-size: 15px; font-weight: 800; color: var(--theme-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .rp-count { font-size: 14px; font-weight: 700; color: var(--muted); }
+
+    .rp-track { display: flex; gap: 8px; }
+
+    .rp-seg {
+      flex: 1; height: 10px; border-radius: 999px;
+      background: #e2ebf3; transition: background 0.25s ease;
+    }
+
+    .rp-seg.done { background: var(--theme); }
+    .rp-seg.current { background: var(--theme); box-shadow: var(--theme-glow); }
+
+    .step-card {
+      border-radius: 26px; padding: 26px 22px;
+      margin-bottom: 18px; border: 1px solid var(--line);
+      min-height: 220px;
+    }
+
+    .step-card.leak { background: linear-gradient(180deg, #f7fbfe 0%, #ffffff 100%); border-color: #d7eaf7; }
+    .step-card.ph { background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%); border-color: #e3eec3; }
+
+    .step-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 15px; border-radius: 999px;
+      background: var(--theme-soft); color: var(--theme-dark);
+      font-size: 14px; font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .step-badge-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--theme); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px;
+    }
+
+    .step-text {
+      margin: 0; font-size: 21px; line-height: 1.7;
+      font-weight: 700; color: #18324a; letter-spacing: -0.02em;
+      word-break: keep-all;
+    }
+
+    .step-note {
+      margin-top: 16px; padding: 14px 16px;
+      border-radius: 14px; background: #fff6e8;
+      border: 1px solid #f0d9ae;
+      font-size: 15px; line-height: 1.7; color: #7a5a12; font-weight: 700;
+    }
+
+    /* 단계별 이미지 */
+    .step-image-wrap {
+      margin-top: 18px;
+      border-radius: 16px;
+      overflow: hidden;
       border: 1px solid var(--line);
+      background: #fff;
     }
 
-    .content-card.leak {
-      background: linear-gradient(180deg, #f7fbfe 0%, #ffffff 100%);
-      border-color: #d7eaf7;
-    }
-
-    .content-card.ph {
-      background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%);
-      border-color: #e3eec3;
-    }
-
-    .content-title {
-      margin: 0 0 12px;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-
-    .guide-list {
-      margin: 0;
-      padding-left: 24px;
-      font-size: 17px;
-      line-height: 1.95;
-      color: #22384c;
-    }
-
-    .guide-list li + li { margin-top: 10px; }
-
-    /* 분기(4-1/4-2)는 번호 없는 하위 블록으로 표현 → 자동 번호와 충돌 방지 */
-    .guide-branch {
-      margin-top: 10px;
-      padding-left: 0;
-      list-style: none;
-    }
-
-    .guide-branch > li {
-      margin-top: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: rgba(0,140,210,0.045);
-      border: 1px dashed rgba(0,140,210,0.25);
-    }
-
-    .guide-branch-label {
+    .step-image {
       display: block;
-      font-weight: 800;
-      color: var(--sky-dark);
-      margin-bottom: 4px;
-      font-size: 16px;
+      width: 100%;
+      height: auto;
+      cursor: zoom-in;
     }
 
-    .guide-sub {
-      margin-top: 8px;
-      padding-left: 0;
-      list-style: none;
-      font-size: 16px;
-      line-height: 1.85;
-      color: #22384c;
+    /* 이미지 준비 중 / 로드 실패 시 자리표시 */
+    .step-image-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 160px;
+      padding: 28px 18px;
+      text-align: center;
+      background:
+        repeating-linear-gradient(45deg, #f2f7fb 0 12px, #eaf1f7 12px 24px);
+      color: #7d90a3;
     }
 
-    .guide-sub li { margin-top: 6px; }
-
-    .guide-note {
-      margin-top: 8px;
-      font-size: 15px;
-      line-height: 1.7;
-      color: #4b5f73;
-      font-weight: 700;
+    .step-image-placeholder .ph-icon { font-size: 30px; opacity: 0.7; }
+    .step-image-placeholder .ph-text { font-size: 15px; font-weight: 700; line-height: 1.6; }
+    .step-image-placeholder .ph-file {
+      font-size: 12px; color: #9aabbb;
+      font-family: "Consolas", "Courier New", monospace;
+      word-break: break-all;
     }
+
+    .step-branch {
+      margin-top: 16px; padding-left: 0; list-style: none;
+      display: grid; gap: 12px;
+    }
+
+    .step-branch > li {
+      padding: 16px; border-radius: 16px;
+      background: rgba(0,140,210,0.05);
+      border: 1px dashed rgba(0,140,210,0.3);
+    }
+
+    body[data-theme="ph"] .step-branch > li {
+      background: rgba(161,200,20,0.08);
+      border-color: rgba(143,177,15,0.4);
+    }
+
+    .step-branch-label {
+      display: block; font-weight: 800;
+      color: var(--theme-dark); margin-bottom: 8px; font-size: 17px;
+    }
+
+    .step-branch-text { font-size: 16px; line-height: 1.7; color: #22384c; }
+
+    .step-sub {
+      margin: 8px 0 0; padding-left: 0; list-style: none;
+      font-size: 16px; line-height: 1.8; color: #22384c;
+    }
+
+    .step-sub li { margin-top: 8px; }
 
     .nav-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 8px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; margin-top: 8px;
     }
 
     .nav-row.single { grid-template-columns: 1fr; }
 
     .nav-btn {
-      min-height: 66px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 21px;
-      font-weight: 800;
+      min-height: 66px; border-radius: 20px; cursor: pointer;
+      font-family: inherit; font-size: 21px; font-weight: 800;
       letter-spacing: -0.02em;
       transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease, color 0.2s ease, border 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
     }
 
     .nav-btn.prev {
-      background: #fff;
-      color: var(--text);
+      background: #fff; color: var(--text);
       border: 2px solid var(--gray-border);
       box-shadow: 0 8px 22px rgba(24,50,74,0.05);
     }
 
     .nav-btn.next {
-      background: var(--theme-soft);
-      color: var(--theme-dark);
-      border: 2px solid var(--theme-border);
-      box-shadow: var(--theme-shadow);
+      background: var(--theme-soft); color: var(--theme-dark);
+      border: 2px solid var(--theme-border); box-shadow: var(--theme-shadow);
+    }
+
+    .nav-btn.next.final {
+      background: linear-gradient(135deg, var(--theme-dark) 0%, var(--theme) 100%);
+      color: #fff; border-color: transparent;
     }
 
     .nav-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      line-height: 1;
-      font-weight: 800;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 24px; line-height: 1; font-weight: 800;
     }
 
-    .util-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-top: 14px;
-    }
+    .util-row { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
 
     .util-btn {
-      min-height: 66px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      font-size: 21px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #fff;
+      min-height: 66px; border: none; border-radius: 20px; cursor: pointer;
+      font-family: inherit; font-size: 21px; font-weight: 800;
+      letter-spacing: -0.02em; color: #fff;
       box-shadow: 0 12px 26px rgba(0,0,0,0.08);
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
@@ -509,8 +426,7 @@
     .util-btn.green { background: var(--green); }
 
     .contact-card {
-      border: 1px solid var(--theme-border);
-      border-radius: 28px;
+      border: 1px solid var(--theme-border); border-radius: 28px;
       background: linear-gradient(180deg, #f8fbfd 0%, #ffffff 100%);
       padding: 24px 22px;
     }
@@ -519,310 +435,138 @@
       background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%);
     }
 
-    .contact-label {
-      text-align: center;
-      font-size: 15px;
-      color: #5d7689;
-      margin-bottom: 8px;
-    }
-
-    .contact-name {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
+    .contact-label { text-align: center; font-size: 15px; color: #5d7689; margin-bottom: 8px; }
+    .contact-name { text-align: center; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
 
     .contact-number {
-      text-align: center;
-      font-size: 36px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--theme-dark);
-      margin-bottom: 8px;
-      transition: color 0.2s ease;
+      text-align: center; font-size: 36px; font-weight: 800;
+      letter-spacing: -0.04em; color: var(--theme-dark);
+      margin-bottom: 8px; transition: color 0.2s ease;
     }
 
-    .contact-desc {
-      text-align: center;
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
+    .contact-desc { text-align: center; font-size: 15px; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
 
     .call-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 64px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 21px;
-      font-weight: 800;
-      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; min-height: 64px; border-radius: 20px;
+      text-decoration: none; font-size: 21px; font-weight: 800; color: #fff;
       background: linear-gradient(135deg, var(--theme-dark) 0%, var(--theme) 100%);
       box-shadow: var(--theme-shadow);
       transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.2s ease;
     }
 
     .report-box {
-      margin-top: 16px;
-      padding: 22px 20px;
-      border-radius: 24px;
+      margin-top: 16px; padding: 22px 20px; border-radius: 24px;
       background: linear-gradient(180deg, #fffdf7 0%, #ffffff 100%);
       border: 1px solid #f0e4b7;
     }
 
-    .report-title {
-      margin: 0 0 12px;
-      font-size: 21px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #856300;
-    }
+    .report-title { margin: 0 0 12px; font-size: 21px; font-weight: 800; letter-spacing: -0.03em; color: #856300; }
 
-    .report-list {
-      margin: 0;
-      padding-left: 22px;
-      font-size: 17px;
-      line-height: 2;
-      color: #111111;
-      font-weight: 700;
-    }
-
+    .report-list { margin: 0; padding-left: 22px; font-size: 17px; line-height: 2; color: #111111; font-weight: 700; }
     .report-list li + li { margin-top: 2px; }
 
     .notice {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
+      margin-top: 18px; padding: 16px 18px; border-radius: 18px;
       background: linear-gradient(180deg, #edf8fd 0%, #f8fcff 100%);
-      border: 1px solid #d5ebf7;
-      font-size: 14px;
-      line-height: 1.8;
-      color: #35526b;
+      border: 1px solid #d5ebf7; font-size: 14px; line-height: 1.8; color: #35526b;
     }
 
-    /* 오프라인 안내 배너 */
     .offline-banner {
-      display: none;
-      margin: 0 0 14px;
-      padding: 12px 16px;
-      border-radius: 16px;
-      background: #fff6e8;
-      border: 1px solid #f0d9ae;
-      color: #7a5a12;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: center;
+      display: none; margin: 0 0 14px; padding: 12px 16px;
+      border-radius: 16px; background: #fff6e8; border: 1px solid #f0d9ae;
+      color: #7a5a12; font-size: 14px; font-weight: 700; text-align: center;
     }
 
     body.offline .offline-banner { display: block; }
 
     .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      padding: 18px;
-      background: rgba(13,30,47,0.52);
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0; z-index: 999;
+      padding: 18px; background: rgba(13,30,47,0.52);
+      align-items: center; justify-content: center;
     }
 
     .modal.show { display: flex; }
 
     .modal-box {
-      width: 100%;
-      max-width: 1100px;
-      max-height: 90vh;
-      overflow: auto;
-      background: #ffffff;
-      border: 1px solid rgba(226,236,244,0.95);
-      border-radius: 28px;
-      padding: 20px;
+      width: 100%; max-width: 1100px; max-height: 90vh; overflow: auto;
+      background: #ffffff; border: 1px solid rgba(226,236,244,0.95);
+      border-radius: 28px; padding: 20px;
       box-shadow: 0 24px 60px rgba(16,34,54,0.18);
     }
 
-    .modal-title {
-      margin: 0 0 12px;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-
-    .modal-desc {
-      margin: 0 0 14px;
-      font-size: 15px;
-      line-height: 1.8;
-      color: #46596b;
-    }
+    .modal-title { margin: 0 0 12px; font-size: 24px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+    .modal-desc { margin: 0 0 14px; font-size: 15px; line-height: 1.8; color: #46596b; }
 
     .modal-image-wrap {
-      width: 100%;
-      overflow: auto;
-      border-radius: 18px;
-      border: 1px solid #dde7ef;
-      background: #fff;
-      padding: 10px;
+      width: 100%; overflow: auto; border-radius: 18px;
+      border: 1px solid #dde7ef; background: #fff; padding: 10px;
     }
 
-    .modal-image-link {
-      display: inline-block;
-      min-width: 100%;
-    }
+    .modal-image-link { display: inline-block; min-width: 100%; }
+    .modal-image { display: block; width: 100%; height: auto; border-radius: 12px; }
 
-    .modal-image {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-    }
-
-    /* 이미지 로드 실패 안내 */
     .image-error {
-      display: none;
-      padding: 28px 18px;
-      text-align: center;
-      font-size: 15px;
-      line-height: 1.8;
-      color: #8a4b0f;
-      background: #fff6e8;
-      border-radius: 12px;
+      display: none; padding: 28px 18px; text-align: center;
+      font-size: 15px; line-height: 1.8; color: #8a4b0f;
+      background: #fff6e8; border-radius: 12px;
     }
 
     .modal-image-wrap.img-failed .modal-image-link { display: none; }
     .modal-image-wrap.img-failed .image-error { display: block; }
 
     .modal-close {
-      margin-top: 18px;
-      width: 100%;
-      min-height: 58px;
-      border: none;
+      margin-top: 18px; width: 100%; min-height: 58px; border: none;
       border-radius: 18px;
       background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
-      color: #fff;
-      font-size: 18px;
-      font-weight: 800;
-      font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-      cursor: pointer;
-      box-shadow: var(--shadow-blue);
+      color: #fff; font-size: 18px; font-weight: 800; font-family: inherit;
+      cursor: pointer; box-shadow: var(--shadow-blue);
       transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
 
-    /* 모션 최소화 설정 존중 */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
-        transition: none !important;
-        animation: none !important;
-        scroll-behavior: auto !important;
+        transition: none !important; animation: none !important; scroll-behavior: auto !important;
       }
     }
 
     @media (max-width: 760px) {
       .page { padding-top: 16px; }
-
-      .hero {
-        min-height: auto;
-        padding: 16px 16px 18px;
-      }
-
-      .hero-logo-wrap {
-        position: static;
-        display: inline-flex;
-        margin-bottom: 10px;
-        padding: 6px 10px;
-      }
-
+      .hero { min-height: auto; padding: 16px 16px 18px; }
+      .hero-logo-wrap { position: static; display: inline-flex; margin-bottom: 10px; padding: 6px 10px; }
       .hero-logo { height: 21px; }
-
-      .hero-inner {
-        min-height: auto;
-        padding: 0;
-        align-items: center;
-      }
-
+      .hero-inner { min-height: auto; padding: 0; align-items: center; }
       .hero-kicker { margin-top: 2px; }
       .hero-title { font-size: 29px; }
       .hero-desc { font-size: 15px; }
-
-      .stage-bar {
-        grid-template-columns: 1fr;
-        border-radius: 24px;
-      }
-
-      .stage-item {
-        justify-content: flex-start;
-        min-height: 54px;
-        padding-left: 14px;
-      }
-
+      .stage-bar { grid-template-columns: 1fr; border-radius: 24px; }
+      .stage-item { justify-content: flex-start; min-height: 54px; padding-left: 14px; }
       .panel { padding: 24px 16px 20px; }
-
       .section-title-wrap { gap: 10px; }
-
-      .section-no {
-        width: 38px;
-        height: 38px;
-        font-size: 18px;
-      }
-
-      .section-desc,
-      .guide-list { font-size: 15px; }
-
-      .guide-sub { font-size: 14px; }
+      .section-no { width: 38px; height: 38px; font-size: 18px; }
+      .section-desc { font-size: 15px; }
+      .step-text { font-size: 18px; }
       .report-list { font-size: 16px; }
       .select-btn-title { font-size: 20px; }
       .select-btn-sub { font-size: 14px; }
-
       .nav-row { grid-template-columns: 1fr; }
-
-      .nav-btn,
-      .util-btn,
-      .call-btn { font-size: 19px; }
-
+      .nav-btn, .util-btn, .call-btn { font-size: 19px; }
       .contact-number { font-size: 31px; }
-
-      .modal-box {
-        max-width: 100%;
-        padding: 16px;
-      }
-
-      .modal-image {
-        width: auto;
-        min-width: 100%;
-        max-width: none;
-      }
+      .modal-box { max-width: 100%; padding: 16px; }
+      .modal-image { width: auto; min-width: 100%; max-width: none; }
     }
 
-    /* 인쇄: 현장 게시용 - 모든 절차를 한 번에 출력 */
     @media print {
       body { background: #fff; color: #000; }
       .stage-bar, .nav-row, .util-row, .select-grid, .modal,
-      .offline-banner, .call-btn { display: none !important; }
+      .offline-banner, .call-btn, .response-progress { display: none !important; }
       .page { max-width: 100%; padding: 0; }
-      .hero, .panel, .content-card, .contact-card, .report-box {
-        box-shadow: none;
-        border-radius: 8px;
-      }
-      .hero {
-        background: none;
-        border: 2px solid #000;
-        padding: 14px;
-        min-height: auto;
-      }
+      .hero, .panel, .step-card, .contact-card, .report-box { box-shadow: none; border-radius: 8px; }
+      .hero { background: none; border: 2px solid #000; padding: 14px; min-height: auto; }
       .hero-title, .hero-desc, .hero-kicker { color: #000; }
       .hero::before, .hero::after { display: none; }
-      /* 인쇄 시 숨겨진 화면도 모두 표시 */
       .screen { display: block !important; page-break-inside: avoid; margin-bottom: 16px; }
-      .print-only-title { display: block !important; }
     }
-
-    .print-only-title { display: none; }
   </style>
 </head>
 <body data-theme="leak">
@@ -833,7 +577,6 @@
              onerror="document.getElementById('logo-wrap').classList.add('img-failed')">
         <span class="hero-logo-fallback">이수스페셜티케미컬</span>
       </div>
-
       <div class="hero-inner">
         <p class="hero-kicker">Emergency Response Guide</p>
         <h1 class="hero-title">누출사고 초동조치방법</h1>
@@ -874,7 +617,6 @@
             <span class="select-btn-title">누출 상황(제품 / 원·부재료)</span>
             <span class="select-btn-sub">누출 위치 확인, 확산 방지, 최종우수 차단 및 보고 절차 확인</span>
           </button>
-
           <button type="button" class="select-btn green" onclick="selectSituation('ph')">
             <span class="select-btn-title">pH 농도 이상 상황</span>
             <span class="select-btn-sub">계측값 재확인, 이상 원인 확인, 유입 차단 및 보고 절차 확인</span>
@@ -886,7 +628,7 @@
         </div>
       </section>
 
-      <!-- 2단계: 대응방법 -->
+      <!-- 2단계: 대응방법 (단계별 1페이지) -->
       <section class="screen" id="screen-2" aria-labelledby="title-2">
         <div class="section-title-wrap">
           <div class="section-no" aria-hidden="true">2</div>
@@ -894,18 +636,23 @@
         </div>
         <p class="section-desc" id="response-desc"></p>
 
-        <div class="content-card" id="response-card">
-          <h3 class="content-title" id="response-title"></h3>
-          <ol class="guide-list" id="response-list"></ol>
+        <div class="response-progress">
+          <div class="rp-head">
+            <span class="rp-label" id="rp-label"></span>
+            <span class="rp-count" id="rp-count"></span>
+          </div>
+          <div class="rp-track" id="rp-track" role="progressbar" aria-label="대응방법 진행 상황"></div>
         </div>
 
-        <div class="nav-row">
-          <button type="button" class="nav-btn prev" onclick="goPrev()">
+        <div class="step-card" id="step-card"></div>
+
+        <div class="nav-row" id="response-nav">
+          <button type="button" class="nav-btn prev" id="resp-prev" onclick="respPrev()">
             <span class="nav-icon" aria-hidden="true">←</span>
-            <span>이전</span>
+            <span id="resp-prev-label">이전</span>
           </button>
-          <button type="button" class="nav-btn next" id="next-btn" onclick="goNext()">
-            <span>다음</span>
+          <button type="button" class="nav-btn next" id="resp-next" onclick="respNext()">
+            <span id="resp-next-label">다음</span>
             <span class="nav-icon" aria-hidden="true">→</span>
           </button>
         </div>
@@ -945,16 +692,16 @@
         </div>
 
         <div class="nav-row single">
-          <button type="button" class="nav-btn prev" onclick="goPrev()">
+          <button type="button" class="nav-btn prev" onclick="goStageBack()">
             <span class="nav-icon" aria-hidden="true">←</span>
-            <span>이전</span>
+            <span>대응방법으로</span>
           </button>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- 모달: 공장 우수로 계통도 -->
+  <!-- 모달 -->
   <div class="modal" id="modal-flow" role="dialog" aria-modal="true" aria-labelledby="modal-flow-title">
     <div class="modal-box">
       <h3 class="modal-title" id="modal-flow-title">공장 우수로 계통도</h3>
@@ -964,16 +711,12 @@
           <img class="modal-image" src="./route1.png" alt="공장 우수로 계통도"
                onerror="document.getElementById('flow-image-wrap').classList.add('img-failed')">
         </a>
-        <div class="image-error">
-          계통도 이미지를 불러올 수 없습니다.<br>
-          현장 게시판의 인쇄본을 확인하거나, 네트워크 연결 후 다시 시도해 주세요.
-        </div>
+        <div class="image-error">계통도 이미지를 불러올 수 없습니다.<br>현장 게시판의 인쇄본을 확인하거나, 네트워크 연결 후 다시 시도해 주세요.</div>
       </div>
       <button type="button" class="modal-close" onclick="closeModal('modal-flow')">닫기</button>
     </div>
   </div>
 
-  <!-- 모달: 공장 내 방제장비 위치 -->
   <div class="modal" id="modal-equipment" role="dialog" aria-modal="true" aria-labelledby="modal-equipment-title">
     <div class="modal-box">
       <h3 class="modal-title" id="modal-equipment-title">공장 내 방제장비 위치</h3>
@@ -983,10 +726,7 @@
           <img class="modal-image" src="./chestpoint1.png" alt="공장 내 방제장비 위치"
                onerror="document.getElementById('equipment-image-wrap').classList.add('img-failed')">
         </a>
-        <div class="image-error">
-          방제장비 위치 이미지를 불러올 수 없습니다.<br>
-          현장 게시판의 인쇄본을 확인하거나, 네트워크 연결 후 다시 시도해 주세요.
-        </div>
+        <div class="image-error">방제장비 위치 이미지를 불러올 수 없습니다.<br>현장 게시판의 인쇄본을 확인하거나, 네트워크 연결 후 다시 시도해 주세요.</div>
       </div>
       <button type="button" class="modal-close" onclick="closeModal('modal-equipment')">닫기</button>
     </div>
@@ -995,44 +735,44 @@
   <script>
     "use strict";
 
-    /* =========================================================
-     * 설정: 담당자/연락처가 바뀌면 여기 한 곳만 수정하세요.
-     * ========================================================= */
     const CONFIG = {
       contactName: "윤정일 팀장",
       contactNumber: "052-231-5572"
     };
 
-    /* =========================================================
-     * 시나리오 데이터
-     * - branch: 조건 분기(4-1/4-2처럼 번호가 이어지지 않는 항목)
-     * - note:   ※ 주의사항
-     * - sub:    (1)(2) 세부 절차
-     * ========================================================= */
     const SCENARIOS = {
       leak: {
         label: "누출 상황(제품 / 원·부재료)",
         cardClass: "leak",
         steps: [
-          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장 및 주위 동료에게 신속히 연락한다." },
+          {
+            text: "무전기를 통해 안전환경팀, 조정실, 교대직장 및 주위 동료에게 신속히 연락한다.",
+            image: "leak-step1.png"
+          },
           {
             text: "Unit 우수로 및 후문우수로 차단밸브/막을 잠금(Close) 실시한다.",
-            note: "※ 단, Unit 화재, 폭발 또는 접근이 불가할 수준의 사고일 경우에는 후문우수로만 잠금 실시한다."
+            note: "※ 단, Unit 화재, 폭발 또는 접근이 불가할 수준의 사고일 경우에는 후문우수로만 잠금 실시한다.",
+            image: "leak-step2.png"
           },
-          { text: "화학보호구(방독마스크, 내산장갑, 내산장화, 내산복 등)를 착용하고, 추가 누출이 없도록 공정상의 조치를 실시한다.(차단밸브 잠금 등)" },
+          {
+            text: "화학보호구(방독마스크, 내산장갑, 내산장화, 내산복 등)를 착용하고, 추가 누출이 없도록 공정상의 조치를 실시한다.(차단밸브 잠금 등)",
+            image: "leak-step3.png"
+          },
           {
             text: "누출량에 따라 아래 중 해당하는 조치를 실시한다.",
             branch: [
               {
                 label: "4-1. 누출량이 적은 경우",
-                text: "누출물질을 흡유포/보루로 제품을 흡수시킨 후 마대에 넣어 폐유(고상) 폐기물로 처리한다."
+                text: "누출물질을 흡유포/보루로 제품을 흡수시킨 후 마대에 넣어 폐유(고상) 폐기물로 처리한다.",
+                image: "leak-step4-1.png"
               },
               {
                 label: "4-2. 누출량이 많은 경우",
                 sub: [
                   "(1) 누출물질의 우배수로로의 유입이 예상되는 지점에 Oil boom 등을 이용하여 선제 차단하고, 만약 우배수로에 유입된 경우 하류의 우수로 내부에 Oil Boom, 흡유포 등을 설치한다.(외부 유출을 차단)",
                   "(2) 확산방지조치가 이루어지면 에어펌프를 이용하여 우수로 등에 고인 누출물질을 루베통에 담는다."
-                ]
+                ],
+                image: "leak-step4-2.png"
               }
             ]
           }
@@ -1042,147 +782,244 @@
         label: "pH 농도 이상 상황",
         cardClass: "ph",
         steps: [
-          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다." },
-          { text: "해당 Unit의 유수분리조로 이동 후 유수분리조 차단 밸브를 잠금한다." },
-          { text: "유수분리조 내 잔류된 스팀응축수를 에어펌프를 이용하여 루베통에 담는다." }
+          { text: "무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다.", image: "ph-step1.png" },
+          { text: "해당 Unit의 유수분리조로 이동 후 유수분리조 차단 밸브를 잠금한다.", image: "ph-step2.png" },
+          { text: "유수분리조 내 잔류된 스팀응축수를 에어펌프를 이용하여 루베통에 담는다.", image: "ph-step3.png" }
         ]
       }
     };
 
-    let currentStep = 1;
+    let currentStage = 1;
     let currentType = "leak";
+    let respIndex = 0;
     let lastFocusedBeforeModal = null;
 
-    /* ---------- 연락처 주입 (한 곳에서 관리) ---------- */
     function initContact() {
       document.getElementById("contact-name").textContent = CONFIG.contactName;
       document.getElementById("contact-number").textContent = CONFIG.contactNumber;
-      document.getElementById("call-btn").href =
-        "tel:" + CONFIG.contactNumber.replace(/[^0-9+]/g, "");
-      document.getElementById("call-btn").setAttribute(
-        "aria-label",
-        "안전환경팀 " + CONFIG.contactName + "에게 전화 걸기, " + CONFIG.contactNumber
-      );
+      document.getElementById("call-btn").href = "tel:" + CONFIG.contactNumber.replace(/[^0-9+]/g, "");
+      document.getElementById("call-btn").setAttribute("aria-label",
+        "안전환경팀 " + CONFIG.contactName + "에게 전화 걸기, " + CONFIG.contactNumber);
     }
 
-    /* ---------- 대응방법 목록 렌더링 (innerHTML 대신 DOM 생성) ---------- */
-    function renderSteps(type) {
-      const info = SCENARIOS[type];
-      const list = document.getElementById("response-list");
-      list.textContent = "";
-
-      info.steps.forEach(step => {
-        const li = document.createElement("li");
-        li.appendChild(document.createTextNode(step.text));
-
-        if (step.note) {
-          const note = document.createElement("div");
-          note.className = "guide-note";
-          note.textContent = step.note;
-          li.appendChild(note);
-        }
-
-        if (step.branch) {
-          const branchUl = document.createElement("ul");
-          branchUl.className = "guide-branch";
-
-          step.branch.forEach(b => {
-            const bLi = document.createElement("li");
-
-            const label = document.createElement("span");
-            label.className = "guide-branch-label";
-            label.textContent = b.label;
-            bLi.appendChild(label);
-
-            if (b.text) {
-              bLi.appendChild(document.createTextNode(b.text));
-            }
-
-            if (b.sub) {
-              const subUl = document.createElement("ul");
-              subUl.className = "guide-sub";
-              b.sub.forEach(s => {
-                const sLi = document.createElement("li");
-                sLi.textContent = s;
-                subUl.appendChild(sLi);
-              });
-              bLi.appendChild(subUl);
-            }
-
-            branchUl.appendChild(bLi);
-          });
-
-          li.appendChild(branchUl);
-        }
-
-        list.appendChild(li);
+    function renderProgress() {
+      const steps = SCENARIOS[currentType].steps;
+      const track = document.getElementById("rp-track");
+      track.textContent = "";
+      steps.forEach((_, i) => {
+        const seg = document.createElement("div");
+        seg.className = "rp-seg" + (i < respIndex ? " done" : i === respIndex ? " current" : "");
+        track.appendChild(seg);
       });
+      track.setAttribute("aria-valuemin", "1");
+      track.setAttribute("aria-valuemax", String(steps.length));
+      track.setAttribute("aria-valuenow", String(respIndex + 1));
 
-      // 설명/제목/카드 스타일
+      document.getElementById("rp-label").textContent = "대응 절차";
+      document.getElementById("rp-count").textContent = (respIndex + 1) + " / " + steps.length + " 단계";
+    }
+
+    // 이미지 영역 생성: 파일이 있으면 표시, 없으면 자리표시로 대체
+    function buildStepImage(filename) {
+      const wrap = document.createElement("div");
+      wrap.className = "step-image-wrap";
+
+      // 자리표시(이미지 준비 중 / 로드 실패 시 노출)
+      const ph = document.createElement("div");
+      ph.className = "step-image-placeholder";
+      ph.innerHTML =
+        '<span class="ph-icon" aria-hidden="true">🖼️</span>' +
+        '<span class="ph-text">이미지 준비 중입니다</span>' +
+        '<span class="ph-file"></span>';
+      ph.querySelector(".ph-file").textContent = filename;
+
+      const link = document.createElement("a");
+      link.href = "./" + filename;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+
+      const img = document.createElement("img");
+      img.className = "step-image";
+      img.src = "./" + filename;
+      img.alt = (respIndex + 1) + "단계 안내 이미지";
+      img.loading = "lazy";
+      // 로드 실패(파일 미업로드 포함) → 자리표시로 전환
+      img.onerror = function () {
+        link.style.display = "none";
+        ph.style.display = "flex";
+      };
+      // 로드 성공 → 자리표시 숨김
+      img.onload = function () {
+        ph.style.display = "none";
+        link.style.display = "block";
+      };
+      link.appendChild(img);
+
+      // 초기엔 자리표시를 보여주고, 로드 성공 시 img가 대체
+      ph.style.display = "flex";
+      link.style.display = "none";
+
+      wrap.appendChild(link);
+      wrap.appendChild(ph);
+      return wrap;
+    }
+
+    function renderStepCard() {
+      const info = SCENARIOS[currentType];
+      const step = info.steps[respIndex];
+      const card = document.getElementById("step-card");
+      card.className = "step-card " + info.cardClass;
+      card.textContent = "";
+
+      const badge = document.createElement("div");
+      badge.className = "step-badge";
+      const bnum = document.createElement("span");
+      bnum.className = "step-badge-num";
+      bnum.textContent = String(respIndex + 1);
+      badge.appendChild(bnum);
+      badge.appendChild(document.createTextNode(" " + (respIndex + 1) + "단계"));
+      card.appendChild(badge);
+
+      const p = document.createElement("p");
+      p.className = "step-text";
+      p.textContent = step.text;
+      card.appendChild(p);
+
+      if (step.note) {
+        const note = document.createElement("div");
+        note.className = "step-note";
+        note.textContent = step.note;
+        card.appendChild(note);
+      }
+
+      // 단계 본문 이미지 (분기가 없는 단계)
+      if (step.image) {
+        card.appendChild(buildStepImage(step.image));
+      }
+
+      if (step.branch) {
+        const ul = document.createElement("ul");
+        ul.className = "step-branch";
+        step.branch.forEach(b => {
+          const li = document.createElement("li");
+          const label = document.createElement("span");
+          label.className = "step-branch-label";
+          label.textContent = b.label;
+          li.appendChild(label);
+          if (b.text) {
+            const t = document.createElement("span");
+            t.className = "step-branch-text";
+            t.textContent = b.text;
+            li.appendChild(t);
+          }
+          if (b.sub) {
+            const subUl = document.createElement("ul");
+            subUl.className = "step-sub";
+            b.sub.forEach(s => {
+              const sLi = document.createElement("li");
+              sLi.textContent = s;
+              subUl.appendChild(sLi);
+            });
+            li.appendChild(subUl);
+          }
+          // 분기별 이미지 (4-1, 4-2)
+          if (b.image) {
+            li.appendChild(buildStepImage(b.image));
+          }
+          ul.appendChild(li);
+        });
+        card.appendChild(ul);
+      }
+
+      const steps = info.steps;
+      const prevLabel = document.getElementById("resp-prev-label");
+      const nextLabel = document.getElementById("resp-next-label");
+      const nextBtn = document.getElementById("resp-next");
+
+      prevLabel.textContent = respIndex === 0 ? "상황 선택" : "이전 단계";
+
+      if (respIndex === steps.length - 1) {
+        nextLabel.textContent = "보고단계로";
+        nextBtn.classList.add("final");
+      } else {
+        nextLabel.textContent = "다음 단계";
+        nextBtn.classList.remove("final");
+      }
+    }
+
+    function renderResponse() {
+      const info = SCENARIOS[currentType];
       const desc = document.getElementById("response-desc");
       desc.textContent = "";
       const strong = document.createElement("span");
       strong.className = "highlight-text";
       strong.textContent = info.label;
       desc.appendChild(strong);
-      desc.appendChild(document.createTextNode("에 대한 대응방법입니다."));
+      desc.appendChild(document.createTextNode(" 대응방법입니다."));
 
-      document.getElementById("response-title").textContent = info.label;
-      document.getElementById("response-card").className = "content-card " + info.cardClass;
+      renderProgress();
+      renderStepCard();
     }
 
-    /* ---------- 단계 전환 ---------- */
-    function setStage(step) {
-      currentStep = step;
+    function respNext() {
+      const steps = SCENARIOS[currentType].steps;
+      if (respIndex < steps.length - 1) {
+        respIndex++;
+        renderResponse();
+        focusStepTitle();
+      } else {
+        setStage(3);
+      }
+    }
 
+    function respPrev() {
+      if (respIndex > 0) {
+        respIndex--;
+        renderResponse();
+        focusStepTitle();
+      } else {
+        document.body.setAttribute("data-theme", "leak");
+        setStage(1);
+      }
+    }
+
+    function focusStepTitle() {
+      const t = document.getElementById("title-2");
+      if (t) t.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function setStage(stage) {
+      currentStage = stage;
       document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
-      const screen = document.getElementById("screen-" + step);
-      screen.classList.add("active");
+      document.getElementById("screen-" + stage).classList.add("active");
 
       for (let i = 1; i <= 3; i++) {
         const el = document.getElementById("stage-" + i);
         el.classList.remove("active", "done");
         el.removeAttribute("aria-current");
-
-        if (i < step) el.classList.add("done");
-        if (i === step) {
-          el.classList.add("active");
-          el.setAttribute("aria-current", "step");
-        }
+        if (i < stage) el.classList.add("done");
+        if (i === stage) { el.classList.add("active"); el.setAttribute("aria-current", "step"); }
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
-
-      // 스크린리더가 화면 전환을 인지하도록 새 화면의 제목으로 포커스 이동
-      const title = document.getElementById("title-" + step);
+      const title = document.getElementById("title-" + stage);
       if (title) title.focus({ preventScroll: true });
     }
 
     function selectSituation(type) {
       currentType = type;
+      respIndex = 0;
       document.body.setAttribute("data-theme", type);
-      renderSteps(type);
+      renderResponse();
       setStage(2);
     }
 
-    function goPrev() {
-      if (currentStep === 2) {
-        // 상황선택 화면으로 복귀 시 테마를 기본(파랑)으로
-        document.body.setAttribute("data-theme", "leak");
-        setStage(1);
-      } else if (currentStep === 3) {
-        setStage(2);
-      }
+    function goStageBack() {
+      setStage(2);
     }
 
-    function goNext() {
-      if (currentStep === 2) setStage(3);
-    }
-
-    /* ---------- 모달 (키보드 대응 포함) ---------- */
-    function getOpenModal() {
-      return document.querySelector(".modal.show");
-    }
+    function getOpenModal() { return document.querySelector(".modal.show"); }
 
     function openModal(id, triggerEl) {
       lastFocusedBeforeModal = triggerEl || document.activeElement;
@@ -1196,63 +1033,37 @@
       const modal = document.getElementById(id);
       modal.classList.remove("show");
       document.body.classList.remove("modal-open");
-      if (lastFocusedBeforeModal) {
-        lastFocusedBeforeModal.focus();
-        lastFocusedBeforeModal = null;
-      }
+      if (lastFocusedBeforeModal) { lastFocusedBeforeModal.focus(); lastFocusedBeforeModal = null; }
     }
 
-    // 배경 클릭으로 닫기
     window.addEventListener("click", function (e) {
       const modal = getOpenModal();
       if (modal && e.target === modal) closeModal(modal.id);
     });
 
-    // Esc로 닫기 + Tab 포커스 트랩
     window.addEventListener("keydown", function (e) {
       const modal = getOpenModal();
       if (!modal) return;
-
-      if (e.key === "Escape") {
-        closeModal(modal.id);
-        return;
-      }
-
+      if (e.key === "Escape") { closeModal(modal.id); return; }
       if (e.key === "Tab") {
-        const focusables = modal.querySelectorAll(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusables.length === 0) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        const f = modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
 
-    /* ---------- 오프라인 감지 ---------- */
-    function updateOnlineStatus() {
-      document.body.classList.toggle("offline", !navigator.onLine);
-    }
+    function updateOnlineStatus() { document.body.classList.toggle("offline", !navigator.onLine); }
     window.addEventListener("online", updateOnlineStatus);
     window.addEventListener("offline", updateOnlineStatus);
 
-    /* ---------- 서비스워커 등록 (오프라인 캐싱) ---------- */
     if ("serviceWorker" in navigator && location.protocol === "https:") {
       window.addEventListener("load", function () {
-        navigator.serviceWorker.register("./sw.js").catch(function () {
-          // sw.js가 없거나 등록 실패해도 페이지 동작에는 영향 없음
-        });
+        navigator.serviceWorker.register("./sw.js").catch(function () {});
       });
     }
 
-    /* ---------- 초기화 ---------- */
     initContact();
     updateOnlineStatus();
   </script>
