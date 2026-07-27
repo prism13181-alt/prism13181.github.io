@@ -2,24 +2,47 @@
  * 내용(HTML/이미지)이 바뀌면 CACHE_VERSION 숫자를 올려주세요.
  * 그래야 현장 기기들이 새 버전을 받아갑니다.
  */
+// 이미지를 새로 올릴 때마다 이 숫자를 올려주세요. (예: 2, 3 …)
 const CACHE_VERSION = 1;
 const CACHE_NAME = "leak-guide-v" + CACHE_VERSION;
 
-const ASSETS = [
+// 핵심 자산: 하나라도 없으면 설치 실패 (반드시 존재해야 하는 파일)
+const CORE_ASSETS = [
   "./",
   "./index.html",
+  "./manifest.json",
   "./logo.png",
   "./route1.png",
-  "./chestpoint1.png",
-  "./manifest.json"
+  "./chestpoint1.png"
 ];
 
-// 설치: 모든 자산을 미리 캐싱
+// 선택 자산: 아직 안 올렸을 수 있는 단계별 이미지.
+// 있으면 캐싱하고, 없으면 조용히 건너뜀 (설치 실패 안 함).
+const OPTIONAL_ASSETS = [
+  "./leak-step1.png",
+  "./leak-step2.png",
+  "./leak-step3.png",
+  "./leak-step4-1.png",
+  "./leak-step4-2.png",
+  "./ph-step1.png",
+  "./ph-step2.png",
+  "./ph-step3.png"
+];
+
+// 설치: 핵심 자산은 반드시 캐싱, 선택 자산은 개별적으로 시도
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(ASSETS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(cache => {
+      const core = cache.addAll(CORE_ASSETS);
+      const optional = Promise.all(
+        OPTIONAL_ASSETS.map(url =>
+          cache.add(url).catch(() => {
+            /* 파일이 아직 없으면 무시 */
+          })
+        )
+      );
+      return Promise.all([core, optional]);
+    }).then(() => self.skipWaiting())
   );
 });
 
