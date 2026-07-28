@@ -862,7 +862,8 @@
     let currentStage = 1;
     let currentType = "leak";
     let respIndex = 0;
-    let situationChosen = false;  // 상황(누출/pH)을 선택했는지 여부
+    // 실제로 방문한 단계만 진행바에서 클릭 가능 (1단계는 항상 가능)
+    let visited = { 1: true, 2: false, 3: false };
     let lastFocusedBeforeModal = null;
 
     function initContact() {
@@ -1118,8 +1119,7 @@
         renderResponse();
         focusStepTitle();
       } else {
-        situationChosen = false;
-        document.body.setAttribute("data-theme", "leak");
+        resetProgress();
         setStage(1);
       }
     }
@@ -1132,6 +1132,8 @@
 
     function setStage(stage) {
       currentStage = stage;
+      visited[stage] = true;   // 실제로 들어온 단계를 방문 처리
+
       document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
       document.getElementById("screen-" + stage).classList.add("active");
 
@@ -1151,41 +1153,43 @@
     }
 
     // 진행바 클릭 가능 여부 갱신
-    // 1단계는 항상 가능, 2·3단계는 상황을 선택한 뒤에만 가능
+    // 실제로 방문한 적 있는 단계만 클릭 가능 (1단계는 항상 가능)
     function updateStageAccess() {
-      const stage2 = document.getElementById("stage-2");
-      const stage3 = document.getElementById("stage-3");
-      if (situationChosen) {
-        stage2.classList.remove("disabled");
-        stage3.classList.remove("disabled");
-        stage2.removeAttribute("aria-disabled");
-        stage3.removeAttribute("aria-disabled");
-      } else {
-        stage2.classList.add("disabled");
-        stage3.classList.add("disabled");
-        stage2.setAttribute("aria-disabled", "true");
-        stage3.setAttribute("aria-disabled", "true");
+      for (let i = 2; i <= 3; i++) {
+        const el = document.getElementById("stage-" + i);
+        if (visited[i]) {
+          el.classList.remove("disabled");
+          el.removeAttribute("aria-disabled");
+        } else {
+          el.classList.add("disabled");
+          el.setAttribute("aria-disabled", "true");
+        }
       }
     }
 
     // 진행바 클릭 시 해당 단계로 이동
     function goStage(stage) {
       if (stage === 1) {
-        // 상황 선택 화면으로 (테마 초기화)
-        situationChosen = false;
-        document.body.setAttribute("data-theme", "leak");
+        // 상황 선택으로 복귀 → 이후 단계 잠금 초기화
+        resetProgress();
         setStage(1);
         return;
       }
-      // 2·3단계는 상황 선택 후에만
-      if (!situationChosen) return;
+      // 가본 적 없는 단계는 이동 불가
+      if (!visited[stage]) return;
       setStage(stage);
+    }
+
+    // 상황 선택 화면으로 돌아갈 때 진행 상태 초기화
+    function resetProgress() {
+      visited = { 1: true, 2: false, 3: false };
+      respIndex = 0;
+      document.body.setAttribute("data-theme", "leak");
     }
 
     function selectSituation(type) {
       currentType = type;
       respIndex = 0;
-      situationChosen = true;
       document.body.setAttribute("data-theme", type);
       renderResponse();
       setStage(2);
@@ -1198,7 +1202,10 @@
       preloadImages(all);
     }
 
+    // 보고단계 → 대응방법으로 복귀: 절차를 1단계부터 다시 표시
     function goStageBack() {
+      respIndex = 0;
+      renderResponse();
       setStage(2);
     }
 
