@@ -76,6 +76,119 @@
       padding: 22px 18px 48px;
     }
 
+    /* ============ GPS 접근 게이트 ============ */
+    .gate {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(160deg, #0a5c8f 0%, #073b5c 100%);
+    }
+
+    .gate.hidden { display: none; }
+
+    /* 검토용 우회 버튼 (PC 등 위치 확인이 어려운 환경에서 내용 확인용)
+       배경과 거의 같은 색이라 눈에 잘 띄지 않음 */
+    .gate-bypass {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .gate-bypass:hover { background: rgba(255,255,255,0.16); }
+
+    .gate-card {
+      width: 100%;
+      max-width: 460px;
+      background: #fff;
+      border-radius: 28px;
+      padding: 34px 26px 28px;
+      text-align: center;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+    }
+
+    .gate-icon {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      background: var(--sky-soft);
+    }
+
+    .gate-icon.deny { background: #fdecec; }
+    .gate-icon.wait { background: #fff5e2; }
+
+    .gate-title {
+      margin: 0 0 12px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .gate-desc {
+      margin: 0 0 22px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: #4a5f73;
+      word-break: keep-all;
+    }
+
+    .gate-btn {
+      width: 100%;
+      min-height: 60px;
+      border: none;
+      border-radius: 18px;
+      font-family: inherit;
+      font-size: 19px;
+      font-weight: 800;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--sky-dark) 0%, var(--sky) 100%);
+      box-shadow: var(--shadow-blue);
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    .gate-btn:hover { transform: translateY(-1px); filter: brightness(1.02); }
+
+    .gate-spinner {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 18px;
+      border: 5px solid #e3eef6;
+      border-top-color: var(--sky);
+      border-radius: 50%;
+      animation: gate-spin 0.9s linear infinite;
+    }
+
+    @keyframes gate-spin { to { transform: rotate(360deg); } }
+
+    .gate-sub {
+      margin-top: 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #8496a6;
+    }
+
+    /* 본문: 게이트 통과 전엔 숨김 */
+    .app { display: none; }
+    body.access-granted .app { display: block; }
+
     .hero {
       position: relative;
       overflow: hidden;
@@ -258,38 +371,27 @@
       color: rgba(255,255,255,0.93);
     }
 
-    /* ============ 대응방법: 단계별 1페이지 ============ */
-    .response-progress {
-      margin-bottom: 20px;
-    }
+    /* ============ 대응방법: 전체 스크롤 표시 ============ */
 
-    .rp-head {
+    /* 절차 개수 안내 */
+    .steps-head {
       display: flex; align-items: baseline; justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
-    .rp-label {
+    .steps-head-label {
       font-size: 15px; font-weight: 800; color: var(--theme-dark);
       letter-spacing: -0.02em;
     }
 
-    .rp-count { font-size: 14px; font-weight: 700; color: var(--muted); }
-
-    .rp-track { display: flex; gap: 8px; }
-
-    .rp-seg {
-      flex: 1; height: 10px; border-radius: 999px;
-      background: #e2ebf3; transition: background 0.25s ease;
-    }
-
-    .rp-seg.done { background: var(--theme); }
-    .rp-seg.current { background: var(--theme); box-shadow: var(--theme-glow); }
+    .steps-head-count { font-size: 14px; font-weight: 700; color: var(--muted); }
 
     .step-card {
-      border-radius: 26px; padding: 26px 22px;
-      margin-bottom: 18px; border: 1px solid var(--line);
-      min-height: 220px;
+      border-radius: 22px; padding: 20px 18px;
+      margin-bottom: 14px; border: 1px solid var(--line);
     }
+
+    .step-card:last-of-type { margin-bottom: 0; }
 
     .step-card.leak { background: linear-gradient(180deg, #f7fbfe 0%, #ffffff 100%); border-color: #d7eaf7; }
     .step-card.ph { background: linear-gradient(180deg, #fbfdf6 0%, #ffffff 100%); border-color: #e3eec3; }
@@ -322,25 +424,95 @@
       font-size: 15px; line-height: 1.7; color: #7a5a12; font-weight: 700;
     }
 
-    /* 단계 카드 안의 보고사항 박스 */
+    /* 단계 카드 안의 보고사항 표 */
     .step-report {
-      margin-top: 18px; padding: 18px 18px 16px;
+      margin-top: 18px; padding: 16px;
       border-radius: 16px;
-      background: linear-gradient(180deg, #fffdf7 0%, #ffffff 100%);
-      border: 1px solid #f0e4b7;
+      background: #fdf6e8;
+      border: 1px solid #e0a23c;
+    }
+
+    .step-report-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
     }
 
     .step-report-title {
-      margin: 0 0 10px; font-size: 17px; font-weight: 800;
-      letter-spacing: -0.02em; color: #856300;
+      margin: 0; font-size: 17px; font-weight: 800;
+      letter-spacing: -0.02em; color: #7a5410;
     }
 
-    .step-report-list {
-      margin: 0; padding-left: 20px;
-      font-size: 16px; line-height: 1.9; color: #111111; font-weight: 700;
+    .report-toggle {
+      border: 1px solid #e0a23c; background: #fff; color: #7a5410;
+      font-family: inherit; font-size: 13px; font-weight: 700;
+      padding: 8px 14px; border-radius: 999px; cursor: pointer;
+      transition: background 0.16s ease;
     }
 
-    .step-report-list li + li { margin-top: 2px; }
+    .report-toggle:hover { background: #f7e2b8; }
+
+    .report-table {
+      width: 100%; border-collapse: collapse; table-layout: fixed;
+      background: #fff; border-radius: 10px; overflow: hidden;
+    }
+
+    .report-table thead th {
+      background: #f7e2b8; color: #7a5410;
+      font-size: 13px; font-weight: 800; text-align: left;
+      padding: 10px 12px; border: 1px solid #e0a23c;
+    }
+
+    .report-table tbody td {
+      border: 1px solid #ecd9b4; padding: 12px;
+      font-size: 15px; vertical-align: top; line-height: 1.55;
+    }
+
+    .report-table tbody td.label {
+      width: 42%; font-weight: 800; background: #fffdf8; color: #22384c;
+    }
+
+    .report-table tbody td.value { color: #4b5f73; font-weight: 600; }
+    .report-table tbody td.value.blank { color: #b9c4cf; }
+
+    .report-note {
+      display: flex; gap: 8px; margin: 12px 2px 0;
+      font-size: 13.5px; line-height: 1.65; color: #7a5410; font-weight: 700;
+    }
+
+    /* 좁은 화면: 표를 카드형으로 (상하 여백 최소화) */
+    @media (max-width: 520px) {
+      .report-table thead {
+        position: absolute; width: 1px; height: 1px;
+        overflow: hidden; clip: rect(0 0 0 0);
+      }
+      .report-table, .report-table tbody, .report-table tr, .report-table td { display: block; width: 100%; }
+      .report-table tr {
+        border: 1px solid #ecd9b4; border-radius: 9px;
+        background: #fff; margin-bottom: 5px; overflow: hidden;
+      }
+      .report-table tr:last-child { margin-bottom: 0; }
+
+      .report-table tbody td {
+        border: 0; padding: 5px 9px;
+        line-height: 1.4;
+      }
+
+      /* 라벨: 작은 캡션처럼 */
+      .report-table tbody td.label {
+        width: 100%; font-size: 12.5px; font-weight: 800;
+        background: #fffdf8; color: #5a6a7a;
+        border-bottom: 1px solid #f2e7d0;
+        padding-top: 4px; padding-bottom: 4px;
+        letter-spacing: -0.03em;
+      }
+
+      /* 값: 한 줄에 들어가도록 자간을 살짝 좁힘 */
+      .report-table tbody td.value {
+        font-size: 13.5px; font-weight: 700; color: #22384c;
+        letter-spacing: -0.04em;
+        padding-top: 6px; padding-bottom: 6px;
+      }
+    }
 
     /* 단계별 이미지 */
     .step-image-wrap {
@@ -473,18 +645,50 @@
       font-size: 24px; line-height: 1; font-weight: 800;
     }
 
-    .util-row { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 14px; }
-
-    .util-btn {
-      min-height: 66px; border: none; border-radius: 20px; cursor: pointer;
-      font-family: inherit; font-size: 21px; font-weight: 800;
-      letter-spacing: -0.02em; color: #fff;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.08);
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    /* ── 참고자료 영역 (주요 이동 버튼과 구분되는 보조 스타일) ── */
+    .util-section {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed #d5e1eb;
     }
 
-    .util-btn.blue { background: var(--sky); }
-    .util-btn.green { background: var(--green); }
+    .util-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #94a6b5;
+      letter-spacing: 0.02em;
+      margin-bottom: 9px;
+      text-align: center;
+    }
+
+    .util-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0; }
+
+    .util-btn {
+      min-height: 52px; cursor: pointer;
+      font-family: inherit; font-size: 15px; font-weight: 700;
+      letter-spacing: -0.02em;
+      border-radius: 14px;
+      background: #fff;
+      transition: background 0.16s ease, transform 0.16s ease;
+      padding: 8px 10px;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .util-btn.blue {
+      border: 1.5px solid #bfe0f3;
+      color: var(--sky-dark);
+    }
+
+    .util-btn.blue:hover { background: var(--sky-soft); }
+
+    .util-btn.green {
+      border: 1.5px solid var(--green-border);
+      color: var(--green-dark);
+    }
+
+    .util-btn.green:hover { background: var(--green-soft); }
 
     .contact-card {
       border: 1px solid var(--theme-border); border-radius: 28px;
@@ -592,35 +796,117 @@
     }
 
     @media (max-width: 760px) {
-      .page { padding-top: 16px; }
-      .hero { min-height: auto; padding: 16px 16px 18px; }
-      .hero-logo-wrap { position: static; display: inline-flex; margin-bottom: 10px; padding: 6px 10px; }
-      .hero-logo { height: 21px; }
+      /* --- 여백 최소화: 겹치는 컨테이너 패딩을 층마다 줄임 --- */
+      .page { padding: 10px 8px 28px; }
+
+      .hero { min-height: auto; padding: 12px 14px 14px; border-radius: 20px; }
+      .hero-logo-wrap { position: static; display: inline-flex; margin-bottom: 8px; padding: 5px 9px; border-radius: 10px; }
+      .hero-logo { height: 19px; }
       .hero-inner { min-height: auto; padding: 0; align-items: center; }
-      .hero-kicker { margin-top: 2px; }
-      .hero-title { font-size: 29px; }
-      .hero-desc { font-size: 15px; }
-      .stage-bar { grid-template-columns: 1fr; border-radius: 24px; }
-      .stage-item { justify-content: flex-start; min-height: 54px; padding-left: 14px; }
-      .panel { padding: 24px 16px 20px; }
-      .section-title-wrap { gap: 10px; }
-      .section-no { width: 38px; height: 38px; font-size: 18px; }
-      .section-desc { font-size: 15px; }
-      .step-text { font-size: 18px; }
-      .report-list { font-size: 16px; }
-      .select-btn-title { font-size: 20px; }
-      .select-btn-sub { font-size: 14px; }
-      .nav-row { grid-template-columns: 1fr; }
-      .nav-btn, .util-btn, .call-btn { font-size: 19px; }
-      .contact-number { font-size: 31px; }
-      .modal-box { max-width: 100%; padding: 16px; }
+      .hero-kicker { margin-top: 2px; font-size: 11px; margin-bottom: 5px; }
+      .hero-title { font-size: 25px; }
+      .hero-desc { font-size: 13.5px; margin-top: 9px; line-height: 1.55; }
+
+      /* 단계 표시줄: 3칸 유지하고 크기만 축소 (세로 공간 절약) */
+      .stage-bar {
+        grid-template-columns: repeat(3, 1fr);
+        border-radius: 999px; padding: 5px; gap: 4px;
+        margin: 10px 0 12px;
+      }
+      .stage-item {
+        justify-content: center; min-height: 44px;
+        padding: 6px 4px; gap: 6px;
+      }
+      .stage-num { width: 22px; height: 22px; font-size: 12px; }
+      .stage-label { font-size: 12.5px; }
+
+      .panel { padding: 16px 10px 14px; border-radius: 20px; }
+
+      .section-title-wrap { gap: 8px; margin-bottom: 6px; }
+      .section-no { width: 32px; height: 32px; font-size: 16px; }
+      .section-title { font-size: 25px; }
+      .section-desc { font-size: 14px; margin: 10px auto 14px; }
+
+      /* 단계 카드 */
+      .steps-head { margin-bottom: 10px; }
+      .steps-head-label { font-size: 14px; }
+      .steps-head-count { font-size: 13px; }
+
+      .step-card { padding: 14px 12px; border-radius: 16px; margin-bottom: 10px; }
+      .step-badge { padding: 5px 12px; font-size: 13px; margin-bottom: 10px; }
+      .step-badge-num { width: 20px; height: 20px; font-size: 12px; }
+      .step-text { font-size: 17px; line-height: 1.5; letter-spacing: -0.035em; }
+      .step-note { padding: 10px 11px; font-size: 13.5px; margin-top: 10px; border-radius: 11px; line-height: 1.5; }
+
+      /* 보고사항 표 */
+      .step-report { padding: 8px; margin-top: 12px; border-radius: 12px; }
+      .step-report-head { margin-bottom: 7px; gap: 8px; }
+      .step-report-title { font-size: 15px; }
+      .report-toggle { font-size: 12px; padding: 5px 10px; }
+      .report-note { font-size: 12px; margin-top: 8px; gap: 5px; line-height: 1.5; }
+
+      /* 분기(4-1/4-2) */
+      .step-branch { margin-top: 12px; gap: 10px; }
+      .step-branch > li { padding: 12px 11px; border-radius: 13px; }
+      .step-branch-label { font-size: 15.5px; margin-bottom: 6px; }
+      .step-branch-text { font-size: 15px; }
+      .step-sub { font-size: 14.5px; }
+
+      /* 이미지 */
+      .step-image-wrap { margin-top: 12px; border-radius: 12px; }
+
+      /* 상황 선택 버튼 */
+      .select-btn { min-height: auto; padding: 15px 16px; border-radius: 18px; }
+      .select-btn-title { font-size: 18px; margin-bottom: 5px; }
+      .select-btn-sub { font-size: 13px; line-height: 1.5; }
+
+      /* --- 주요 이동 버튼: 좌우 2열 유지, 크기 축소 --- */
+      .nav-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .nav-row.single { grid-template-columns: 1fr; }
+      .nav-btn { min-height: 50px; font-size: 15.5px; gap: 7px; border-radius: 14px; }
+      .nav-icon { font-size: 17px; }
+
+      /* --- 참고자료 버튼: 보조 스타일로 축소 --- */
+      .util-row { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+      .util-btn { min-height: 44px; font-size: 13.5px; border-radius: 12px; padding: 6px 8px; }
+      .util-label { font-size: 12px; }
+
+      /* 보고단계 */
+      .contact-card { padding: 16px 13px; border-radius: 18px; }
+      .contact-number { font-size: 29px; }
+      .contact-desc { font-size: 13.5px; margin-bottom: 12px; }
+      .call-btn { min-height: 52px; font-size: 17px; border-radius: 14px; }
+      .report-box { padding: 15px 13px; border-radius: 16px; margin-top: 12px; }
+      .report-title { font-size: 18px; }
+      .report-list { font-size: 15px; line-height: 1.75; padding-left: 19px; }
+
+      .notice { padding: 12px 13px; font-size: 13px; margin-top: 12px; border-radius: 14px; }
+
+      .modal-box { max-width: 100%; padding: 13px; border-radius: 18px; }
+      .modal-title { font-size: 20px; }
+      .modal-desc { font-size: 13.5px; }
       .modal-image { width: auto; min-width: 100%; max-width: none; }
+    }
+
+    /* 아주 좁은 화면 추가 축소 */
+    @media (max-width: 380px) {
+      .page { padding: 8px 6px 24px; }
+      .panel { padding: 14px 8px 12px; }
+      .step-card { padding: 12px 10px; }
+      .step-report { padding: 8px; }
+      .stage-label { font-size: 11.5px; }
+      .hero-title { font-size: 23px; }
+      .section-title { font-size: 23px; }
+      .step-text { font-size: 16.5px; }
+      .nav-btn { font-size: 14.5px; }
+      .util-btn { font-size: 12.5px; }
     }
 
     @media print {
       body { background: #fff; color: #000; }
-      .stage-bar, .nav-row, .util-row, .select-grid, .modal,
-      .offline-banner, .call-btn, .response-progress { display: none !important; }
+      .gate, .stage-bar, .nav-row, .util-row, .util-section, .select-grid, .modal,
+      .offline-banner, .call-btn { display: none !important; }
+      .app { display: block !important; }
       .page { max-width: 100%; padding: 0; }
       .hero, .panel, .step-card, .contact-card, .report-box { box-shadow: none; border-radius: 8px; }
       .hero { background: none; border: 2px solid #000; padding: 14px; min-height: auto; }
@@ -631,6 +917,25 @@
   </style>
 </head>
 <body data-theme="leak">
+
+  <!-- ============ GPS 접근 게이트 ============ -->
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <!-- 검토용 우회 버튼: 위치 확인 없이 내용 확인 -->
+    <button type="button" class="gate-bypass" id="gate-bypass"
+            onclick="grantAccess()" aria-label="검토용 바로 보기" title=""></button>
+
+    <div class="gate-card">
+      <div class="gate-spinner" id="gate-spinner"></div>
+      <div class="gate-icon" id="gate-icon" style="display:none;">📍</div>
+      <h1 class="gate-title" id="gate-title">위치 확인 중</h1>
+      <p class="gate-desc" id="gate-desc">공장 구역 내에서만 이용할 수 있습니다.<br>위치를 확인하고 있습니다…</p>
+      <button type="button" class="gate-btn" id="gate-btn" style="display:none;" onclick="requestLocation()">위치 권한 허용하고 다시 시도</button>
+      <p class="gate-sub" id="gate-sub"></p>
+    </div>
+  </div>
+
+  <!-- ============ 본문 (게이트 통과 후 표시) ============ -->
+  <div class="app">
   <div class="page">
     <header class="hero">
       <div class="hero-logo-wrap" id="logo-wrap">
@@ -703,30 +1008,31 @@
         </div>
         <p class="section-desc" id="response-desc"></p>
 
-        <div class="response-progress">
-          <div class="rp-head">
-            <span class="rp-label" id="rp-label"></span>
-            <span class="rp-count" id="rp-count"></span>
-          </div>
-          <div class="rp-track" id="rp-track" role="progressbar" aria-label="대응방법 진행 상황"></div>
+        <div class="steps-head">
+          <span class="steps-head-label">대응 절차</span>
+          <span class="steps-head-count" id="steps-count"></span>
         </div>
 
-        <div class="step-card" id="step-card"></div>
+        <!-- 전체 단계를 한 번에 표시 (JS로 채움) -->
+        <div id="steps-container"></div>
 
         <div class="nav-row" id="response-nav">
-          <button type="button" class="nav-btn prev" id="resp-prev" onclick="respPrev()">
+          <button type="button" class="nav-btn prev" onclick="goStage(1)">
             <span class="nav-icon" aria-hidden="true">←</span>
-            <span id="resp-prev-label">이전</span>
+            <span>상황 선택</span>
           </button>
-          <button type="button" class="nav-btn next" id="resp-next" onclick="respNext()">
-            <span id="resp-next-label">다음</span>
+          <button type="button" class="nav-btn next final" onclick="goReportStage()">
+            <span>보고단계</span>
             <span class="nav-icon" aria-hidden="true">→</span>
           </button>
         </div>
 
-        <div class="util-row">
-          <button type="button" class="util-btn blue" onclick="openModal('modal-flow', this)">공장 우수로 계통도</button>
-          <button type="button" class="util-btn green" onclick="openModal('modal-equipment', this)">공장 내 방제장비 위치</button>
+        <div class="util-section">
+          <span class="util-label">참고자료</span>
+          <div class="util-row">
+            <button type="button" class="util-btn blue" onclick="openModal('modal-flow', this)">공장 우수로 계통도</button>
+            <button type="button" class="util-btn green" onclick="openModal('modal-equipment', this)">공장 내 방제장비 위치</button>
+          </div>
         </div>
       </section>
 
@@ -760,6 +1066,7 @@
       </section>
     </main>
   </div>
+  </div><!-- /.app -->
 
   <!-- 모달 -->
   <div class="modal" id="modal-flow" role="dialog" aria-modal="true" aria-labelledby="modal-flow-title">
@@ -797,23 +1104,46 @@
 
     const CONFIG = {
       contactName: "윤정일 팀장",
-      contactNumber: "052-231-5572"
+      contactNumber: "052-231-5572",
+
+      // 접근 허용 구역 (제공된 4개 좌표를 이은 다각형)
+      geofence: [
+        { lat: 35.4386694, lng: 129.3286528 }, // 35°26'19.21"N 129°19'43.15"E
+        { lat: 35.4387028, lng: 129.3337833 }, // 35°26'19.33"N 129°20'01.62"E
+        { lat: 35.4344778, lng: 129.3337833 }, // 35°26'04.12"N 129°20'01.62"E
+        { lat: 35.4344472, lng: 129.3296972 }  // 35°26'04.01"N 129°19'46.91"E
+      ],
+
+      // GPS 오차 완충(m). 경계에 붙어 있을 때 오차로 튕기는 것 방지.
+      // 완충 없이 정확히 경계로 막으려면 0으로 변경.
+      bufferMeters: 30
     };
 
-    // 보고사항 (1단계 안내 + 3단계 보고단계에서 공통 사용)
-    const REPORT_ITEMS = [
-      "보고자",
-      "누출 위치",
-      "누출 시간",
-      "누출범위(피해 범위)",
-      "현장 인원 / 공정 상 피해 여부 (피해 있을 시 피해인원 이름)",
-      "누출 차단 완료 여부"
-    ];
+    // 공통 비고 (1단계 보고사항 표 하단)
+    const REPORT_NOTE = '확인되지 않은 항목은 "확인 중"으로 보고하고, 파악 즉시 추가 보고한다.';
 
     const SCENARIOS = {
       leak: {
         label: "누출 상황(제품 / 원·부재료)",
         cardClass: "leak",
+
+        // 1단계 보고사항 표 (빈 양식 / 예시)
+        reportTable: [
+          { label: "누출 시간",        blank: "0000시",                 example: "1420시 경" },
+          { label: "누출 위치",        blank: "공정, 층, 설비명",        example: "NOM/NDM 공정 1층 펌프 전단 플랜지에서" },
+          { label: "누출량",          blank: "0L",                     example: "약 1L 정도" },
+          { label: "우수로 유입 여부",  blank: "O / X",                  example: "우수로 유입은 없음" },
+          { label: "누출 원인",        blank: "부식, 파손 등",           example: "플랜지 가스켓 파손 추정" },
+          { label: "피해 여부",        blank: "유 / 무 (있을 시 개요 설명)", example: "로컬 근무자 1명 얼굴 PT 접촉" }
+        ],
+
+        // 3단계 보고단계 항목
+        reportItems: [
+          "보고자",
+          "상황 개요(발생 시간, 누출량, 누출 위치, 우수로 유입 여부, 피해 여부(인적·물적))",
+          "현장 조치 결과"
+        ],
+
         steps: [
           {
             text: "무전기를 통해 안전환경팀, 조정실, 교대직장 및 주위 동료에게 신속히 연락한다.",
@@ -851,6 +1181,20 @@
       ph: {
         label: "pH 농도 이상 상황",
         cardClass: "ph",
+
+        reportTable: [
+          { label: "확인 시간",             blank: "0000시",   example: "1400시" },
+          { label: "pH이상 위치",           blank: "공정명",    example: "#1 Li2S 공정" },
+          { label: "pH 지시값",             blank: "0.00",     example: "11.00" },
+          { label: "집수조 밸브 개/폐 여부", blank: "O / X",    example: "O" }
+        ],
+
+        reportItems: [
+          "보고자",
+          "상황 개요(확인 시간, 발견 시 pH농도, 공정명, 우수로 v/v 열림 여부)",
+          "현장 조치 결과(대응 과정, 대응 후 현재의 pH 농도)"
+        ],
+
         steps: [
           { text: "무전기를 통해 안전환경팀, 조정실, 교대직장에게 신속히 연락한다.", report: true },
           { text: "해당 Unit의 유수분리조로 이동 후 유수분리조 차단 밸브를 잠금한다.", image: "ph-step2.png" },
@@ -861,7 +1205,6 @@
 
     let currentStage = 1;
     let currentType = "leak";
-    let respIndex = 0;
     // 실제로 방문한 단계만 진행바에서 클릭 가능 (1단계는 항상 가능)
     let visited = { 1: true, 2: false, 3: false };
     let lastFocusedBeforeModal = null;
@@ -872,47 +1215,31 @@
       document.getElementById("call-btn").href = "tel:" + CONFIG.contactNumber.replace(/[^0-9+]/g, "");
       document.getElementById("call-btn").setAttribute("aria-label",
         "안전환경팀 " + CONFIG.contactName + "에게 전화 걸기, " + CONFIG.contactNumber);
+    }
 
-      // 3단계 보고 목록 채우기 (1단계와 동일 항목)
+    // 3단계 보고 목록 채우기 (선택한 상황에 따라 다름)
+    function renderReportItems() {
+      const items = SCENARIOS[currentType].reportItems;
       const reportList = document.getElementById("report-list");
       reportList.textContent = "";
-      REPORT_ITEMS.forEach(item => {
+      items.forEach(item => {
         const li = document.createElement("li");
         li.textContent = item;
         reportList.appendChild(li);
       });
     }
 
-    function renderProgress() {
-      const steps = SCENARIOS[currentType].steps;
-      const track = document.getElementById("rp-track");
-      track.textContent = "";
-      steps.forEach((_, i) => {
-        const seg = document.createElement("div");
-        seg.className = "rp-seg" + (i < respIndex ? " done" : i === respIndex ? " current" : "");
-        track.appendChild(seg);
-      });
-      track.setAttribute("aria-valuemin", "1");
-      track.setAttribute("aria-valuemax", String(steps.length));
-      track.setAttribute("aria-valuenow", String(respIndex + 1));
-
-      document.getElementById("rp-label").textContent = "대응 절차";
-      document.getElementById("rp-count").textContent = (respIndex + 1) + " / " + steps.length + " 단계";
-    }
-
     // 이미지 영역 생성: 로딩 중엔 스피너, 완료 시 사진, 실패 시 자리표시
-    function buildStepImage(filename) {
+    function buildStepImage(filename, stepNo) {
       const wrap = document.createElement("div");
       wrap.className = "step-image-wrap";
 
-      // 로딩 표시 (이미지 받아오는 동안)
       const loading = document.createElement("div");
       loading.className = "step-image-loading";
       loading.innerHTML =
         '<span class="img-spinner" aria-hidden="true"></span>' +
         '<span class="img-loading-text">이미지 불러오는 중…</span>';
 
-      // 실패 시 자리표시 (파일 없음 등)
       const ph = document.createElement("div");
       ph.className = "step-image-placeholder";
       ph.innerHTML =
@@ -930,16 +1257,13 @@
 
       const img = document.createElement("img");
       img.className = "step-image";
-      img.alt = (respIndex + 1) + "단계 안내 이미지";
-      // loading="lazy" 제거 → 곧바로 로딩 시작
+      img.alt = stepNo + "단계 안내 이미지";
 
-      // 성공: 스피너 숨기고 사진 표시
       img.onload = function () {
         loading.style.display = "none";
         ph.style.display = "none";
         link.style.display = "block";
       };
-      // 실패: 스피너 숨기고 자리표시
       img.onerror = function () {
         loading.style.display = "none";
         link.style.display = "none";
@@ -951,9 +1275,7 @@
       wrap.appendChild(link);
       wrap.appendChild(ph);
 
-      // src는 핸들러 연결 후 지정 (캐시된 경우도 onload가 확실히 실행되게)
       img.src = "./" + filename;
-      // 이미 캐시에 있어 즉시 완료된 경우 즉시 반영
       if (img.complete && img.naturalWidth > 0) {
         loading.style.display = "none";
         link.style.display = "block";
@@ -962,40 +1284,106 @@
       return wrap;
     }
 
-    // 다음 단계 이미지를 백그라운드에서 미리 받아두기 (preload)
-    function preloadImages(filenames) {
-      filenames.forEach(name => {
-        if (!name) return;
-        const im = new Image();
-        im.src = "./" + name;
+    // 보고사항 표 생성 (예시 / 빈 양식 전환)
+    function buildReportTable(type) {
+      const rows = SCENARIOS[type].reportTable;
+
+      const box = document.createElement("div");
+      box.className = "step-report";
+
+      // 머리말 + 전환 버튼
+      const head = document.createElement("div");
+      head.className = "step-report-head";
+      const title = document.createElement("h4");
+      title.className = "step-report-title";
+      title.textContent = "보고사항";
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "report-toggle";
+      toggle.textContent = "빈 양식 보기";
+      toggle.setAttribute("aria-pressed", "true");
+      head.appendChild(title);
+      head.appendChild(toggle);
+      box.appendChild(head);
+
+      // 표
+      const table = document.createElement("table");
+      table.className = "report-table";
+
+      const thead = document.createElement("thead");
+      const htr = document.createElement("tr");
+      const th1 = document.createElement("th");
+      th1.scope = "col";
+      th1.textContent = "항목";
+      const th2 = document.createElement("th");
+      th2.scope = "col";
+      th2.textContent = "보고 예시";
+      htr.appendChild(th1);
+      htr.appendChild(th2);
+      thead.appendChild(htr);
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      const valueCells = [];
+      rows.forEach(r => {
+        const tr = document.createElement("tr");
+        const tdL = document.createElement("td");
+        tdL.className = "label";
+        tdL.textContent = r.label;
+        const tdV = document.createElement("td");
+        tdV.className = "value";
+        tdV.textContent = r.example;
+        tdV.dataset.example = r.example;
+        tdV.dataset.blank = r.blank;
+        valueCells.push(tdV);
+        tr.appendChild(tdL);
+        tr.appendChild(tdV);
+        tbody.appendChild(tr);
       });
+      table.appendChild(tbody);
+      box.appendChild(table);
+
+      // 비고
+      const note = document.createElement("p");
+      note.className = "report-note";
+      const bang = document.createElement("span");
+      bang.setAttribute("aria-hidden", "true");
+      bang.textContent = "!";
+      const noteText = document.createElement("span");
+      noteText.textContent = REPORT_NOTE;
+      note.appendChild(bang);
+      note.appendChild(noteText);
+      box.appendChild(note);
+
+      // 전환 동작
+      let showingExample = true;
+      toggle.addEventListener("click", function () {
+        showingExample = !showingExample;
+        valueCells.forEach(td => {
+          td.textContent = showingExample ? td.dataset.example : td.dataset.blank;
+          td.classList.toggle("blank", !showingExample);
+        });
+        th2.textContent = showingExample ? "보고 예시" : "기재 내용";
+        toggle.textContent = showingExample ? "빈 양식 보기" : "예시 보기";
+        toggle.setAttribute("aria-pressed", String(showingExample));
+      });
+
+      return box;
     }
 
-    // 특정 단계에 들어있는 이미지 파일명들을 모아 반환
-    function imagesInStep(step) {
-      if (!step) return [];
-      const list = [];
-      if (step.image) list.push(step.image);
-      if (step.branch) {
-        step.branch.forEach(b => { if (b.image) list.push(b.image); });
-      }
-      return list;
-    }
-
-    function renderStepCard() {
-      const info = SCENARIOS[currentType];
-      const step = info.steps[respIndex];
-      const card = document.getElementById("step-card");
-      card.className = "step-card " + info.cardClass;
-      card.textContent = "";
+    // 단계 카드 하나 생성
+    function buildStepCard(step, index, cardClass) {
+      const stepNo = index + 1;
+      const card = document.createElement("div");
+      card.className = "step-card " + cardClass;
 
       const badge = document.createElement("div");
       badge.className = "step-badge";
       const bnum = document.createElement("span");
       bnum.className = "step-badge-num";
-      bnum.textContent = String(respIndex + 1);
+      bnum.textContent = String(stepNo);
       badge.appendChild(bnum);
-      badge.appendChild(document.createTextNode(" " + (respIndex + 1) + "단계"));
+      badge.appendChild(document.createTextNode(" " + stepNo + "단계"));
       card.appendChild(badge);
 
       const p = document.createElement("p");
@@ -1010,30 +1398,17 @@
         card.appendChild(note);
       }
 
-      // 보고사항 박스 (1단계 연락 시 함께 안내)
+      // 보고사항 표 (1단계)
       if (step.report) {
-        const box = document.createElement("div");
-        box.className = "step-report";
-        const title = document.createElement("h4");
-        title.className = "step-report-title";
-        title.textContent = "보고사항";
-        box.appendChild(title);
-        const ul = document.createElement("ul");
-        ul.className = "step-report-list";
-        REPORT_ITEMS.forEach(item => {
-          const li = document.createElement("li");
-          li.textContent = item;
-          ul.appendChild(li);
-        });
-        box.appendChild(ul);
-        card.appendChild(box);
+        card.appendChild(buildReportTable(currentType));
       }
 
-      // 단계 본문 이미지 (분기가 없는 단계, image 지정 시)
+      // 단계 이미지
       if (step.image) {
-        card.appendChild(buildStepImage(step.image));
+        card.appendChild(buildStepImage(step.image, stepNo));
       }
 
+      // 조건 분기 (4-1 / 4-2)
       if (step.branch) {
         const ul = document.createElement("ul");
         ul.className = "step-branch";
@@ -1059,33 +1434,22 @@
             });
             li.appendChild(subUl);
           }
-          // 분기별 이미지 (4-1, 4-2)
           if (b.image) {
-            li.appendChild(buildStepImage(b.image));
+            li.appendChild(buildStepImage(b.image, stepNo));
           }
           ul.appendChild(li);
         });
         card.appendChild(ul);
       }
 
-      const steps = info.steps;
-      const prevLabel = document.getElementById("resp-prev-label");
-      const nextLabel = document.getElementById("resp-next-label");
-      const nextBtn = document.getElementById("resp-next");
-
-      prevLabel.textContent = respIndex === 0 ? "상황 선택" : "이전 단계";
-
-      if (respIndex === steps.length - 1) {
-        nextLabel.textContent = "보고단계로";
-        nextBtn.classList.add("final");
-      } else {
-        nextLabel.textContent = "다음 단계";
-        nextBtn.classList.remove("final");
-      }
+      return card;
     }
 
+    // 대응방법 전체를 한 번에 렌더링 (스크롤 방식)
     function renderResponse() {
       const info = SCENARIOS[currentType];
+
+      // 상단 설명
       const desc = document.getElementById("response-desc");
       desc.textContent = "";
       const strong = document.createElement("span");
@@ -1094,40 +1458,15 @@
       desc.appendChild(strong);
       desc.appendChild(document.createTextNode(" 대응방법입니다."));
 
-      renderProgress();
-      renderStepCard();
+      // 절차 개수
+      document.getElementById("steps-count").textContent = "총 " + info.steps.length + "단계";
 
-      // 다음 단계 이미지를 미리 받아둠 → "다음 단계" 눌렀을 때 즉시 표시
-      const nextStep = info.steps[respIndex + 1];
-      if (nextStep) preloadImages(imagesInStep(nextStep));
-    }
-
-    function respNext() {
-      const steps = SCENARIOS[currentType].steps;
-      if (respIndex < steps.length - 1) {
-        respIndex++;
-        renderResponse();
-        focusStepTitle();
-      } else {
-        setStage(3);
-      }
-    }
-
-    function respPrev() {
-      if (respIndex > 0) {
-        respIndex--;
-        renderResponse();
-        focusStepTitle();
-      } else {
-        resetProgress();
-        setStage(1);
-      }
-    }
-
-    function focusStepTitle() {
-      const t = document.getElementById("title-2");
-      if (t) t.focus({ preventScroll: true });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // 모든 단계 카드 생성
+      const container = document.getElementById("steps-container");
+      container.textContent = "";
+      info.steps.forEach((step, i) => {
+        container.appendChild(buildStepCard(step, i, info.cardClass));
+      });
     }
 
     function setStage(stage) {
@@ -1183,29 +1522,24 @@
     // 상황 선택 화면으로 돌아갈 때 진행 상태 초기화
     function resetProgress() {
       visited = { 1: true, 2: false, 3: false };
-      respIndex = 0;
       document.body.setAttribute("data-theme", "leak");
     }
 
     function selectSituation(type) {
       currentType = type;
-      respIndex = 0;
       document.body.setAttribute("data-theme", type);
       renderResponse();
+      renderReportItems();   // 상황별 보고단계 항목 반영
       setStage(2);
-
-      // 선택한 시나리오의 전체 이미지를 백그라운드에서 미리 받아둠
-      const all = [];
-      SCENARIOS[type].steps.forEach(s => {
-        imagesInStep(s).forEach(name => all.push(name));
-      });
-      preloadImages(all);
     }
 
-    // 보고단계 → 대응방법으로 복귀: 절차를 1단계부터 다시 표시
+    // 대응방법 → 보고단계
+    function goReportStage() {
+      setStage(3);
+    }
+
+    // 보고단계 → 대응방법으로 복귀
     function goStageBack() {
-      respIndex = 0;
-      renderResponse();
       setStage(2);
     }
 
@@ -1254,9 +1588,139 @@
       });
     }
 
+    /* =========================================================
+     * GPS 접근 게이트
+     * - 구역 안: 통과
+     * - 구역 밖: 차단
+     * - 위치 확인 불가(권한 거부/신호 없음/시간초과): 재시도 화면 (통과 안 됨)
+     * ========================================================= */
+
+    // 점이 다각형 내부인지 판정 (ray casting)
+    function pointInPolygon(lat, lng, poly) {
+      let inside = false;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const xi = poly[i].lng, yi = poly[i].lat;
+        const xj = poly[j].lng, yj = poly[j].lat;
+        const intersect = ((yi > lat) !== (yj > lat)) &&
+          (lng < (xj - xi) * (lat - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+      return inside;
+    }
+
+    // 점에서 다각형 경계까지의 최단거리(m) — 완충 판정용
+    function distanceToPolygonMeters(lat, lng, poly) {
+      const R = 6378137;
+      const rad = Math.PI / 180;
+      const mPerLat = R * rad;
+      const mPerLng = R * rad * Math.cos(lat * rad);
+      const px = lng * mPerLng, py = lat * mPerLat;
+      let min = Infinity;
+      for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+        const ax = poly[j].lng * mPerLng, ay = poly[j].lat * mPerLat;
+        const bx = poly[i].lng * mPerLng, by = poly[i].lat * mPerLat;
+        const dx = bx - ax, dy = by - ay;
+        const len2 = dx * dx + dy * dy;
+        let t = len2 === 0 ? 0 : ((px - ax) * dx + (py - ay) * dy) / len2;
+        t = Math.max(0, Math.min(1, t));
+        const cx = ax + t * dx, cy = ay + t * dy;
+        const d = Math.hypot(px - cx, py - cy);
+        if (d < min) min = d;
+      }
+      return min;
+    }
+
+    function isWithinFence(lat, lng) {
+      if (pointInPolygon(lat, lng, CONFIG.geofence)) return true;
+      // 경계 밖이어도 완충 범위 안이면 허용
+      return distanceToPolygonMeters(lat, lng, CONFIG.geofence) <= CONFIG.bufferMeters;
+    }
+
+    // 게이트 화면 상태 전환
+    function setGate(state, opts) {
+      opts = opts || {};
+      const spinner = document.getElementById("gate-spinner");
+      const icon = document.getElementById("gate-icon");
+      const title = document.getElementById("gate-title");
+      const desc = document.getElementById("gate-desc");
+      const btn = document.getElementById("gate-btn");
+      const sub = document.getElementById("gate-sub");
+
+      spinner.style.display = state === "checking" ? "block" : "none";
+      icon.style.display = state === "checking" ? "none" : "flex";
+      btn.style.display = opts.showBtn ? "block" : "none";
+      icon.className = "gate-icon" + (opts.iconClass ? " " + opts.iconClass : "");
+
+      if (opts.icon) icon.textContent = opts.icon;
+      title.textContent = opts.title || "";
+      desc.innerHTML = opts.desc || "";
+      sub.textContent = opts.sub || "";
+      if (opts.btnText) btn.textContent = opts.btnText;
+    }
+
+    function grantAccess() {
+      document.body.classList.add("access-granted");
+      document.getElementById("gate").classList.add("hidden");
+    }
+
+    function requestLocation() {
+      if (!("geolocation" in navigator)) {
+        setGate("error", {
+          icon: "⚠️", iconClass: "deny",
+          title: "위치를 확인할 수 없습니다",
+          desc: "이 기기 또는 브라우저는 위치 기능을 지원하지 않습니다.<br>위치 확인이 가능한 환경에서 다시 접속해 주세요.",
+          showBtn: false
+        });
+        return;
+      }
+
+      setGate("checking", {
+        title: "위치 확인 중",
+        desc: "공장 구역 내에서만 이용할 수 있습니다.<br>위치를 확인하고 있습니다…"
+      });
+
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          if (isWithinFence(lat, lng)) {
+            grantAccess();
+          } else {
+            setGate("deny", {
+              icon: "⛔", iconClass: "deny",
+              title: "접근 구역이 아닙니다",
+              desc: "이 안내는 <b>공장 구역 내</b>에서만 이용할 수 있습니다.<br>현장으로 이동한 뒤 다시 시도해 주세요.",
+              showBtn: true,
+              btnText: "다시 시도"
+            });
+          }
+        },
+        function (err) {
+          // 위치를 얻지 못한 경우 → 통과시키지 않고 재시도 안내
+          let msg;
+          if (err.code === 1) {
+            msg = "위치 권한이 거부되었습니다.<br>브라우저 설정에서 위치 권한을 허용한 뒤 다시 시도해 주세요.";
+          } else if (err.code === 2) {
+            msg = "위치를 확인할 수 없습니다.<br>실내에서는 GPS 신호가 약할 수 있으니, 창가나 야외로 이동 후 다시 시도해 주세요.";
+          } else {
+            msg = "위치 확인 시간이 초과되었습니다.<br>다시 시도해 주세요.";
+          }
+          setGate("error", {
+            icon: "📡", iconClass: "wait",
+            title: "위치 확인이 필요합니다",
+            desc: msg,
+            showBtn: true,
+            btnText: "위치 권한 허용하고 다시 시도"
+          });
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    }
+
     initContact();
     updateOnlineStatus();
     updateStageAccess();
+    requestLocation();   // 페이지 로드 즉시 위치 확인 시작
   </script>
 </body>
 </html>
