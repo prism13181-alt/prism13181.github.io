@@ -2,9 +2,8 @@
  * 내용(HTML/이미지)이 바뀌면 CACHE_VERSION 숫자를 올려주세요.
  * 그래야 현장 기기들이 새 버전을 받아갑니다.
  */
-
 // 이미지를 새로 올릴 때마다 이 숫자를 올려주세요. (예: 3, 4 …)
-const CACHE_VERSION = 3;
+const CACHE_VERSION = 4;
 const CACHE_NAME = "leak-guide-v" + CACHE_VERSION;
 
 // 핵심 자산: 하나라도 없으면 설치 실패 (반드시 존재해야 하는 파일)
@@ -26,7 +25,8 @@ const OPTIONAL_ASSETS = [
   "./leak-step4-1.png",
   "./leak-step4-2.png",
   "./ph-step2.png",
-  "./ph-step3.png"
+  "./ph-step3.png",
+  "./toolbox.png"
 ];
 
 // 설치: 핵심 자산은 반드시 캐싱, 선택 자산은 개별적으로 시도
